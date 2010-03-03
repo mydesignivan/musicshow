@@ -1,0 +1,40 @@
+
+
+<div id="top">
+    <div class="topmenu-top">
+  </div>
+    <div class="login">
+        <? if( $STATUSLOGIN=="ON" ){?>
+        
+            <form name="formLogin" method="post" enctype="application/x-www-form-urlencoded">
+                     
+                <input type="submit" value="Salir" id="login" />
+                <input type="hidden" name="action" value="<? echo session_id();?>" />
+            </form> 
+                    
+        <? }else{?>
+	        <div class="login-opcional"><a href="#" onclick="Login.remember_pass.show_dialog(this);return false;">Olvidaste tu Contrase&ntilde;a?</a></div>
+            <form name="formLogin" method="post" enctype="application/x-www-form-urlencoded" onsubmit="return Login.validate(this);">
+                <input class="input" type="text" name="txtUser" value="Usuario" onfocus="clear_input(event)" onblur="set_input(event, 'Usuario')" />
+                <input class="input" type="text" name="txtPass" value="Contrase&ntilde;a" onfocus="clear_input(event, 1)" onblur="set_input(event, 'Contrase&ntilde;a', 1)" />
+                <input type="submit" value="Entrar" id="login" />            
+                <input type="hidden" name="action" value="login" />
+            </form>
+        <? }?>        
+    </div>
+</div>
+
+<? if( !isset($STATUSLOGIN) ){?>
+<div id="bannertop"><a href="../registro.php"><img src="../images/bannertop.png" alt="Registrate Gratis!" border="0" /></a></div>
+<? }?>
+
+<div id="topmenu">
+    <ul>
+    <li><a href="index.php"><img src="images/botonoinicio.png" alt="Preguntas Frecuentes" border="0" /></a></li>
+    <li><a href="secciones/fechas.php"><img src="images/botonfechas.png" alt="Como Recomendar mi CV" border="0" /></a></li>
+    <li><a href="secciones/bandas.php"><img src="images/botonbandas.png" alt="Como Funciona LexerSports" border="0" /></a></li>
+    <li><a href="secciones/contacto.php"><img src="images/botoncontacto.png" alt="Acerca de LexerSports" border="0" /></a></li>
+  </ul>
+</div>
+
+<div id="search">
