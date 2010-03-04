@@ -1,5 +1,4 @@
 <div id="sidebar1">
-    <script src="DWConfiguration/ActiveContent/IncludeFiles/AC_RunActiveContent.js" type="text/javascript"></script>
     <h3>&nbsp;</h3>
     <ul>
         <li><a href="rockn.php"><img src="images/rockn.png" alt="" /></a></li>
@@ -14,9 +13,6 @@
     </ul>
 
     <div id="banner-right">
-        <script type="text/javascript">
-        AC_FL_RunContent( 'codebase','http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0','width','153','height','217','src','images/flash/bannerlaterla','quality','high','pluginspage','http://www.adobe.com/shockwave/download/download.cgi?P1_Prod_Version=ShockwaveFlash','movie','images/flash/bannerlaterla' ); //end AC code
-        </script>
         <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,28,0" width="153" height="217">
           <param name="movie" value="images/flash/bannerlaterla.swf" />
           <param name="quality" value="high" />

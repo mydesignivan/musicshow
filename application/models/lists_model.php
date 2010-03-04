@@ -13,9 +13,9 @@ class lists_model extends Model {
         $this->db->order_by('name', 'asc');
         return $this->db->get(TBL_COUNTRY);
     }
-    public function get_states($state_id){
+    public function get_states($country_id){
         $this->db->select('name, state_id');
-        $this->db->where('state_id', $state_id);
+        $this->db->where('country_id', $country_id);
         $this->db->order_by('name', 'asc');
         return $this->db->get(TBL_STATES);
     }

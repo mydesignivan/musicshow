@@ -5,8 +5,8 @@ class Index extends Controller {
         parent::Controller();
     }
 	
-    function index(){
-        $this->load->view('index_view');
+    public function index(){
+        $this->load->view('front_index_view');
     }
     
 

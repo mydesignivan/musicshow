@@ -11,15 +11,15 @@
  */
 
 .jquery-validator{
-    float:right;
+    position: relative;
     clear: both !important;
-    width:195px;
+    width:295px;
     padding:5px;
     /*margin:10px 0 0 100px !important;*/
     margin-top:4px !important;
     background-color:#fff;
     border:1px solid #ccc;
     color:red;
-    font-size: 110%;
+    font-size: 90%;
     display:none;
 }

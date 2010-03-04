@@ -20,6 +20,8 @@
 <script type="text/javascript" src="js/helpers.min.js"></script>
 <!--========== END LIBRARIES =======-->
 
+<script type="text/javascript" src="js/class.login.js"></script>
+
 <script type="text/javascript">
 <!--
 <?php

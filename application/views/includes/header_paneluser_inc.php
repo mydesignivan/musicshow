@@ -9,46 +9,13 @@
         <div align="left"></div>
 
         <div class="login">
-        <?php if( !$this->session->userdata('logged_in') ){?>
-            <form id="formLogin" action="<?=site_url('/login/')?>" method="post" enctype="application/x-www-form-urlencoded">
-                <div class="login-opcional"><a href="#" onclick="Login.remember_pass.show_dialog(this);return false;">Olvidaste tu Contrase&ntilde;a?</a></div>
-
-                <input class="input" type="text" name="txtLoginUser" class="inputbox2" value="Usuario" onfocus="clear_input(event)" onblur="set_input(event, 'Usuario')" />
-                <input class="input" type="text" name="txtLoginPass" class="inputbox2" value="Contrase&ntilde;a" onfocus="clear_input(event, 1)" onblur="set_input(event, 'Contrase&ntilde;a', 1)" />
-                <input type="submit" id="btnLogin" value="Entrar" class="inputlogin" />
-            </form>
-
-            <script type="text/javascript">
-            <!--
-             <?php
-                /*if( $this->session->flashdata('statusLogin') ) {
-                    switch($this->session->flashdata('statusLogin')){
-                        case "loginfaild":
-                            $message = "El usuario y/o password son incorrectos.";
-                        break;
-                        case "userinactive":
-                            $message = "El usuario no esta activado.";
-                        break;
-                    }
-                    echo 'Login.show_error("'.$message.'");';
-                }*/
-             ?>
-
-                 //Login.show_error("El usuario y/o password son incorrectos.");
-            -->
-            </script>
-            
-
-        <?php }else{
-
+        <?php
             echo '<form id="formLogin" action="'.site_url('/login/logout').'" method="post" enctype="application/x-www-form-urlencoded">';
             echo 'Usuario: '.$this->session->userdata('email').' <a href="'.site_url('/micuenta/').'">(mi cuenta)</a> ';
             echo '<input type="submit" value="Salir" class="inputlogin" />';
-            echo '</form>';
-        
+            echo '</form>';       
          }?>
         </div>
-
 
     </div>
 
