@@ -100,7 +100,7 @@ class Registro extends Controller {
     public function ajax_show_states($state_id=0){
         $listStates = $this->lists_model->get_states($this->uri->segment(3));
 
-        echo '<option value="0">Seleccion una Provincia</option>\n';
+        echo '<option value="0">Seleccione una Provincia</option>\n';
         foreach( $listStates->result_array() as $row ){
             $sel = $state_id==$row['state_id'] ? ' selected="selected"' : "";
             echo '<option value="'.$row['state_id'].'"'.$sel.'>'.$row['name'].'</option>\n';

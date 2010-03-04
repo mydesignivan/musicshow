@@ -22,6 +22,7 @@
 
 <!--inicio contenido-->
     <div id="mainContent">
+        <h1>Mi Cuenta</h1>
         <form id="form1" action="<?=site_url('/micuenta/modified/');?>" method="post" class="container-form" enctype="application/x-www-form-urlencoded">
             <div id="mask"></div>
 
@@ -29,11 +30,11 @@
             <h2 class="linetitle">Datos del Usuario</h2>
             <div class="formreg-row">
                 <label for="txtUser">Usuario <b>*</b></label><br />
-                <input type="text" id="txtUser" name="txtUser" class="inputbox validate" value="" />
+                <input type="text" id="txtUser" name="txtUser" class="inputbox validate" value="<?=$info['username'];?>" />
             </div>
             <div class="formreg-row">
                 <label for="txtEmail">E-Mail <b>*</b></label><br />
-                <input type="text" id="txtEmail" name="txtEmail" value="" class="inputbox validate" onchange="this.value = this.value.toLowerCase();" />
+                <input type="text" id="txtEmail" name="txtEmail" value="<?=$info['email'];?>" class="inputbox validate" onchange="this.value = this.value.toLowerCase();" />
             </div>
             <div class="formreg-row">
                 <label for="txtPass">Contrase&ntilde;a <b>*</b></label><br />
@@ -44,48 +45,46 @@
                 <input type="password" id="txtPass_confirm" name="txtPass_confirm" class="inputbox validate" />
             </div>
             <div class="formreg-row">
-                <input type="checkbox" name="chkNewsletter" value="1" />&nbsp;Deseo recibir Novedades de Music Shows
+                <input type="checkbox" name="chkNewsletter" value="1" <?=$info['newsletter']==1 ? 'checked="checked"' : '';?> />&nbsp;Deseo recibir Novedades de Music Shows
             </div>
 
             <!-- =================  DATOS DEL PERSONALES  ================ -->
             <h2 class="linetitle">Datos Personales</h2>
             <div class="formreg-row">
                 <label for="txtLastName">Apellido <b>*</b></label><br />
-                <input type="text" id="txtLastName" name="txtLastName" class="inputbox validate" onchange="$(this).ucTitle();" />
+                <input type="text" id="txtLastName" name="txtLastName" class="inputbox validate" value="<?=$info['lastname'];?>" onchange="$(this).ucTitle();" />
             </div>
             <div class="formreg-row">
                 <label for="txtFirstName">Nombre <b>*</b></label><br />
-                <input type="text" id="txtFirstName" name="txtFirstName" class="inputbox validate" onchange="$(this).ucTitle();" />
+                <input type="text" id="txtFirstName" name="txtFirstName" class="inputbox validate" value="<?=$info['firstname'];?>" onchange="$(this).ucTitle();" />
             </div>
             <div class="formreg-row">
                 <label for="cboCountry">Pa&iacute;s <b>*</b></label><br />
-                <?=form_dropdown('cboCountry', $listCountry, '0', 'onchange="Account.show_states(this);" class="validate" id="cboCountry"');?>
+                <?=form_dropdown('cboCountry', $listCountry,  $info['country_id'], 'onchange="Account.show_states(this);" class="validate" id="cboCountry"');?>
             </div>
             <div class="formreg-row">
                 <label for="cboStates">Provincia <b>*</b></label><br />
-                <select name="cboStates" id="cboStates" class="validate"><option value="0">Seleccione un Pa&iacute;s</option></select>
+                <?=form_dropdown('cboStates', $listStates,  $info['state_id'], 'class="validate" id="cboStates"');?>
             </div>
             <div class="formreg-row">
                 <label for="txtCity">Ciudad <b>*</b></label><br />
-                <input type="text" id="txtCity" name="txtCity" class="inputbox validate" onchange="$(this).ucFirst();" />
+                <input type="text" id="txtCity" name="txtCity" value="<?=$info['city'];?>" class="inputbox validate" onchange="$(this).ucFirst();" />
             </div>
             <div class="formreg-row">
                 <label for="txtPhone">Telefono <b>*</b></label><br />
-                <input type="text" id="txtPhoneArea" name="txtPhoneArea" class="inputbox" style="width:50px;" />&nbsp;-&nbsp;
-                <input type="text" id="txtPhone" name="txtPhone" class="inputbox validate" style="width:200px;" />
+                <input type="text" id="txtPhoneArea" name="txtPhoneArea" class="inputbox" value="<?=$info['phone_area'];?>" style="width:50px;" />&nbsp;-&nbsp;
+                <input type="text" id="txtPhone" name="txtPhone" class="inputbox validate" value="<?=$info['phone'];?>" style="width:200px;" />
             </div>
             <div class="formreg-row">
                 <label for="txtAddress">Domicilio</label><br />
-                <input type="text" id="txtAddress" name="txtAddress" class="inputbox" />
-            </div>
-            <div class="formreg-row">
-                <input type="text" id="txtCode" name="txtCode" maxlength="6" class="inputbox validate" style="width:225px" />
+                <input type="text" id="txtAddress" name="txtAddress" class="inputbox" value="<?=$info['address'];?>" />
             </div>
             <!-- =================  FIN DATOS PERSONALES ================== -->
 
             <h4 class="legend">(*) Campos obligatorios</h4>
 
             <p align="center"><input type="button" value="Modificar" onclick="Account.save();" /></p>
+            <input type="hidden" name="user_id" value="<?=$info['user_id'];?>" />
         </form>
 
         <script type="text/javascript">

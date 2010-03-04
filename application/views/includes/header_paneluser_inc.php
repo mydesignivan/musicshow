@@ -13,8 +13,8 @@
             echo '<form id="formLogin" action="'.site_url('/login/logout').'" method="post" enctype="application/x-www-form-urlencoded">';
             echo 'Usuario: '.$this->session->userdata('email').' <a href="'.site_url('/micuenta/').'">(mi cuenta)</a> ';
             echo '<input type="submit" value="Salir" class="inputlogin" />';
-            echo '</form>';       
-         }?>
+            echo '</form>';
+         ?>
         </div>
 
     </div>
@@ -22,10 +22,8 @@
 
     <div id="topmenu">
         <ul>
-            <li><a href="<?=site_url('/index/')?>"><img src="images/botonoinicio.png" alt="" /></a></li>
-            <li><a href="<?=site_url('/fechas/');?>"><img src="images/botonfechas.png" alt="" /></a></li>
-            <li><a href="<?=site_url('/bandas/');?>"><img src="images/botonbandas.png" alt="" /></a></li>
-            <li><a href="<?=site_url('/contacto/');?>"><img src="images/botoncontacto.png" alt="" /></a></li>
+            <li><a href="<?=site_url('/micuenta/')?>">Mi Cuenta  |  </a></li>
+            <li><a href="<?=site_url('/recitales/');?>">&nbsp;&nbsp;Recitales</a></li>
         </ul>
     </div>
 

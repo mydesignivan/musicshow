@@ -36,7 +36,8 @@ class users_model extends Model {
     }
 
     public function get_user() {
-        return $this->db->get_where(TBL_USERS, array('user_id'=>$this->session->userdata('user_id'), 'active'=>1));
+        $query = $this->db->get_where(TBL_USERS, array('user_id'=>$this->session->userdata('user_id'), 'active'=>1));
+        return $query->row_array();
     }
 
     public function check($username, $email, $user_id=''){
@@ -73,6 +74,23 @@ class users_model extends Model {
 
     }
 
+    public function rememberpass($field){
+        $result = $this->db->get_where(TBL_USERS, "(email = '".$field."' or username='".$field."') and active=0");
+        if( $result->num_rows >0 ) return array("status"=>"userinactive");
+
+        $result = $this->db->get_where(TBL_USERS, "(email = '".$field."' or username='".$field."') and active=1");
+        if( $result->num_rows==0 ) return array("status"=>"notexists");
+
+        $data = $result->row_array();
+        $data['token'] = uniqid(time());
+
+        $this->db->where('user_id', $data['user_id']);
+        if( !$this->db->update(TBL_USERS, array('token'=>$data['token'])) ){
+            show_error(sprintf(ERR_DB_UPDATE, TBL_USERS));
+        }
+
+        return array("status"=>"ok", "data"=>$data);
+    }
 
 
 

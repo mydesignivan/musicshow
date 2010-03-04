@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 03-03-2010 a las 03:29:51
+-- Tiempo de generación: 04-03-2010 a las 18:08:16
 -- Versión del servidor: 5.1.37
 -- Versión de PHP: 5.3.0
 
@@ -32,6 +32,8 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 -- Volcar la base de datos para la tabla `ci_sessions`
 --
 
+INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
+('300ce443066a0bd407dd2ce2a915130c', '0.0.0.0', 'Mozilla/5.0 (X11; U; Linux i686; es-AR; rv:1.9.1.6', 1267710809, 'a:19:{s:7:"user_id";s:2:"20";s:8:"username";s:8:"imattoni";s:9:"firstname";s:4:"Ivan";s:8:"lastname";s:7:"Mattoni";s:5:"email";s:19:"iwmattoni@yahoo.com";s:5:"phone";s:7:"4442192";s:10:"phone_area";s:4:"0261";s:10:"country_id";s:2:"13";s:8:"state_id";s:3:"180";s:4:"city";s:7:"Mendoza";s:7:"address";s:14:"barrio sanidad";s:10:"newsletter";s:1:"0";s:6:"active";s:1:"1";s:5:"fondo";s:1:"0";s:5:"token";s:0:"";s:5:"level";s:1:"0";s:10:"date_added";s:19:"2010-03-03 07:36:30";s:13:"last_modified";s:19:"');
 
 -- --------------------------------------------------------
 
@@ -289,6 +291,33 @@ INSERT INTO `list_country` (`country_id`, `name`) VALUES
 (239, 'Zaire'),
 (240, 'Zambia'),
 (241, 'Zimbabue');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `list_generos`
+--
+
+CREATE TABLE IF NOT EXISTS `list_generos` (
+  `genero_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`genero_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=10 ;
+
+--
+-- Volcar la base de datos para la tabla `list_generos`
+--
+
+INSERT INTO `list_generos` (`genero_id`, `name`) VALUES
+(1, 'Rock Nacional'),
+(2, 'Punk'),
+(3, 'Electrónica'),
+(4, 'Fiestas'),
+(5, 'Jazz, Blues, Soul'),
+(6, 'Metal'),
+(7, 'Pop'),
+(8, 'Reggae'),
+(9, 'Rock Internacional');
 
 -- --------------------------------------------------------
 
@@ -4610,12 +4639,13 @@ INSERT INTO `list_states` (`state_id`, `country_id`, `name`) VALUES
 
 CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(15) NOT NULL,
+  `username` char(10) NOT NULL,
   `password` varchar(64) NOT NULL,
   `firstname` varchar(50) DEFAULT NULL,
   `lastname` varchar(50) NOT NULL,
   `email` varchar(50) DEFAULT NULL,
   `phone` char(30) DEFAULT NULL,
+  `phone_area` char(10) NOT NULL,
   `country_id` int(11) NOT NULL,
   `state_id` int(11) NOT NULL,
   `city` varchar(50) NOT NULL,
@@ -4628,10 +4658,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   `date_added` datetime NOT NULL,
   `last_modified` datetime NOT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=15 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Volcar la base de datos para la tabla `users`
 --
 
+INSERT INTO `users` (`user_id`, `username`, `password`, `firstname`, `lastname`, `email`, `phone`, `phone_area`, `country_id`, `state_id`, `city`, `address`, `newsletter`, `active`, `fondo`, `token`, `level`, `date_added`, `last_modified`) VALUES
+(20, 'imattoni', 'RWc3dw/7z65xhGqDloY2DqZ//Gr58p6G', 'Ivan', 'Mattoni', 'iwmattoni@yahoo.com', '4442192', '0261', 6, 89, 'Mendoza', 'barrio sanidad', 1, 1, 0, '', 0, '2010-03-03 07:36:30', '2010-03-04 03:34:18');
 

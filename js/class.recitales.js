@@ -6,13 +6,13 @@
  *
  */
 
-var Account = new (function(){
+var Recitales = new (function(){
 
     /* PUBLIC METHODS
      **************************************************************************/
     this.initializer = function(){
         f = $('#form1')[0];
-        $.validator.setting('#form1 .validate', {
+        /*$.validator.setting('#form1 .validate', {
             effect_show     : 'slidefade',
             validateOne     : true
         });
@@ -21,24 +21,7 @@ var Account = new (function(){
             v_required  : true,
             v_user      : [5,10]
         });
-        $('#txtEmail').validator({
-            v_required : true,
-            v_email    : true
-        });
-        $('#txtPass').validator({
-            v_required : ($(f.user_id).val()!='') ? false : true,
-            v_password : [8,10]
-        });
-        $('#txtPass_confirm').validator({
-            v_required : ($(f.user_id).val()!='') ? false : true,
-            v_compare  : '#txtPass'
-        });
-
-        $('#txtLastName, #txtFirstName, #cboCountry, #cboStates, #txtCity, #txtPhone, #txtCode').validator({
-            v_required  : true
-        });
-
-        $('#mask').css('opacity', '0.5');
+        $('#mask').css('opacity', '0.5');*/
     };
 
     this.save = function(){        
@@ -94,16 +77,6 @@ var Account = new (function(){
         return false;
     };
 
-    this.show_states = function(el){
-        el.disabled = true;
-        $.get(baseURI+'registro/ajax_show_states/'+el.value,'', function(data){
-
-            $('#cboStates').empty()
-                           .append(data);
-
-            el.disabled = false;
-        });
-    };
 
 
     /* PRIVATE PROPERTIES

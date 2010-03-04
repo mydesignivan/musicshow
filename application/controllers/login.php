@@ -4,6 +4,7 @@ class Login extends Controller{
 
     function __construct(){
         parent::Controller();
+        $this->load->library('simplelogin');
     }
 
     public function index(){
@@ -16,7 +17,7 @@ class Login extends Controller{
                 redirect('/index/');
             }else{
                 if( $this->session->userdata('level')==0 ){
-                    redirect('/micuenta/');
+                    redirect('/index/');
                 }else{
                     redirect('/inicio/');
                 }
