@@ -44,6 +44,8 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 define('TBL_COUNTRY', 'list_country');
 define('TBL_STATES', 'list_states');
 define('TBL_USERS', 'users');
+define('TBL_RECITALES', 'recitales');
+define('TBL_GENEROS', 'list_generos');
 
 /*
 |--------------------------------------------------------------------------
@@ -61,6 +63,7 @@ define('ERR_DB_DELETE', 'Ha ocurrido un error al tratar de eliminar datos en la 
 define('ERR_USER_EDIT',   'El usuario no pudo ser modificado. Si el error coninua por favor, comuniquelo al administrador del sitio.');
 define('ERR_USER_DELETE', 'El usuario no pudo ser eliminado. Si el error coninua por favor, comuniquelo al administrador del sitio.');
 
+define('ERR_RECITAL_DELETE', 'El recital no pudo ser eliminado. Si el error coninua por favor, comuniquelo al administrador del sitio.');
 
 /*
 |--------------------------------------------------------------------------

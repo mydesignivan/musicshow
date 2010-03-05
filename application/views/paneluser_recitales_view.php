@@ -17,22 +17,44 @@
 
 <!--inicio contenido-->
     <div id="mainContent">
-        <h1>Recitales</h1>
+        <div class="anunciantes">
+
+            <h1>Recitales</h1>
+
+            <div class="float-right">
+                <input type="button" value="Nuevo" onclick="Recitales.action.New()" />
+                <?php if( $listRecitales->num_rows>0 ){?>
+                <input type="button" value="Modificar" onclick="Recitales.action.edit()" />
+                <input type="button" value="Eliminar" onclick="Recitales.action.del()" />&nbsp;&nbsp;&nbsp;
+                <?php }?>
+            </div>
 
 
-        <p>
-            <input type="button" value="Nuevo" onclick="location.href='<?=site_url('/recitales/form')?>'" />
-            <input type="button" value="Modificar" onclick="Recitales.action.edit()" />
-            <input type="button" value="Eliminar" onclick="Recitales.action.del()" />
-        </p>
+            <?php if( $listRecitales->num_rows>0 ){?>
+                <div class="tbl-header">
+                    <div class="cell-1-3">&nbsp;</div>
+                    <div class="cell-6">Banda</div>
+                    <div class="cell-7">Lugar</div>
+                    <div class="cell-3">Fecha</div>
+                </div>
 
-        
+                <div id="tblList" class="tbl-body">
+                    <?php foreach( $listRecitales->result_array() as $row ){?>
+                        <div class="tbl-body-row">
+                            <div class="cell-1-3"><input type="checkbox" value="<?=$row['recital_id'];?>" /></div>
+                            <div class="cell-6"><a href="<?=site_url('/recitales/form/'.$row['recital_id']);?>" class="td-name"><?=$row['banda'];?></a></div>
+                            <div class="cell-7"><?=$row['place'];?></div>
+                            <div class="cell-3"><?=$row['date'];?></div>
+                        </div>
+                    <?php }?>
+                </div>
 
-        <script type="text/javascript">
-        <!--
-            Recitales.initializer();
-        -->
-        </script>
+            <?php }else{?>
+            
+                <div class="formreg-row"><center><h3>No hay recitales cargados.</h3></center></div>
+                
+            <?php }?>
+        </div>
     </div>
     <br class="clearfloat" />
 <!--fin contenido-->

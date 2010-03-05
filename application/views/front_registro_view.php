@@ -23,6 +23,9 @@
 <!--inicio contenido-->
     <div id="mainContent">
         <?php if( !$this->session->flashdata('statusrecord') ){?>
+
+        <h1>Formulario de Registro</h1>
+
         <form id="form1" action="<?=site_url('/registro/create/');?>" method="post" class="container-form" enctype="application/x-www-form-urlencoded">
             <div id="mask"></div>
 

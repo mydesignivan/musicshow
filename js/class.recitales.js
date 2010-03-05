@@ -1,8 +1,8 @@
 /* 
- * Clase Account
+ * Clase Recitales
  *
- * Llamada por las vistas: front_registro_view, paneluser_myaccount_view
- * Su funcion: Crear, Modificar o Eliminar usuarios
+ * Llamada por las vistas: paneluser_recitales_view, paneluser_recitalesform_view
+ * Su funcion: Crear, Modificar o Eliminar recitales
  *
  */
 
@@ -12,42 +12,44 @@ var Recitales = new (function(){
      **************************************************************************/
     this.initializer = function(){
         f = $('#form1')[0];
-        /*$.validator.setting('#form1 .validate', {
-            effect_show     : 'slidefade',
-            validateOne     : true
-        });
+        if( typeof f!="undefined" ){
+            $.validator.setting('#form1 .validate', {
+                effect_show     : 'slidefade',
+                validateOne     : true
+            });
 
-        $('#txtUser').validator({
-            v_required  : true,
-            v_user      : [5,10]
-        });
-        $('#mask').css('opacity', '0.5');*/
+            $('#txtBanda, #cboGenero, #txtPlace, #txtPlace2, #txtPrice').validator({
+                v_required  : true
+            });
+
+            $('#txtDate').datepicker({
+                dateFormat : 'dd/mm/yy',
+                onClose : function(value){
+                    validDate();
+                }
+            });
+
+            $('#mask').css('opacity', '0.5');
+        }
     };
 
-    this.save = function(){        
+    this.save = function(){
         if( working ) return false;
         
         ajaxloader.show();
         $.validator.validate('#form1 .validate', function(error){
-            if( !error ){
+            if( !error && validDate() ){
 
                 $.ajax({
                     type : 'post',
-                    url  : baseURI+'registro/ajax_check/',
+                    url  : baseURI+'recitales/ajax_check/',
                     data : {
-                        username : escape(f.txtUser.value),
-                        email    : escape(f.txtEmail.value),
-                        captcha  : $(f.txtCode).val(),
-                        userid   : $(f.user_id).val()
+                        banda     : escape(f.txtBanda.value),
+                        recitalid : $(f.recital_id).val()
                     },
                     success : function(data){
-                        if( data=="existsuser" ){
-                            show_error(f.txtUser, 'El usuario ingresado ya existe.');
-                        }else if( data=="existsmail" ){
-                            show_error(f.txtEmail, 'El email ingresado ya existe.');
-                        }else if( data=="captcha_error" ){
-                            show_error(f.txtCode, 'El c&oacute;digo ingresado es incorrecto.');
-
+                        if( data=="exists" ){
+                            show_error(f.txtBanda, 'La banda ingresada ya existe.');
                         }else if( data=="ok" ){
                             f.submit();
                         }else{
@@ -68,15 +70,44 @@ var Recitales = new (function(){
         return false;
     };
 
-    this.delete_account = function(id){
-        var msg = "Si elimina su usuario se eliminara también las propiedades associadas.\n";
-        msg+= "¿Está seguro de confirmar la eliminación del usuario?.";
-        if( confirm(msg) ){
-            location.href = baseURI+"micuenta/delete/"+id;
-        }
-        return false;
-    };
+    this.action={
+        New : function(){
+            var list = $("#tblList .tbl-body-row");
+            if( list.length<5 ){
+                location.href = baseURI+"recitales/form";
+            }else{
+               alert('Estimado usuario, le informamos que el servicio gratuito que usted dispone, le permite cargar un maximo de cinco recitales.');
+            }
+        },
+        edit : function(){
+            var list = $("#tblList .tbl-body-row input:checked");
+            if( list.length==0 ){
+                alert("Debe seleccionar un recital para modificar.");
+                return true;
+            }
+            if( list.length>1 ){
+                alert("Solo se puede modificar solo un recital a la vez.");
+                return false;
+            }
+            location.href = baseURI+'recitales/form/'+list.val();
+            return false;
+        },
 
+        del : function(){
+            var list = $("#tblList .tbl-body-row input:checked");
+            if( list.length==0 ){
+                alert("Debe seleccionar al menos un recital.");
+                return false;
+            }
+
+            var data = get_data(list);
+
+            if( confirm("¿Está seguro de eliminar?\n\n"+data.names) ){
+                location.href = baseURI+'recitales/delete/'+data.id;
+            }
+            return false;
+        }
+    };
 
 
     /* PRIVATE PROPERTIES
@@ -94,6 +125,20 @@ var Recitales = new (function(){
         el.focus();
     };
 
+    var validDate = function(){
+        var el = $('#txtDate');
+        if( el.val()=="" ){
+            $.validator.show(el,{
+                message : 'Este campo es obligatorio.'
+            });
+            el.focus();
+            return false;
+        }else {
+            $.validator.hide(el);
+            return true;
+        }
+    }
+
     var ajaxloader ={
         show : function(){
             $('#mask').show();
@@ -104,6 +149,23 @@ var Recitales = new (function(){
             working=false;
         }
     }
+
+    var get_data = function(arr){
+        var names="", id="";
+
+        arr.each(function(i){
+            id+=this.value+"/";
+            names+= $(this).parent().parent().find('.td-name').text()+", ";
+        });
+
+        id = id.substr(0, id.length-1);
+        names = names.substr(0, names.length-2);
+
+        return {
+            id   : id,
+            names : names
+        }
+    };
 
 
 })();

@@ -13,11 +13,19 @@ class lists_model extends Model {
         $this->db->order_by('name', 'asc');
         return $this->db->get(TBL_COUNTRY);
     }
+
     public function get_states($country_id){
         $this->db->select('name, state_id');
         $this->db->where('country_id', $country_id);
         $this->db->order_by('name', 'asc');
         return $this->db->get(TBL_STATES);
+    }
+
+    public function get_generos($genero_id=null){
+        $this->db->select('name, genero_id');
+        if( $genero_id!=null ) $this->db->where('genero_id', $genero_id);
+        $this->db->order_by('name', 'asc');
+        return $this->db->get(TBL_GENEROS);
     }
 
 }
