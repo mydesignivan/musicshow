@@ -4,7 +4,9 @@
 
         <div align="left"></div>
         <div id="bannertop">
-            <div align="left"><a href="<?=site_url('/registro/');?>"><img src="../images/bannertop.png" alt="Registrate Gratis!" /></a></div>
+            <?php if( !$this->session->userdata('logged_in') ){?>
+                <div align="left"><a href="<?=site_url('/registro/');?>"><img src="../images/bannertop.png" alt="Registrate Gratis!" /></a></div>
+            <?php }?>
         </div>
         <div align="left"></div>
 
@@ -42,7 +44,7 @@
         <?php }else{
 
             echo '<form id="formLogin" action="'.site_url('/login/logout').'" method="post" enctype="application/x-www-form-urlencoded">';
-            echo 'Usuario: '.$this->session->userdata('email').' <a href="'.site_url('/micuenta/').'">(mi cuenta)</a> ';
+            echo 'Usuario: '.$this->session->userdata('username').'&nbsp;&nbsp;&nbsp; <a href="'.site_url('/panel/micuenta/').'">(mi cuenta)</a> ';
             echo '<input type="submit" value="Salir" class="inputlogin" />';
             echo '</form>';
         

@@ -30,11 +30,11 @@
         <?php
             if( is_array($info) ){
                 $title = "Modificar Recital";
-                $action = site_url('/recitales/edit/');
+                $action = site_url('/panel/recitales/edit/');
                 $genero_id = $info['genero_id'];
             }else{
                 $title = "Nuevo Recital";
-                $action = site_url('/recitales/save/');
+                $action = site_url('/panel/recitales/save/');
                 $genero_id = "0";
             }
         ?>

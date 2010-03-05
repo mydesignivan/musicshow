@@ -22,21 +22,21 @@
 
 <!--inicio contenido-->
     <div id="mainContent">
-        <div class="anunciante">
+        <div class="main-container">
             <h1>Recordar Contrase&ntilde;a</h1>
 
             <form id="form1" action="<?=site_url('/recordarcontrasenia/send/');?>" method="post">
-            <?php if( $status=="ok" ){?>
-                <p class="message1">Muy bien, le hemos enviado una nueva contrase&ntilde;a a su email. Reviselo!</p>
-                <p class="message1">Usted puede mantener esta pagina abierta mientras chequea su email. Si usted no recibe el email en el transcurso de un minuto o dos pruebe <a href="javascript:$('#form1').submit();">Reenviar las instrucciones</a></p>
-                <input type="hidden" name="txtField" value="<?=$field;?>" />
+            <?php if( @$status=="ok" ){?>
+                <p class="message1">Muy bien, le hemos enviado las instrucciones a su email. Reviselo!</p>
+                <p class="message1">Usted puede mantener esta pagina abierta mientras chequea su email. Si usted no recibe las instrucciones en el transcurso de un minuto o dos pruebe <a href="javascript:$('#form1').submit();">Reenviar las instrucciones</a></p>
+                <input type="hidden" name="txtField" id="txtField" value="<?=$field;?>" />
 
             <?php }else{?>
 
-                <p>MusicShow.org le enviara una nueva contrase&ntilde;a a la direcci&oacute;n de correo asociada a su cuenta.</p>
+                <p>MusicShows.org le enviara las instrucciones para resetear su contrase&ntilde;a a la direcci&oacute;n de correo asociada a su cuenta.</p>
                 <p>Por favor escriba su direcci&oacute;n de <b>email</b> o su <b>usuario</b> a continuaci&oacute;n.</p>
 
-                <div class="formreg-row"><input type="text" name="txtField" class="inputbox validate" /></div>
+                <div class="formreg-row"><input type="text" name="txtField" id="txtField" class="inputbox validate" /></div>
 
                 <div class="formreg-row">
                     <label for="txtCode">Ingrese el c&oacute;digo de abajo <b>*</b></label><br />
@@ -64,7 +64,7 @@
             
             <script type="text/javascript">
             <!--
-                RememberPass.initializer('<?=$status;?>');
+                RememberPass.initializer();
             -->
             </script>
         </div>

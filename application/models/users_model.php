@@ -3,6 +3,7 @@ class users_model extends Model {
 
     function  __construct() {
         parent::Model();
+        $this->load->library('encpss');
     }
 
     /*
@@ -74,13 +75,8 @@ class users_model extends Model {
 
     }
 
-    public function rememberpass($field){
-        $result = $this->db->get_where(TBL_USERS, "(email = '".$field."' or username='".$field."') and active=0");
-        if( $result->num_rows >0 ) return array("status"=>"userinactive");
-
+    public function rememberpass_generate_token($field){
         $result = $this->db->get_where(TBL_USERS, "(email = '".$field."' or username='".$field."') and active=1");
-        if( $result->num_rows==0 ) return array("status"=>"notexists");
-
         $data = $result->row_array();
         $data['token'] = uniqid(time());
 
@@ -89,9 +85,36 @@ class users_model extends Model {
             show_error(sprintf(ERR_DB_UPDATE, TBL_USERS));
         }
 
-        return array("status"=>"ok", "data"=>$data);
+        return $data;
     }
 
+    public function rememberpass_check($field){
+        $result = $this->db->get_where(TBL_USERS, "(email = '".$field."' or username='".$field."') and active=0");
+        if( $result->num_rows >0 ) return "userinactive";
+
+        $result = $this->db->get_where(TBL_USERS, "(email = '".$field."' or username='".$field."') and active=1");
+        if( $result->num_rows==0 ) return "notexists";
+
+        return "ok";
+    }
+
+    public function check_token($username, $token){
+        $result = $this->db->get_where(TBL_USERS, array('username'=>$username, 'token'=>$token));
+        return $result->num_rows>0;
+    }
+
+    public function change_pass($post){
+        if( $this->check_token($post['usr'], $post['token']) ){
+            $newpass = $this->encpss->encode($post['txtPass']);
+
+            $this->db->where('username', $post['usr']);
+            if( !$this->db->update(TBL_USERS, array('password'=>$newpass, 'token'=>'')) ){
+                show_error(sprintf(ERR_DB_UPDATE, TBL_USERS));
+            }
+        }else return false;
+
+        return true;
+    }
 
 
 }

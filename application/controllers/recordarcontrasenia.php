@@ -8,32 +8,32 @@ class Recordarcontrasenia extends Controller {
     }
 
     public function index(){
-        $this->load->view('front_rememberpass_view', array('status'=>false));
+        $this->load->view('front_rememberpass_view');
     }
 
     public function send(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
             
-            $result = $this->users_model->rememberpass(trim($_POST["txtField"]));
-            if( $result['status']=="ok" ){
-                $data = $result['data'];
-                $link = site_url('/recordarcontrasenia/password_reset/'.urlencode($data['username']).'/'.$data['token']);
+            $result = $this->users_model->rememberpass_generate_token(trim($_POST["txtField"]));
+
+            if( $result ){
+                $link = site_url('/recordarcontrasenia/password_reset/'.urlencode($result['username']).'/'.$result['token']);
                 $message = sprintf(EMAIL_RP_MESSAGE,
                     $link,
                     $link
                 );
 
                 $this->email->from(EMAIL_RP_FROM, EMAIL_RP_NAME);
-                $this->email->to($data['email']);
+                $this->email->to($result['email']);
                 $this->email->subject(EMAIL_RP_SUBJECT);
                 $this->email->message($message);
                 if( !$this->email->send() ){
                     $err = $this->email->print_debugger();
-                    log_message("error", $err);
                     die($err);
+                }else{
+                    $this->load->view('front_rememberpass_view', array('status'=>"ok", 'field'=>$_POST['txtField']));
                 }
             }
-            $this->load->view('front_rememberpass_view', array('status'=>$result['status'], 'field'=>$_POST['txtField']));
         }
     }
 
@@ -44,9 +44,10 @@ class Recordarcontrasenia extends Controller {
         if( $param1 && $param2 ){
             if( $this->users_model->check_token($param1, $param2) ){
                 $this->load->view('front_passwordreset_view', array('username'=>$param1, 'token'=>$param2));
-            }else redirect('/');
-        }else redirect('/');
+            }else redirect('/index/');
+        }else redirect('/index/');
     }
+
     public function send_newpass(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
             if( $this->users_model->change_pass($_POST) ){
@@ -59,8 +60,25 @@ class Recordarcontrasenia extends Controller {
                      )
                 );
                 $this->load->view('front_passwordreset_view', $data);
-            }else redirect('/');
+            }else redirect('/index/');
         }
+    }
+
+    public function ajax_check(){
+        $this->load->library('captcha/securimage');
+
+        $status = $this->users_model->rememberpass_check($_POST['field']);
+
+        if( $status!="ok" ){
+            die($status);
+        }
+        if( !empty($_POST['captcha']) ){
+            if( !$this->securimage->check($_POST['captcha']) ){
+                die("captcha_error");
+            }
+        }
+
+        die("ok");
     }
 
 }

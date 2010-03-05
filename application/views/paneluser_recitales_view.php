@@ -17,7 +17,7 @@
 
 <!--inicio contenido-->
     <div id="mainContent">
-        <div class="anunciantes">
+        <div class="main-container">
 
             <h1>Recitales</h1>
 
@@ -42,7 +42,7 @@
                     <?php foreach( $listRecitales->result_array() as $row ){?>
                         <div class="tbl-body-row">
                             <div class="cell-1-3"><input type="checkbox" value="<?=$row['recital_id'];?>" /></div>
-                            <div class="cell-6"><a href="<?=site_url('/recitales/form/'.$row['recital_id']);?>" class="td-name"><?=$row['banda'];?></a></div>
+                            <div class="cell-6"><a href="<?=site_url('/panel/recitales/form/'.$row['recital_id']);?>" class="td-name"><?=$row['banda'];?></a></div>
                             <div class="cell-7"><?=$row['place'];?></div>
                             <div class="cell-3"><?=$row['date'];?></div>
                         </div>

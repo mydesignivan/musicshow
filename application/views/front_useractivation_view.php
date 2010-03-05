@@ -16,7 +16,7 @@
 <!--inicio contenido-->
     <div id="mainContent">
 
-        <div class="anunciante">
+        <div class="main-container">
             <h2>Usuario Activado.</h2>
             <p>Gracias, <?=$username;?>. Tu registro ha sido completado.</p>
         </div>

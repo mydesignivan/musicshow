@@ -42,7 +42,7 @@ var Recitales = new (function(){
 
                 $.ajax({
                     type : 'post',
-                    url  : baseURI+'recitales/ajax_check/',
+                    url  : baseURI+'panel/recitales/ajax_check/',
                     data : {
                         banda     : escape(f.txtBanda.value),
                         recitalid : $(f.recital_id).val()
@@ -74,7 +74,7 @@ var Recitales = new (function(){
         New : function(){
             var list = $("#tblList .tbl-body-row");
             if( list.length<5 ){
-                location.href = baseURI+"recitales/form";
+                location.href = baseURI+"panel/recitales/form";
             }else{
                alert('Estimado usuario, le informamos que el servicio gratuito que usted dispone, le permite cargar un maximo de cinco recitales.');
             }
@@ -89,7 +89,7 @@ var Recitales = new (function(){
                 alert("Solo se puede modificar solo un recital a la vez.");
                 return false;
             }
-            location.href = baseURI+'recitales/form/'+list.val();
+            location.href = baseURI+'panel/recitales/form/'+list.val();
             return false;
         },
 
@@ -103,7 +103,7 @@ var Recitales = new (function(){
             var data = get_data(list);
 
             if( confirm("¿Está seguro de eliminar?\n\n"+data.names) ){
-                location.href = baseURI+'recitales/delete/'+data.id;
+                location.href = baseURI+'panel/recitales/delete/'+data.id;
             }
             return false;
         }

@@ -105,14 +105,18 @@ define('EMAIL_REGACTIVE_MESSAGE', $msg);
 |--------------------------------------------------------------------------
 */
 $msg = "Hola!<br /><br />";
-$msg.= "Tu nueva contrase&ntilde;a es: %s <br />";
+$msg.= "¿No recuerda su contrase&ntilde;a?<br />";
+$msg.= "Puede sucederle a cualquiera.<br /><br />";
+$msg.= "Por favor abra este link en su navegador:<br /><br />";
+$msg.= '<a href="%s">%s</a><br /><br />';
+$msg.= 'Esto resetear&aacute; su contrase&ntilde;a<br />';
 $msg.= 'Usted puede luego ingresar y cambiarla por alguna que recuerde.<br /><br />';
 $msg.= 'Atentamente,<br />';
 $msg.= 'www.musicshows.com.ar';
 
 define('EMAIL_RP_FROM', 'no-reply@musicshows.com.ar');
 define('EMAIL_RP_NAME', 'www.musicshows.com.ar');
-define('EMAIL_RP_SUBJECT', 'Nueva Contraseña de www.musicshows.com.ar');
+define('EMAIL_RP_SUBJECT', 'Resetear su contraseña de www.musicshows.com.ar');
 define('EMAIL_RP_MESSAGE', $msg);
 
 /*
@@ -120,9 +124,15 @@ define('EMAIL_RP_MESSAGE', $msg);
 | EMAIL CONTACTO
 |--------------------------------------------------------------------------
 */
-define('EMAIL_CONTACT_TO', 'ivan@mydesign.com.ar');
-define('EMAIL_CONTACT_SUBJECT', 'Formulario de consulta');
-define('EMAIL_CONTACT_MESSAGE', 'Nombre: %s<br>Telefono: %s<br>Consulta:<hr color="#000000" />%s');
+$msg = '<b>Nombre Completo:</b>   %s<br /><br />';
+$msg.= '<b>Email:</b>   %s<br /><br />';
+$msg.= '<b>Telefono:</b>   %s<br /><br />';
+$msg.= '<b>Provincia:</b>   %s<br /><br />';
+$msg.= '<b>Ciudad:</b>   %s<br /><br />';
+$msg.= '<b>Consulta:</b><hr color="#000000" />%s';
+
+define('EMAIL_CONTACT_SUBJECT', 'Formulario de Consulta');
+define('EMAIL_CONTACT_MESSAGE', $msg);
 
 
 

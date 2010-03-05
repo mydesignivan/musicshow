@@ -31,7 +31,7 @@ class Recitales extends Controller{
             $data = array_merge(array('user_id'=>$this->session->userdata('user_id'), 'date_added'=>date('Y-m-d h:i:s')), $data);
 
             $this->recitales_model->create($data);
-            redirect('/recitales/');
+            redirect('/panel/recitales/');
         }
     }
 
@@ -42,7 +42,7 @@ class Recitales extends Controller{
             $data = array_merge(array('last_modified'=>date('Y-m-d h:i:s')), $data);
 
             $this->recitales_model->modified($data, $_POST['recital_id']);
-            redirect('/recitales/');
+            redirect('/panel/recitales/');
         }
     }
     public function delete(){
@@ -51,7 +51,7 @@ class Recitales extends Controller{
             array_splice($id, 0,2);
 
             if( $this->recitales_model->delete($id) ){
-                redirect('/recitales/');
+                redirect('/panel/recitales/');
             }else{
                 show_error(ERR_RECITAL_DELETE);
             }

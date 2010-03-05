@@ -23,7 +23,7 @@
 <!--inicio contenido-->
     <div id="mainContent">
         <h1>Mi Cuenta</h1>
-        <form id="form1" action="<?=site_url('/micuenta/modified/');?>" method="post" class="container-form" enctype="application/x-www-form-urlencoded">
+        <form id="form1" action="<?=site_url('/panel/micuenta/modified/');?>" method="post" class="container-form" enctype="application/x-www-form-urlencoded">
             <div id="mask"></div>
 
             <!-- =================  DATOS DEL USUARIO  ================ -->
