@@ -1,4 +1,5 @@
 nbproject/*
 _website_old/*
+_documentacion/*
 application/config/config.php
 application/config/database.php

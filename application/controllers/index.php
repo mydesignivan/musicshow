@@ -6,7 +6,7 @@ class Index extends Controller {
     }
 	
     public function index(){
-        $this->load->view('front_index_view');
+        $this->load->view('template_view', array('section'=>'frontpage/index_view.php'));
     }
     
 

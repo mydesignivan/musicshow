@@ -52,10 +52,10 @@
                         <input type="text" name="txtCity" id="txtCity" class="inputbox" />
                     </div>
                     <div class="formreg-row">
-                        <label for="txtEmail">Area de Contacto: <b>*</b></label><br />
+                        <label for="txtEmail">Area de Contacto:</label><br />
                         <select name="cboArea" id="cboArea">
-                            <option value="ivan@mydesign.com.ar">Area1</option>
-                            <option value="ivan@mydesign.com.ar">Area1</option>
+                            <option value="info@musicshows.com.ar">Administraci&oacute;n</option>
+                            <option value="publicidad@musicshows.com.ar">Publicidad</option>
                         </select>
                     </div>
                     <div class="formreg-row">

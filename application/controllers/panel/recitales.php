@@ -14,7 +14,7 @@ class Recitales extends Controller{
         $this->load->view("paneluser_recitales_view", array('listRecitales'=>$list));
     }
     public function form(){
-        $info = is_numeric($this->uri->segment(3)) ? $this->recitales_model->get_recital($this->uri->segment(3)) : false;
+        $info = is_numeric($this->uri->segment(4)) ? $this->recitales_model->get_recital($this->uri->segment(4)) : false;
 
         $listGeneros = array();
         $listGeneros = $this->lists_model->get_generos()->result_array();
@@ -46,9 +46,9 @@ class Recitales extends Controller{
         }
     }
     public function delete(){
-        if( $this->uri->segment(3) ){
+        if( $this->uri->segment(4) ){
             $id = $this->uri->segment_array();
-            array_splice($id, 0,2);
+            array_splice($id, 0,3);
 
             if( $this->recitales_model->delete($id) ){
                 redirect('/panel/recitales/');
