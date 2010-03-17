@@ -10,9 +10,9 @@
                     <button type="submit" id="btnLogin" class="button-medium float-left">Entrar</button>
                     <div id="message-login">El usuario y/o password son incorrectos</div>
                 </div>
-                <div class="float-right">
-                    <a href="<?=site_url('/registro/');?>"><img src="images/btn_registrarse.png" alt="Registrate Gratis!" /></a>
+                <div class="container-links">
                     <a href="<?=site_url('/recordarcontrasenia/');?>" class="link-olvidocontra">¿Olvidaste tu Contrase&ntilde;a?</a>
+                    <a href="<?=site_url('/registro/');?>"><img src="images/btn_registrarse.png" alt="Registrate Gratis!" /></a>
                 </div>
 
                 <?php if( $this->session->flashdata('statusLogin') ) {?>

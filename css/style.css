@@ -81,10 +81,10 @@ a.link2{
         text-decoration: none;
     }
 a.link-olvidocontra{
-    float:left;
+    position: relative;
     font-size: 90%;
     font-style: italic;
-    margin-top: 8px;
+    top: -13px;
 }
 
 /*------------------------------------------------------------------------------
@@ -127,6 +127,10 @@ input.input-captcha{
     letter-spacing: 5px;
     margin-left: 5px;
     margin-top: 10px;
+}
+textarea.textarea-contact{
+    width: 450px;
+    height: 180px;
 }
 
 /*------------------------------------------------------------------------------
@@ -215,6 +219,11 @@ label.label-legend{
         margin-left: 20px;
         margin-top: 5px;
         overflow: hidden;
+    }
+    .top-header .container-links{
+        float: right;
+        width: 400px;
+        text-align: right;
     }
     #message-login{
         position:relative;

@@ -3,15 +3,22 @@ class Contacto extends Controller {
 
     function __construct(){
         parent::Controller();
+        $this->load->model('lists_model');
+        $this->load->library('email');
     }
 
     public function index(){
-        $this->load->view('front_contact_view');
+        $data = array(
+            'tlp_section'  => 'frontpage/contact_view.php',
+            'tlp_script'   => 'front_contact',
+            'tlp_title'    => TITLE_CONTACTO,
+            'listGeneros'  => $this->lists_model->get_generos()
+        );
+        $this->load->view('template_view', $data);
     }
 
     public function send(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
-            $this->load->library('email');
 
             $message = sprintf(EMAIL_CONTACT_MESSAGE,
                     $_POST['txtName'],

@@ -17,7 +17,7 @@ class Registro extends Controller {
         $data = array(
             'tlp_section'  => 'frontpage/registro_view.php',
             'tlp_script'   => 'front_registro',
-            'tlp_title'    => TITLE_INDEX,
+            'tlp_title'    => TITLE_REGISTRO,
             'comboCountry' => $this->lists_model->get_country(array("0"=>"Seleccione un Pa&iacute;s")),
             'listGeneros'  => $this->lists_model->get_generos()
         );

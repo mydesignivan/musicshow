@@ -5,10 +5,17 @@ class Recordarcontrasenia extends Controller {
         parent::Controller();
         $this->load->model('users_model');
         $this->load->library('email');
+        $this->load->library('dataview');
     }
 
     public function index(){
-        $this->load->view('front_rememberpass_view');
+        $data = $this->dataview->set_data(array(
+            'tlp_section'  => 'frontpage/rememberpass_view.php',
+            'tlp_script'   => 'front_rememberpass',
+            'tlp_title'    => TITLE_RECORDARCONTRA
+        ));
+
+        $this->load->view('template_view', $data);
     }
 
     public function send(){

@@ -144,8 +144,10 @@ define('TITLE_INDEX', '');
 define('TITLE_FECHAS', '');
 define('TITLE_BANDAS', '');
 define('TITLE_CONTACTO', '');
+define('TITLE_REGISTRO', '');
 define('TITLE_MICUENTA', '');
 define('TITLE_RECITALES', '');
+define('TITLE_RECORDARCONTRA', '');
 
 /*
 |--------------------------------------------------------------------------
