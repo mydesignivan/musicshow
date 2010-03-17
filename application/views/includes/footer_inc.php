@@ -1,5 +1,3 @@
-<div id="footer">
-    <p>&nbsp;</p>
-    <p align="center">&nbsp;</p>
-    <p align="center">Copyright &copy; 2009 - Todos los derechos reservados - <a href="secciones/politicas-de-privacidad.php">Terminos y Condiciones</a> - <a href="secciones/politicas-de-privacidad.php">Politicas de Privacidad</a></p>
-</div>
+    <div class="clear span-24 last footer">
+        <p>Copyright &copy; 2010 - Todos los derechos reservados - <a href="#" class="link2">Terminos y Condiciones</a> - <a href="#" class="link2">Politicas de Privacidad</a></p>
+    </div>

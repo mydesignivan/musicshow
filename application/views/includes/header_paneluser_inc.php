@@ -1,33 +1,26 @@
-<div id="header">
-    <div id="top">
-        <div class="topmenu-top"></div>
-
-        <div align="left"></div>
-        <div id="bannertop">
-            
+    <div class="span-24 last header">
+        <!-- ================  TOP MENU  ================ -->
+        <div class="span-24 last top-header"> 
+            <form id="formLogin" action="<?=site_url('/login/logout');?>" method="post" enctype="application/x-www-form-urlencoded">
+                <span class="text-small"><b>Usuario:&nbsp;</b><?=$this->session->userdata('username');?></span>
+                &nbsp;&nbsp;&nbsp;
+                <a href="<?=site_url('/panel/micuenta/');?>" class="link1">(mi cuenta)</a>
+                &nbsp;&nbsp;&nbsp;
+                <button type="submit" class="button-small">Salir</button>
+                &nbsp;&nbsp;&nbsp;
+            </form>
         </div>
-        <div align="left"></div>
-
-        <div class="login">
-        <?php
-            echo '<form id="formLogin" action="'.site_url('/login/logout').'" method="post" enctype="application/x-www-form-urlencoded">';
-            echo 'Usuario: '.$this->session->userdata('username').'&nbsp;&nbsp;&nbsp; <a href="'.site_url('/panel/micuenta/').'">(mi cuenta)</a> ';
-            echo '<input type="submit" value="Salir" class="inputlogin" />';
-            echo '</form>';
-         ?>
-        </div>
-
+        <!-- ================  END TOP MENU  ================ -->
     </div>
-
-
-    <div id="topmenu">
-        <ul>
-            <li><a href="<?=site_url('/panel/micuenta/')?>">Mi Cuenta  |  </a></li>
-            <li><a href="<?=site_url('/panel/recitales/');?>">&nbsp;&nbsp;Recitales</a></li>
+    <!-- ================  MENU  ================ -->
+    <div class="clear span-13 append-11 last menu-container">
+        <ul class="menu">
+            <li><a href="<?=site_url('/panel/micuenta/')?>" class="mnu_inicio">Mi Cuenta</a></li>
+            <li><a href="<?=site_url('/panel/recitales/');?>" class="mnu_recitales">Recitales</a></li>
         </ul>
     </div>
+    <!-- ================  END MENU  ================ -->
 
-    <div id="search"></div>
-
-    <?php include('banner_center_inc.php');?>
-</div>
+    <!-- ================  BANNER HORIZONTAL  ================ -->
+    <?php require('banner_center_inc.php');?>
+    <!-- ================  END BANNER HORIZONTAL  ================ -->

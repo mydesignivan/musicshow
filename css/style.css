@@ -26,38 +26,38 @@ p{margin-bottom:0;}
 .text-medium{font-size: 90%;}
 .text-large{font-size: 100%;}
 
+h1{
+    font-size: 150%;
+}
 h2{
     font-size: 150%;
     font-weight: bold;
     color: #F79423;
 }
 
-/*------------------------------------------------------------------------------
- - ESTILOS PARA INPUT y TEXTAREA
- -----------------------------------------------------------------------------*/
-input[type=text],input[type=password], textarea{
-    border:1px #E7B969 solid;
-    background-color:#F7E9CF;
-    /*padding:0 0 2px 5px;*/
-    padding:3px;
-    text-align:left;
-    font-family:Arial, Helvetica, sans-serif;
-    font-size:80%;
-    margin-top:0 !important;
-    letter-spacing: 1px;
-}
-
-input.input-login{
-    width: 150px;
+.required{
+    font-size: 100%;
+    font-weight: bold;
+    color:red;
     margin-right: 5px;
 }
+
+#mask{
+    position: absolute;
+    width:100%;
+    background-color: #fff;
+    display: none;
+    z-index: 1000;
+}
+
+#imgCaptcha{margin-right: 10px; border:1px solid #ccc;}
 
 /*------------------------------------------------------------------------------
  - ESTILOS PARA LINK
  -----------------------------------------------------------------------------*/
 a{
     font-size:80%;
-    color:#4C4C4C;
+    color:#4C4C4C !important;
     text-decoration: none;
     font-family: Arial,Helvetica,sans-serif;
 }
@@ -80,10 +80,73 @@ a.link2{
         color:#000;
         text-decoration: none;
     }
-a.link3{
+a.link-olvidocontra{
+    float:left;
     font-size: 90%;
     font-style: italic;
+    margin-top: 8px;
 }
+
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA INPUT y TEXTAREA
+ -----------------------------------------------------------------------------*/
+input[type=text],input[type=password], textarea{
+    border:1px #E7B969 solid;
+    background-color:#F7E9CF;
+    /*padding:0 0 2px 5px;*/
+    padding:3px;
+    text-align:left;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:80%;
+    margin-top:0 !important;
+    letter-spacing: 1px;
+}
+
+input.input-login{
+    float:left;
+    width: 150px;
+    margin-right: 5px;
+}
+input.input-form{
+    font-size: 90%;
+    width: 300px;
+}
+input.input-phone{
+    font-size: 90%;
+    width: 225px;
+}
+input.input-phonearea{
+    font-size: 90%;
+    width: 50px;
+    text-align: center;
+}
+input.input-captcha{
+    width: 150px;
+    font-size: 120%;
+    text-align: center;
+    letter-spacing: 5px;
+    margin-left: 5px;
+    margin-top: 10px;
+}
+
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA SELECT
+ -----------------------------------------------------------------------------*/
+select{
+    border:1px #E7B969 solid;
+    background-color:#F7E9CF;
+    padding:2px 0 2px 0;
+    text-align:left;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size:90%;
+    font-weight: normal;
+    margin-top:0 !important;
+    letter-spacing: 1px;
+}
+select.select-form{
+    width: 308px;
+}
+
 
 /*------------------------------------------------------------------------------
  - ESTILOS PARA BUTTON
@@ -94,7 +157,7 @@ button{
     font-size: 80%;
     font-weight:bold;
     text-align:center;
-    color:#fff;
+    color:#000;
 }
 button.button-small{
     background:url(../images/btn_small.png) top left no-repeat;
@@ -121,38 +184,58 @@ button.button-large{
         background:url(../images/btn_large_over.png) top left no-repeat;
     }
 
-
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA LABEL
+ -----------------------------------------------------------------------------*/
+label.label-form{
+   font-size: 90%;
+}
+label.label-legend{
+    font-style: italic;
+    font-weight: bold;
+    font-size: 80%;
+    color: #000;
+}
 
 /*------------------------------------------------------------------------------
  - ESTILOS PARA EL HEADER
  -----------------------------------------------------------------------------*/
 .header{
     background: url(../images/header.jpg) no-repeat top left;
-    width: 1004px;
+    width: 950px;
     height: 495px;
 }
 .top-header{
     position: relative;
-    text-align: right;
     margin-top: -15px;
 }
-#message-login{
-    position:absolute;
-    left:290px;
-    top:45px;
-    background: #E6EFC2;
-    color:#264409;
-    border:2px solid #C6D880;
-    display:block;
-    font-size:90%;
-    overflow:hidden;
-    padding:5px;
-    width:312px;
-    height: inherit;
-    text-align: center;
-}
+    .top-header .login{
+        float: left;
+        position: relative;
+        margin-left: 20px;
+        margin-top: 5px;
+        overflow: hidden;
+    }
+    #message-login{
+        position:relative;
+        float: left;
+        clear: left;
+        left:0;
+        top:-30px;
+        background: #E6EFC2;
+        color:#264409;
+        border:2px solid #C6D880;
+        display:none;
+        font-size:90%;
+        padding:5px;
+        width:312px;
+        height: inherit;
+        text-align: center;
+    }
+
 .banner-horizontal{
-    margin-top: 5px;
+    margin-top: -114px;
+    /*border:1px solid;*/
 }
 
 
@@ -160,7 +243,7 @@ button.button-large{
  - ESTILOS PARA EL MENU  (HEADER FRONT-PAGE)
  -----------------------------------------------------------------------------*/
 .menu-container{
-    margin-top: 284px;
+    margin-top: -177px;
     padding-left: 10px;
 }
 ul.menu{
@@ -196,6 +279,9 @@ ul.menu{
         ul.menu li a.mnu_bandas{
             background: url(../images/mnu_bandas.png) no-repeat top left;
         }
+        ul.menu li a.mnu_recitales{
+            background: url(../images/mnu_bandas.png) no-repeat top left;
+        }
         ul.menu li a.mnu_contacto{
             background: url(../images/mnu_contacto.png) no-repeat top left;
             width: 80px;
@@ -212,11 +298,13 @@ ul.menu{
     .main-container .column-left{
         min-height: 100px;
         padding: 0 10px 10px 35px;
+        /*border:1px solid red;*/
     }
     .main-container .column-right{
         float:right;
         min-height: 100px;
         padding-right: 10px;
+        /*border:1px solid red;*/
     }
         .main-container .column-right .sidebar{
             float:left;
@@ -236,7 +324,7 @@ ul.menu{
 .footer{
     background:url(../images/footer.png) top left no-repeat;
     background-color: #fff;
-    width: 1004px;
+    width: 950px;
     height: 32px;
     text-align: center;
     padding-top: 110px;
@@ -250,7 +338,7 @@ ul.menu{
 .anunciante{
     float:left;
     clear:left;
-    width: 665px;
+    width: 638px;
     height: inherit;
     margin-bottom: 20px;
     padding-bottom: 20px;
@@ -266,6 +354,16 @@ ul.menu{
     }
 
 /*------------------------------------------------------------------------------
+ - ESTILOS PARA TITULOS
+ -----------------------------------------------------------------------------*/
+h2.title-form{
+    font-size: 100%;
+    width: 600px;
+    margin-top: 15px;
+    border-bottom: 1px solid #000;
+}
+
+/*------------------------------------------------------------------------------
  - ESTILOS PARA LISTAS
  -----------------------------------------------------------------------------*/
 ul.list-generos{
@@ -275,6 +373,13 @@ ul.list-generos{
     font-weight: bold;
     font-size: 110%;
 }
+    ul.list-generos li a{
+        cursor: pointer;
+    }
+        ul.list-generos li a:hover{
+            text-decoration: none;
+            color: #00
+        }
     ul.list-generos li span.item{
         float: left;
         width: 183px;
@@ -287,3 +392,39 @@ ul.list-generos{
         clear: left;
         margin-top: 3px;
     }
+
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA EL MSGBOX
+ -----------------------------------------------------------------------------*/
+.msgbox{
+    position: fixed;
+    width: 403px;
+    height: inherit;
+    top: 100px;
+    left: 100px;
+    z-index: 1100;
+    display: none;
+}
+    .msgbox .top{
+        float: left;
+        background: url(../images/msgbox_top.png) no-repeat top left;
+        width: 403px;
+        height: 14px;
+    }
+    .msgbox .middle{
+        float: left;
+        clear: left;
+        background: url(../images/msgbox_inner.png);
+        width: 403px;
+        height: inherit;
+        padding: 10px 0 10px 0;
+        text-align: center;
+    }
+    .msgbox .bottom{
+        float: left;
+        clear: left;
+        background: url(../images/msgbox_bottom.png) no-repeat top left;
+        width: 403px;
+        height: 14px;
+    }
+

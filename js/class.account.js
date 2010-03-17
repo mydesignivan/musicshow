@@ -39,12 +39,14 @@ var Account = new (function(){
         });
 
         $('#mask').css('opacity', '0.5');
+        $('#mask').css('height', (f.offsetHeight+100)+"px");
     };
 
     this.save = function(){        
         if( working ) return false;
         
         ajaxloader.show();
+        return;
         $.validator.validate('#form1 .validate', function(error){
             if( !error ){
 

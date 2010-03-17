@@ -134,6 +134,26 @@ $msg.= '<b>Consulta:</b><hr color="#000000" />%s';
 define('EMAIL_CONTACT_SUBJECT', 'Formulario de Consulta');
 define('EMAIL_CONTACT_MESSAGE', $msg);
 
+/*
+|--------------------------------------------------------------------------
+| TITULOS DE CADA SECCION
+|--------------------------------------------------------------------------
+*/
+define('TITLE_GLOBAL', 'MusicShows'); // Titulo para todas las secciones
+define('TITLE_INDEX', '');
+define('TITLE_FECHAS', '');
+define('TITLE_BANDAS', '');
+define('TITLE_CONTACTO', '');
+define('TITLE_MICUENTA', '');
+define('TITLE_RECITALES', '');
+
+/*
+|--------------------------------------------------------------------------
+| META - Palabras Claves y Descripcion de la web
+|--------------------------------------------------------------------------
+*/
+define('META_KEYWORDS', '');
+define('META_DESCRIPTION', '');
 
 
 /* End of file constants.php */

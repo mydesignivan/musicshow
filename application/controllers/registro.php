@@ -14,12 +14,14 @@ class Registro extends Controller {
      * FUNCTIONS PUBLIC
      */
     public function index(){
-        $listCountry = array();
-        $listCountry = $this->lists_model->get_country()->result_array();
-        $firstElement = array("0"=>"Seleccione un Pa&iacute;s");
-        $listCountry = array_merge($firstElement, $listCountry);
-
-        $this->load->view('front_registro_view', array('listCountry'=>$listCountry));
+        $data = array(
+            'tlp_section'  => 'frontpage/registro_view.php',
+            'tlp_script'   => 'front_registro',
+            'tlp_title'    => TITLE_INDEX,
+            'comboCountry' => $this->lists_model->get_country(array("0"=>"Seleccione un Pa&iacute;s")),
+            'listGeneros'  => $this->lists_model->get_generos()
+        );
+        $this->load->view('template_view', $data);
     }
 
     public function create(){

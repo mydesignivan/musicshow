@@ -1,0 +1,36 @@
+/*------------------------------------------------------------------------------
+ - ESTILO GENERAL
+ -----------------------------------------------------------------------------*/
+p{margin-bottom:10px;}
+
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA INPUT y TEXTAREA
+ -----------------------------------------------------------------------------*/
+input.input-login, input.input-form, input.input-phone, input.input-phonearea{
+    font-family:Arial, Helvetica, sans-serif;
+    border:1px #E7B969 solid;
+    background-color:#F7E9CF;
+    letter-spacing: 1px;
+    padding:3px;
+    text-align:left;
+    font-size:80%;
+    margin-top:0 !important;
+}
+input.input-captcha{
+    font-family:Arial, Helvetica, sans-serif;
+    border:1px #E7B969 solid;
+    background-color:#F7E9CF;
+    margin-top:0 !important;
+}
+
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA EL HEADER
+ -----------------------------------------------------------------------------*/
+.top-header .login{
+    height: 60px;
+}
+    #message-login{
+        top:-24px;
+    }
+
+

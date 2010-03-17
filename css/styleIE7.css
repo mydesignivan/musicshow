@@ -1,0 +1,11 @@
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA INPUT y TEXTAREA
+ -----------------------------------------------------------------------------*/
+input[type=text],input[type=password], textarea{
+    letter-spacing: 0;
+}
+
+input.input-captcha{
+    letter-spacing: 3px;
+}
+

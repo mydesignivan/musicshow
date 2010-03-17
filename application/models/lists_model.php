@@ -8,10 +8,11 @@ class lists_model extends Model {
     /*
      * FUNCTIONS PUBLIC
      */
-    public function get_country(){
+    public function get_country($first_option){
         $this->db->select('name, country_id');
         $this->db->order_by('name', 'asc');
-        return $this->db->get(TBL_COUNTRY);
+        $array = $this->db->get(TBL_COUNTRY)->result_array();
+        return array_merge($first_option, $array);
     }
 
     public function get_states($country_id){

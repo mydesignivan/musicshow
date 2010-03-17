@@ -11,14 +11,5 @@
  */
 
 .jquery-validator{
-    position: relative;
-    clear: both !important;
-    width:295px;
-    padding:5px;
-    margin:-5px 0 8px 0 !important;
-    background-color:#FBE3E4;
-    border: 2px solid #FBC2C4;
-    color:#8a1f11;
-    font-size: 90%;
-    display:none;
+    margin:0 0 8px 0 !important;
 }
