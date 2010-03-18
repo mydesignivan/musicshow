@@ -23,11 +23,13 @@ class lists_model extends Model {
         return array_merge($first_option, $array);
     }
 
-    public function get_generos($genero_id=null){
+    public function get_generos($first_option=null, $genero_id=null){
         $this->db->select('name, genero_id');
         if( $genero_id!=null ) $this->db->where('genero_id', $genero_id);
         $this->db->order_by('name', 'asc');
-        return $this->db->get(TBL_GENEROS);
+        $array = $this->db->get(TBL_GENEROS)->result_array();
+        if( $first_option!=null ) $array = array_merge($first_option, $array);
+        return $array;
     }
 
 }

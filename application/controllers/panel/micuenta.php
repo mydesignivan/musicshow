@@ -11,21 +11,20 @@ class Micuenta extends Controller{
         $this->load->library('dataview');
         $this->load->helper('form');
 
-        $this->dataview->initializer('frontpage');
+        $this->dataview->initializer('paneluser');
         $this->_data = $this->dataview->set_data(array(
             'tlp_section'  => 'paneluser/myaccount_view.php',
             'tlp_title'    => 'Mi Cuenta',
             'tlp_script'   => array('validator', 'account')
         ));
-
     }
 
     public function index(){
         $info = $this->users_model->get_user();
         $this->_data = $this->dataview->set_data(array(
             'info'          =>  $info,
-            'listCountry'   =>  $this->lists_model->get_country(array("0"=>"Seleccione un Pa&iacute;s")),
-            'listStates'    =>  $this->lists_model->get_states(array("0"=>"Seleccione una Provincia"), $info['country_id'])->result_array()
+            'comboCountry'   =>  $this->lists_model->get_country(array("0"=>"Seleccione un Pa&iacute;s")),
+            'comboStates'    =>  $this->lists_model->get_states(array("0"=>"Seleccione una Provincia"), $info['country_id'])
         ));
 
         $this->load->view("template_paneluser_view", $this->_data);

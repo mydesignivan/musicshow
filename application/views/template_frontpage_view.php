@@ -27,7 +27,12 @@
         </div>
 
         <div class="span-6 last column-right">
-            <?php require('includes/sidebar_inc.php');?>
+            <div class="sidebar">
+                <?php
+                    require('includes/list_generos_inc.php');
+                    require('includes/banner_vertical_inc.php');
+                ?>
+            </div>
         </div>
     </div>
     <!-- ================  END MAIN CONTAINER  ================ -->

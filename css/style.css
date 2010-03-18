@@ -51,6 +51,11 @@ h2{
 }
 
 #imgCaptcha{margin-right: 10px; border:1px solid #ccc;}
+.notice{
+    clear: left;
+    margin-top: 100px;
+    text-align: center;
+}
 
 /*------------------------------------------------------------------------------
  - ESTILOS PARA LINK
@@ -86,6 +91,10 @@ a.link-olvidocontra{
     font-style: italic;
     top: -13px;
 }
+a.link-title{
+    font-size: 90%;
+    color: #150002 !important;
+}
 
 /*------------------------------------------------------------------------------
  - ESTILOS PARA INPUT y TEXTAREA
@@ -101,7 +110,6 @@ input[type=text],input[type=password], textarea{
     margin-top:0 !important;
     letter-spacing: 1px;
 }
-
 input.input-login{
     float:left;
     width: 150px;
@@ -127,6 +135,10 @@ input.input-captcha{
     letter-spacing: 5px;
     margin-left: 5px;
     margin-top: 10px;
+}
+input.input-date{
+    width: 90px;
+    text-align: center;
 }
 textarea.textarea-contact{
     width: 450px;
@@ -242,12 +254,6 @@ label.label-legend{
         text-align: center;
     }
 
-.banner-horizontal{
-    margin-top: -114px;
-    /*border:1px solid;*/
-}
-
-
 /*------------------------------------------------------------------------------
  - ESTILOS PARA EL MENU  (HEADER FRONT-PAGE)
  -----------------------------------------------------------------------------*/
@@ -271,13 +277,14 @@ ul.menu{
         ul.menu li a{
             text-decoration: none !important;
             display:block;
-            width: 64px;
+            width: 70px;
             height: 30px;
-            padding:30px 0 0 60px;
+            padding:30px 0 0 55px;
             font-family:Arial, Helvetica, sans-serif;
-            font-size: 90%;
+            font-size: 80%;
             font-weight:bold;
             color:#4C4C4C;
+            /*border:1px solid red;*/
         }
         ul.menu li a.mnu_inicio{
             background: url(../images/mnu_inicio.png) no-repeat top left;
@@ -293,8 +300,6 @@ ul.menu{
         }
         ul.menu li a.mnu_contacto{
             background: url(../images/mnu_contacto.png) no-repeat top left;
-            width: 80px;
-            padding-left: 50px;
         }
 
 /*------------------------------------------------------------------------------
@@ -322,13 +327,9 @@ ul.menu{
             background-color: #F9F5F4;
             padding:0 0 20px 8px;
         }
-            .main-container .column-right .sidebar .banner{
-                float: left;
-                margin:10px 0 0 5px;
-            }
 
 /*------------------------------------------------------------------------------
- - ESTILOS PARA EL CONTAINER CENTRAL
+ - ESTILOS PARA EL FOOTER
  -----------------------------------------------------------------------------*/
 .footer{
     background:url(../images/footer.png) top left no-repeat;
@@ -338,6 +339,20 @@ ul.menu{
     text-align: center;
     padding-top: 110px;
     font-size: 90%;
+}
+
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA BANNER
+ -----------------------------------------------------------------------------*/
+.banner-horizontal{
+    margin-top: -114px;
+    /*border:1px solid;*/
+}
+.banner-vertical{
+    float: left;
+    clear: left;
+    margin:10px 0 0 5px;
+    /*border:1px solid;*/
 }
 
 
@@ -403,37 +418,75 @@ ul.list-generos{
     }
 
 /*------------------------------------------------------------------------------
- - ESTILOS PARA EL MSGBOX
+ - ESTILOS PARA EL POPUP
  -----------------------------------------------------------------------------*/
-.msgbox{
+.popup{
     position: fixed;
-    width: 403px;
+    width: 300px;
     height: inherit;
-    top: 100px;
-    left: 100px;
-    z-index: 1100;
+    z-index: 2000;
     display: none;
 }
-    .msgbox .top{
+    .popup .top{
         float: left;
-        background: url(../images/msgbox_top.png) no-repeat top left;
-        width: 403px;
+        background: url(../images/popup_top.png) no-repeat top left;
+        width: 300px;
         height: 14px;
     }
-    .msgbox .middle{
+    .popup .middle{
         float: left;
         clear: left;
-        background: url(../images/msgbox_inner.png);
-        width: 403px;
+        background: url(../images/popup_middle.png);
+        background-color: #F8F0ED;
+        width: 280px;
         height: inherit;
-        padding: 10px 0 10px 0;
-        text-align: center;
+        padding: 10px 10px 10px 10px;
+        font-size: 90%;
     }
-    .msgbox .bottom{
+    .popup .bottom{
         float: left;
         clear: left;
-        background: url(../images/msgbox_bottom.png) no-repeat top left;
-        width: 403px;
+        background: url(../images/popup_bottom.png) no-repeat top left;
+        width: 300px;
         height: 14px;
+    }
+
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA TABLAS
+ -----------------------------------------------------------------------------*/
+table{
+    font-size: 90%;
+}
+table thead{
+    background-color: #E8BB6A;
+}
+    table thead tr td{
+        font-weight: bold;
+        padding-left: 0;
+    }
+table tbody{
+    background-color: #F6E9D5;
+    font-weight: normal;
+}
+    table tbody tr td{
+        padding:5px 0 5px 0;
+    }
+
+table.table-list{
+    width: 100%;
+    margin-top: 20px;
+}
+    /*table.table-list td{border-right: 1px solid red;}*/
+    table.table-list .cell-1{
+        width: 15px;
+    }
+    table.table-list .cell-2{
+        width: 200px;
+    }
+    table.table-list .cell-3{
+        width: 290px;
+    }
+    table.table-list .row-par{
+        background-color: #F6F3EE;
     }
 

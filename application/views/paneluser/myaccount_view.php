@@ -2,14 +2,7 @@
 
         <form id="form1" action="<?=site_url('/panel/micuenta/modified/');?>" method="post" class="container-form" enctype="application/x-www-form-urlencoded">
             <div id="mask"></div>
-            <!--<div class="msgbox">
-                <div class="top"></div>
-                <div class="middle">
-                    <p>Validando Formulario</p>
-                    <img src="images/ajax-loader.gif" alt="Cargando..." />
-                </div>
-                <div class="bottom"></div>
-            </div>-->
+            <?php require('application/views/includes/popup_inc.php');?>
 
             <!-- =================  DATOS DEL USUARIO  ================ -->
             <h2 class="title-form">Datos del Usuario</h2>
@@ -49,7 +42,7 @@
             </p>
             <p>
                 <span class="required">*</span><label class="label-form" for="cboStates">Provincia</label><br />
-                <?=form_dropdown('cboStates', $listStates,  $info['state_id'], 'class="validate" id="cboStates"');?>
+                <?=form_dropdown('cboStates', $comboStates,  $info['state_id'], 'class="validate" id="cboStates"');?>
             </p>
             <p>
                 <span class="required">*</span><label class="label-form" for="txtCity">Ciudad</label><br />
@@ -69,7 +62,7 @@
             <p class="clear"><br /><label class="label-legend">(*) Campos Obligatorios</label></p>
 
             <p class="clear span-15 text-center">
-                <button type="button" class="button-medium" onclick="Account.save();">Modificar</button>
+                <button type="button" class="button-large" onclick="Account.save();">Modificar</button>
             </p>
 
             <input type="hidden" name="user_id" value="<?=$info['user_id'];?>" />

@@ -6,6 +6,7 @@ class dataview{
     private $_data;
     function  __construct() {
         $this->CI =& get_instance();
+        $this->_data = array();
     }
 
     public function initializer($type){

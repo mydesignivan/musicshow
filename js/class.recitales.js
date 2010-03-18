@@ -109,6 +109,10 @@ var Recitales = new (function(){
         }
     };
 
+    this.sel_lugar = function(){
+        open_popup();
+    };
+
 
     /* PRIVATE PROPERTIES
      **************************************************************************/
@@ -167,5 +171,16 @@ var Recitales = new (function(){
         }
     };
 
+    var open_popup = function(){
+        popup = $('#popup');
+
+        popup.find('.middle').html($('#container-lugar').html());
+
+        popup.css({
+            'left' : (($(window).width()/2)-(popup.width()/2))+"px",
+            'top'  : (($(window).height()/2)-(popup.height()/2))+"px"
+        }).show();
+
+    };
 
 })();

@@ -68,9 +68,7 @@ class Registro extends Controller {
                 $err = $this->email->print_debugger();
                 die($err);
             }
-
-        }
-        
+        }        
     }
 
     public function confirm_email(){

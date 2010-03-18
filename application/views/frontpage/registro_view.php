@@ -3,6 +3,7 @@
 <?php if( !$this->session->flashdata('statusrecord') ){?>
         <form id="form1" action="<?=site_url('/registro/create/');?>" style="position: relative;" method="post" class="container-form" enctype="application/x-www-form-urlencoded">
             <div id="mask"></div>
+            <?php require('application/views/includes/popup_inc.php');?>
 
             <!-- =================  DATOS DEL USUARIO  ================ -->
             <h2 class="title-form">Datos del Usuario</h2>
@@ -52,7 +53,7 @@
             </p>
             <p>
                 <span class="required">*</span><label class="label-form" for="txtPhone">Telefono</label><br />
-                <input type="text" id="txtPhoneArea" name="txtPhoneArea" class="input-phonearea" />&nbsp;-&nbsp;
+                <input type="text" id="txtPhoneArea" name="txtPhoneArea" class="input-phonearea validate" />&nbsp;-&nbsp;
                 <input type="text" id="txtPhone" name="txtPhone" class="input-phone validate" />
             </p>
             <p>
@@ -87,15 +88,6 @@
             <p class="clear span-15 text-center">
                 <button type="button" class="button-large" onclick="Account.save();">Registrarme</button>
             </p>
-
-            <!--<div class="msgbox">
-                <div class="top"></div>
-                <div class="middle">
-                    <p>Validando Formulario</p>
-                    <img src="images/ajax-loader.gif" alt="Cargando..." />
-                </div>
-                <div class="bottom"></div>
-            </div>-->
         </form>
 
         <script type="text/javascript">
