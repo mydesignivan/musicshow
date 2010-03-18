@@ -15,11 +15,12 @@ class lists_model extends Model {
         return array_merge($first_option, $array);
     }
 
-    public function get_states($country_id){
+    public function get_states($first_option, $country_id=null){
         $this->db->select('name, state_id');
         $this->db->where('country_id', $country_id);
         $this->db->order_by('name', 'asc');
-        return $this->db->get(TBL_STATES);
+        $array = $this->db->get(TBL_STATES)->result_array();
+        return array_merge($first_option, $array);
     }
 
     public function get_generos($genero_id=null){

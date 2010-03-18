@@ -168,8 +168,8 @@ button.button-small{
     width:46px;
     height:24px;
 }
-    button.button-medium:hover{
-        background:url(../images/btn_medium_over.png) top left no-repeat;
+    button.button-small:hover{
+        background:url(../images/btn_small_over.png) top left no-repeat;
     }
 button.button-medium{
     background:url(../images/btn_medium.png) top left no-repeat;

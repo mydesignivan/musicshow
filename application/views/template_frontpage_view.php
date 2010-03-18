@@ -5,7 +5,7 @@
     <meta name="description" content="<?=META_DESCRIPTION;?>" />
     <meta name="keywords" content="<?=META_KEYWORDS;?>" />
     <?php require('includes/head_inc.php');?>
-    <?php if( isset($tlp_script) ) {
+    <?php if( isset($tlp_script) && !empty($tlp_script) ) {
         if( !is_array($tlp_script) ) $tlp_script = array($tlp_script);
         foreach( $tlp_script as $file ){
             require('js/includes/'.$file.'_inc.php');

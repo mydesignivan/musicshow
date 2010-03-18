@@ -1,6 +1,7 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Registro extends Controller {
 
+    private $_data;
     function  __construct() {
         parent::Controller();
         $this->load->model('users_model');
@@ -8,20 +9,22 @@ class Registro extends Controller {
         $this->load->helper('form');
         $this->load->library('encpss');
         $this->load->library('email');
+        $this->load->library('dataview');
+
+        $this->dataview->initializer('frontpage');
+        $this->_data = $this->dataview->set_data(array(
+            'tlp_section'  => 'frontpage/registro_view.php',
+            'tlp_script'   => array('validator', 'account'),
+            'tlp_title'    => TITLE_REGISTRO,
+            'comboCountry' => $this->lists_model->get_country(array("0"=>"Seleccione un Pa&iacute;s")),
+        ));
     }
 
     /*
      * FUNCTIONS PUBLIC
      */
     public function index(){
-        $data = array(
-            'tlp_section'  => 'frontpage/registro_view.php',
-            'tlp_script'   => 'front_registro',
-            'tlp_title'    => TITLE_REGISTRO,
-            'comboCountry' => $this->lists_model->get_country(array("0"=>"Seleccione un Pa&iacute;s")),
-            'listGeneros'  => $this->lists_model->get_generos()
-        );
-        $this->load->view('template_view', $data);
+        $this->load->view('template_frontpage_view', $this->_data);
     }
 
     public function create(){
@@ -89,7 +92,12 @@ class Registro extends Controller {
                 $this->email->subject(EMAIL_REGACTIVE_SUBJECT);
                 $this->email->message($message);
                 if( $this->email->send() ){
-                    $this->load->view('front_useractivation_view', array('username'=>$user['username']));
+                    $this->_data = $this->dataview->set_data(array(
+                        'tlp_section'   =>  'frontpage/useractivation_view.php',
+                        'tlp_script'    =>  '',
+                        'username'      =>  $user['username']
+                    ));
+                    $this->load->view('template_frontpage_view', $this->_data);
                 }else {
                     $err = $this->email->print_debugger();
                     die($err);

@@ -2,12 +2,11 @@
         <!-- ================  TOP MENU  ================ -->
         <div class="span-24 last top-header"> 
             <form id="formLogin" action="<?=site_url('/login/logout');?>" method="post" enctype="application/x-www-form-urlencoded">
-                <span class="text-small"><b>Usuario:&nbsp;</b><?=$this->session->userdata('username');?></span>
-                &nbsp;&nbsp;&nbsp;
-                <a href="<?=site_url('/panel/micuenta/');?>" class="link1">(mi cuenta)</a>
-                &nbsp;&nbsp;&nbsp;
-                <button type="submit" class="button-small">Salir</button>
-                &nbsp;&nbsp;&nbsp;
+                <div class="float-left border">
+                    <b>Usuario:&nbsp;</b><span><?=$this->session->userdata('username');?></span>
+                    <a href="<?=site_url('/panel/micuenta/');?>">(mi cuenta)</a>
+                    <button type="submit" class="button-small">Salir</button>
+                </div>
             </form>
         </div>
         <!-- ================  END TOP MENU  ================ -->

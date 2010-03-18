@@ -1,21 +1,23 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Recordarcontrasenia extends Controller {
 
+    private $_data;
     function __construct(){
         parent::Controller();
         $this->load->model('users_model');
         $this->load->library('email');
         $this->load->library('dataview');
+
+        $this->dataview->initializer('frontpage');
+        $this->_data = $this->dataview->set_data(array(
+            'tlp_section'  => 'frontpage/rememberpass_view.php',
+            'tlp_script'   => array('validator', 'rememberpass'),
+            'tlp_title'    => TITLE_RECORDARCONTRA
+        ));
     }
 
     public function index(){
-        $data = $this->dataview->set_data(array(
-            'tlp_section'  => 'frontpage/rememberpass_view.php',
-            'tlp_script'   => 'front_rememberpass',
-            'tlp_title'    => TITLE_RECORDARCONTRA
-        ));
-
-        $this->load->view('template_view', $data);
+        $this->load->view('template_frontpage_view', $this->_data);
     }
 
     public function send(){
@@ -38,7 +40,11 @@ class Recordarcontrasenia extends Controller {
                     $err = $this->email->print_debugger();
                     die($err);
                 }else{
-                    $this->load->view('front_rememberpass_view', array('status'=>"ok", 'field'=>$_POST['txtField']));
+                    $this->_data = $this->dataview->set_data(array(
+                        'status' => "ok",
+                        'field'  => $_POST['txtField']
+                    ));
+                    $this->load->view('template_frontpage_view', $this->_data);
                 }
             }
         }
@@ -50,7 +56,12 @@ class Recordarcontrasenia extends Controller {
 
         if( $param1 && $param2 ){
             if( $this->users_model->check_token($param1, $param2) ){
-                $this->load->view('front_passwordreset_view', array('username'=>$param1, 'token'=>$param2));
+                $this->_data = $this->dataview->set_data(array(
+                    'tlp_section'   => 'frontpage/passwordreset_view.php',
+                    'username'      => $param1,
+                    'token'         => $param2
+                ));
+                $this->load->view('template_frontpage_view', $this->_data);
             }else redirect('/index/');
         }else redirect('/index/');
     }
@@ -59,14 +70,15 @@ class Recordarcontrasenia extends Controller {
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
             if( $this->users_model->change_pass($_POST) ){
                 $this->load->library('encpss');
-                $data = array(
-                    'status'=>'ok',
-                    'data'=>array(
+                $this->_data = $this->dataview->set_data(array(
+                    'tlp_section' => 'frontpage/passwordreset_view.php',
+                    'status' => 'ok',
+                    'data'   => array(
                         'username'=>$this->encpss->encode($_POST['usr']),
                         'password'=>$this->encpss->encode($_POST['txtPass'])
                      )
-                );
-                $this->load->view('front_passwordreset_view', $data);
+                ));
+                $this->load->view('template_frontpage_view', $this->_data);
             }else redirect('/index/');
         }
     }

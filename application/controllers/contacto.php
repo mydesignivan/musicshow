@@ -1,20 +1,22 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Contacto extends Controller {
 
+    private $_data;
     function __construct(){
         parent::Controller();
-        $this->load->model('lists_model');
         $this->load->library('email');
+        $this->load->library('dataview');
+
+        $this->dataview->initializer('frontpage');
+        $this->_data = $this->dataview->set_data(array(
+            'tlp_section'  => 'frontpage/contact_view.php',
+            'tlp_script'   => array('validator', 'contact'),
+            'tlp_title'    => TITLE_CONTACTO
+        ));
     }
 
     public function index(){
-        $data = array(
-            'tlp_section'  => 'frontpage/contact_view.php',
-            'tlp_script'   => 'front_contact',
-            'tlp_title'    => TITLE_CONTACTO,
-            'listGeneros'  => $this->lists_model->get_generos()
-        );
-        $this->load->view('template_view', $data);
+        $this->load->view('template_frontpage_view', $this->_data);
     }
 
     public function send(){
