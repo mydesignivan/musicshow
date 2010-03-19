@@ -105,13 +105,11 @@ class Registro extends Controller {
         }else redirect('/index/');
     }
 
-    public function ajax_show_states($state_id=0){
-        $listStates = $this->lists_model->get_states($this->uri->segment(3));
-
+    public function ajax_show_states(){
+        $comboStates = $this->lists_model->get_states($this->uri->segment(3));
         echo '<option value="0">Seleccione una Provincia</option>\n';
-        foreach( $listStates->result_array() as $row ){
-            $sel = $state_id==$row['state_id'] ? ' selected="selected"' : "";
-            echo '<option value="'.$row['state_id'].'"'.$sel.'>'.$row['name'].'</option>\n';
+        foreach( $comboStates as $row ){
+            echo '<option value="'.$row['state_id'].'">'.$row['name'].'</option>\n';
         }
         die();
     }

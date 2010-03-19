@@ -19,8 +19,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php foreach( $listRecitales->result_array() as $row ){?>
-                    <tr>
+                <?php 
+                    $n=0;
+                    foreach( $listRecitales->result_array() as $row ){
+                    $n++;
+                    $class = $n%2 ? '' : 'class="row-par"';
+                ?>
+                    <tr <?=$class;?>>
                         <td class="cell-1"><input type="checkbox" value="<?=$row['recital_id'];?>" /></td>
                         <td class="cell-2"><a href="<?=site_url('/panel/recitales/form/'.$row['recital_id']);?>" class="link-title"><?=$row['banda'];?></a></td>
                         <td class="cell-3"><?=$row['place'];?></td>

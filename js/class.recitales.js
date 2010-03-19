@@ -30,6 +30,7 @@ var Recitales = new (function(){
             });
 
             $('#mask').css('opacity', '0.5');
+            $('#mask').css('height', (f.offsetHeight+100)+"px");
         }
     };
 
@@ -106,19 +107,98 @@ var Recitales = new (function(){
                 location.href = baseURI+'panel/recitales/delete/'+data.id;
             }
             return false;
+        },
+
+        lugar_new : function(){
+            var tbody = $('#tblLugares').find('tbody');
+
+            if( tbody.find('input.input-lugar').length==0 ){
+                var html = '<tr>';
+                html+= '<td class="cell-1"><input type="text" id="txtLugarNew" class="input-lugar" onkeypress="if( getKeyCode(event)==13 ) Recitales.action.lugar_save();" /></td>';
+                html+= '<td class="cell-2"><img src="images/ajax-loader3.gif" alt="Guardando" title="Guardando" class="hide img-ajaxloader" /> <a href="javascript:void(Recitales.action.lugar_save())" class="link1">Guardar</a></td>';
+                html+= '</tr>';
+                tbody.prepend(html);
+                $('#txtLugarNew').focus();
+            }
+            return false;
+        },
+        lugar_del : function(lugar_id, el){
+            var lugar_name = $(el).parent().parent().find('td:first').text();
+            if( confirm('¿Está seguro de eliminar el lugar "'+lugar_name+'"?') ){
+                ajaxloader2.show($(el).parent().find('.img-ajaxloader'));
+                $.get(baseURI+'panel/recitales/ajax_del_lugar/'+lugar_id, '', function(result){
+                    if( result!="ok" ){
+                        alert("ERROR:\n"+result);
+                    }else{
+                        $(el).parent().parent().remove();
+                    }
+                    working2=false;
+                });
+            }
+        },
+        lugar_save : function(){
+            if( working2 || $('#txtLugarNew').val().length==0 ) return false;
+
+            ajaxloader2.show($('#tblLugares tbody tr').eq(0).find('.img-ajaxloader'));
+            $.ajax({
+                type : 'post',
+                url  : baseURI+'panel/recitales/ajax_save_lugar/',
+                data : {
+                    name    : $('#txtLugarNew').val(),
+                    city_id : $('#cboCity').val()
+                },
+                success : function(result){
+                    if( result!="ok" ){
+                        alert("ERROR:\n"+result);
+                    }else{
+                        This.show_list_lugar($('#cboCity')[0]);
+                    }
+                },
+                error : function(http){
+                    alert("ERROR:\n"+http.responseText);
+                },
+                complete : function(){
+                    ajaxloader2.hidden();
+                }
+            });
+            
+            return false;
         }
     };
 
     this.sel_lugar = function(){
-        open_popup();
+        ajaxloader.show();
+        open_popup(baseURI+'panel/recitales/ajax_load_lugar');
+    };
+
+    this.show_city = function(el){
+        $('#row-table-lugar').hide();
+        $('#row-city').hide();
+        if( el.value!=0 ){
+            load_combo('panel/recitales/ajax_show_city',el, 'cboCity', function(){
+                $('#row-city').fadeIn('slow');
+            });
+        }
+    };
+    this.show_list_lugar = function(el){
+        $('#row-table-lugar').hide();
+        if( el.value!=0 ){
+            el.disabled=true;
+            $.get(baseURI+'panel/recitales/ajax_list_lugar/'+el.value, '', function(data){
+                $('#row-table-lugar').html(data)
+                                     .fadeIn('slow');
+                el.disabled=false;
+            });
+        }
     };
 
 
     /* PRIVATE PROPERTIES
      **************************************************************************/
     var working=false;
+    var working2=false;
     var f=false;
-
+    var This=this;
 
     /* PRIVATE METHODS
      **************************************************************************/
@@ -153,6 +233,22 @@ var Recitales = new (function(){
             working=false;
         }
     }
+    var ajaxloader2 ={
+        img : false,
+        a   : false,
+        show : function(img){
+            this.img = img
+            this.a = this.img.parent().find('a');
+            this.img.show();
+            this.a.hide();
+            working2=true;
+        },
+        hidden : function(){
+            this.img.hide();
+            this.a.show();
+            working2=false;
+        }
+    }
 
     var get_data = function(arr){
         var names="", id="";
@@ -169,18 +265,6 @@ var Recitales = new (function(){
             id   : id,
             names : names
         }
-    };
-
-    var open_popup = function(){
-        popup = $('#popup');
-
-        popup.find('.middle').html($('#container-lugar').html());
-
-        popup.css({
-            'left' : (($(window).width()/2)-(popup.width()/2))+"px",
-            'top'  : (($(window).height()/2)-(popup.height()/2))+"px"
-        }).show();
-
     };
 
 })();

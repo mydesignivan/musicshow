@@ -96,18 +96,6 @@ var Account = new (function(){
         return false;
     };
 
-    this.show_states = function(el){
-        el.disabled = true;
-        $.get(baseURI+'registro/ajax_show_states/'+el.value,'', function(data){
-
-            $('#cboStates').empty()
-                           .append(data);
-
-            el.disabled = false;
-        });
-    };
-
-
     /* PRIVATE PROPERTIES
      **************************************************************************/
     var working=false;

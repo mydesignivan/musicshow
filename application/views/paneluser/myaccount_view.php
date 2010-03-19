@@ -38,7 +38,7 @@
             </p>
             <p>
                 <span class="required">*</span><label class="label-form" for="cboCountry">Pa&iacute;s</label><br />
-                <?=form_dropdown('cboCountry', $comboCountry, $info['country_id'], 'onchange="Account.show_states(this);" class="select-form validate" id="cboCountry"');?>
+                <?=form_dropdown('cboCountry', $comboCountry, $info['country_id'], 'onchange="load_combo(\'registro/ajax_show_states\',this, \'cboStates\');" class="select-form validate" id="cboCountry"');?>
             </p>
             <p>
                 <span class="required">*</span><label class="label-form" for="cboStates">Provincia</label><br />

@@ -23,11 +23,16 @@
                 <span class="required">*</span><label class="label-form" for="cboGenero">Genero</label><br />
                 <?=form_dropdown('cboGenero', $comboGeneros,  $genero_id, 'class="select-form validate" id="cboGenero"');?>
             </p>
-            <p>
-                <span class="required">*</span><label class="label-form" for="cboStates">Lugar&nbsp;&nbsp;&nbsp;</label>
-                <a href="javascript:void(Recitales.sel_lugar());" class="link1">Seleccione un lugar</a><br /><br />
-            </p>
-            <p>
+
+            <div class="span-14 append-bottom">
+                <div class="float-left"><span class="required">*</span><label class="label-form" for="cboStates">Lugar&nbsp;&nbsp;&nbsp;&nbsp;</label></div>
+                <div class="span-6 last"><a href="javascript:void(Recitales.sel_lugar());" class="link1 float-right">Seleccione un lugar</a></div>
+                <div class="clear">
+                    <p id="txtLugar" class="text-large"></p>
+                </div>
+            </div>
+
+            <p class="clear">
                 <span class="required">*</span><label class="label-form" for="txtDate">Fecha</label><br />
                 <input type="text" id="txtDate" name="txtDate" class="input-date" value="<?=$info['date'];?>" />
             </p>
@@ -52,15 +57,6 @@
 
             <input type="hidden" name="recital_id" value="<?=$info['recital_id'];?>" />
         </form>
-
-        <div id="container-lugar" class="hide">
-            <div class="span-5 border">
-                <p><label class="label-form">Provincia:</label></p>
-            </div>
-            <div class="span-5 last border">
-                <p><?=form_dropdown('cboStates', $comboStates,  $info['state_id'], 'class="validate" id="cboStates"');?></p>
-            </div>
-        </div>
 
         <script type="text/javascript">
         <!--

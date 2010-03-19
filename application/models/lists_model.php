@@ -16,11 +16,23 @@ class lists_model extends Model {
     }
 
     public function get_states($first_option, $country_id=null){
+        if( is_numeric($first_option) ) $country_id = $first_option;
         $this->db->select('name, state_id');
         $this->db->where('country_id', $country_id);
         $this->db->order_by('name', 'asc');
         $array = $this->db->get(TBL_STATES)->result_array();
-        return array_merge($first_option, $array);
+        if( is_array($first_option) ) $array = array_merge($first_option, $array);
+        return $array;
+    }
+
+    public function get_city($first_option, $state_id=null){
+        if( is_numeric($first_option) ) $state_id = $first_option;
+        $this->db->select('name, city_id');
+        $this->db->where('state_id', $state_id);
+        $this->db->order_by('name', 'asc');
+        $array = $this->db->get(TBL_CITY)->result_array();
+        if( is_array($first_option) ) $array = array_merge($first_option, $array);
+        return $array;
     }
 
     public function get_generos($first_option=null, $genero_id=null){

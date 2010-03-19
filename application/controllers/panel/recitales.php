@@ -41,7 +41,7 @@ class Recitales extends Controller{
     public function save(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
 
-            $data = $this->request_fields();
+            $data = $this->_request_fields();
             $data = array_merge(array(
                 'user_id'    => $this->session->userdata('user_id'),
                 'date_added' => date('Y-m-d h:i:s')
@@ -55,7 +55,7 @@ class Recitales extends Controller{
     public function modified(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
 
-            $data = $this->request_fields();
+            $data = $this->_request_fields();
             $data = array_merge(array('last_modified'=>date('Y-m-d h:i:s')), $data);
 
             $this->recitales_model->modified($data, $_POST['recital_id']);
@@ -75,15 +75,48 @@ class Recitales extends Controller{
         }
     }
 
+    /* FUNCTIONS AJAX
+     **************************************************************************/
     public function ajax_check(){
         echo $this->recitales_model->check($_POST['banda'], $_POST['recitalid']);
         die();
     }
+    public function ajax_show_city(){
+        $comboCity = $this->lists_model->get_city($this->uri->segment(4));
+        echo '<option value="0">Seleccione una Ciudad</option>\n';
+        foreach( $comboCity as $row ){
+            echo '<option value="'.$row['city_id'].'">'.$row['name'].'</option>\n';
+        }
+        die();
+    }
+    public function ajax_load_lugar(){
+        $this->load->view('ajax_view', array(
+            'section'      =>  'paneluser/ajax/popup_lugar_view.php',
+            'comboStates'  =>  $this->lists_model->get_states(array("0"=>"Seleccione una Provincia"), 13)
+        ));
+    }
+    public function ajax_list_lugar(){
+        $this->load->view('ajax_view', array(
+            'section'      =>  'paneluser/ajax/table_lugares_view.php',
+            'listLugares'  =>  $this->recitales_model->list_lugares($this->uri->segment(4))
+        ));
+    }
+    public function ajax_save_lugar(){
+        if( $_SERVER['REQUEST_METHOD']=="POST" ){
+            if( $this->recitales_model->save_lugares() )
+                die("ok");
+        }
+    }
+    public function ajax_del_lugar(){
+        if( $this->uri->segment(4) ){
+            if( $this->recitales_model->delete_lugar($this->uri->segment(4)) )
+                die("ok");
+        }
+    }
 
-    /*
-     * FUNCTIONS PRIVATE
-     */
-    private function request_fields(){
+    /* FUNCTIONS PRIVATE
+     **************************************************************************/
+    private function _request_fields(){
         return array(
             'banda'         => $_POST['txtBanda'],
             'genero_id'     => $_POST['cboGenero'],

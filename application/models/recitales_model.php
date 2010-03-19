@@ -96,7 +96,29 @@ class recitales_model extends Model {
         return array("status"=>"ok", "data"=>$data);
     }
 
+    public function list_lugares($city_id){
+        $this->db->where('city_id', $city_id);
+        $this->db->order_by('name', 'asc');
+        return $this->db->get(TBL_LUGARES)->result_array();
+    }
 
+    public function save_lugares(){
+        $data = array(
+            'name'      =>  urldecode($_POST['name']),
+            'city_id'   =>  $_POST['city_id']
+        );
+        if( !$this->db->insert(TBL_LUGARES, $data) ){
+            show_error(sprintf(ERR_DB_INSERT, TBL_LUGARES));
+        }
+        return true;
+    }
+    public function delete_lugar($lugar_id){
+        $this->db->where('lugar_id', $lugar_id);
+        if( !$this->db->delete(TBL_LUGARES) ){
+            show_error(sprintf(ERR_DB_DELETE, TBL_LUGARES));
+        }
+        return true;
+    }
 
 }
 ?>

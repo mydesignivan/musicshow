@@ -43,9 +43,11 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 */
 define('TBL_COUNTRY', 'list_country');
 define('TBL_STATES', 'list_states');
+define('TBL_CITY', 'list_city');
+define('TBL_GENEROS', 'list_generos');
 define('TBL_USERS', 'users');
 define('TBL_RECITALES', 'recitales');
-define('TBL_GENEROS', 'list_generos');
+define('TBL_LUGARES', 'lugares');
 
 /*
 |--------------------------------------------------------------------------
