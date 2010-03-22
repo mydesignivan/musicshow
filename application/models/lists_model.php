@@ -34,6 +34,15 @@ class lists_model extends Model {
         if( is_array($first_option) ) $array = array_merge($first_option, $array);
         return $array;
     }
+    public function get_locality($first_option, $locality_id=null){
+        if( is_numeric($first_option) ) $locality_id = $first_option;
+        $this->db->select('name, locality_id');
+        $this->db->where('locality_id', $locality_id);
+        $this->db->order_by('name', 'asc');
+        $array = $this->db->get(TBL_LOCALITY)->result_array();
+        if( is_array($first_option) ) $array = array_merge($first_option, $array);
+        return $array;
+    }
 
     public function get_generos($first_option=null, $genero_id=null){
         $this->db->select('name, genero_id');

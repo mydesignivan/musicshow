@@ -37,18 +37,16 @@ var Account = new (function(){
         $('#txtLastName, #txtFirstName, #cboCountry, #cboStates, #txtCity, #txtPhone, #txtCode').validator({
             v_required  : true
         });
-
-        $('#mask').css('opacity', '0.5');
-        $('#mask').css('height', (f.offsetHeight+100)+"px");
+        popup.initializer();
     };
 
     this.save = function(){        
         if( working ) return false;
         
-        ajaxloader.show();
-        return;
+        ajaxloader.show('Validando Formulario.');
         $.validator.validate('#form1 .validate', function(error){
             if( !error ){
+                ajaxloader.show('Enviando Formulario');
 
                 $.ajax({
                     type : 'post',
@@ -72,11 +70,10 @@ var Account = new (function(){
                         }else{
                             alert("ERROR:\n"+data);
                         }
+                        if( data!="ok" ) ajaxloader.hidden();
                     },
                     error   : function(http){
                         alert("ERROR: \n"+http.responseText);
-                    },
-                    complete : function(){
                         ajaxloader.hidden();
                     }
                 });
@@ -91,7 +88,7 @@ var Account = new (function(){
         var msg = "Si elimina su usuario se eliminara también las propiedades associadas.\n";
         msg+= "¿Está seguro de confirmar la eliminación del usuario?.";
         if( confirm(msg) ){
-            location.href = baseURI+"panel/micuenta/delete/"+id;
+            location.href = baseURI+"paneluser/micuenta/delete/"+id;
         }
         return false;
     };
@@ -112,15 +109,24 @@ var Account = new (function(){
     };
 
     var ajaxloader ={
-        show : function(){
-            $('#mask').show();
+        show : function(msg){
+            var html = '<div class="text-center">';
+                html+= '<p>'+msg+'</p>';
+                html+= '<img src="images/ajax-loader.gif" alt="" />';
+                html+= '</div>';
+
+            popup.load({html : html}, {
+                reload  : true,
+                bloqEsc : true,
+                effectClose : false
+            });
             working=true;
         },
         hidden : function(){
-            $('#mask').hide();
+            popup.close();
             working=false;
         }
-    }
+    };
 
 
 })();

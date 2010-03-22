@@ -8,7 +8,8 @@
         <thead>
             <tr>
                 <td class="cell-1">Lugar</td>
-                <td class="cell-2">Acci&oacute;n</td>
+                <td class="cell-2">Domicilio</td>
+                <td class="cell-3">Acci&oacute;n</td>
             </tr>
         </thead>
         <tbody>
@@ -19,8 +20,9 @@
                 $class = $n%2 ? '' : 'class="row-par"';
              ?>
                 <tr <?=$class;?>>
-                    <td class="cell-1"><a class="link-title"><?=$row['name'];?></a></td>
-                    <td class="cell-2">
+                    <td class="cell-1"><a href="javascript:void(0)" class="link-title" onclick="Recitales.sel_lugar.select(this, <?=$row['lugar_id'];?>)"><?=$row['name'];?></a></td>
+                    <td class="cell-2"><?=$row['address'];?></td>
+                    <td class="cell-3">
                         <img src="images/ajax-loader3.gif" alt="Guardando" title="Guardando" class="hide img-ajaxloader" />
                         <a href="javascript:void(0)" onclick="Recitales.action.lugar_del(<?=$row['lugar_id'];?>, this)" class="link1">Eliminar</a>
                     </td>

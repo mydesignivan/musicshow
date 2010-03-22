@@ -44,10 +44,13 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 define('TBL_COUNTRY', 'list_country');
 define('TBL_STATES', 'list_states');
 define('TBL_CITY', 'list_city');
+define('TBL_LOCALITY', 'list_locality');
 define('TBL_GENEROS', 'list_generos');
 define('TBL_USERS', 'users');
 define('TBL_RECITALES', 'recitales');
+define('TBL_RECITALES_TO_LUGARVTA', 'recitales_to_lugarvta');
 define('TBL_LUGARES', 'lugares');
+define('TBL_CONTENT', 'content_index');
 
 /*
 |--------------------------------------------------------------------------
@@ -158,6 +161,13 @@ define('TITLE_RECORDARCONTRA', '');
 */
 define('META_KEYWORDS', '');
 define('META_DESCRIPTION', '');
+
+/*
+|--------------------------------------------------------------------------
+| CONFIG
+|--------------------------------------------------------------------------
+*/
+define('CFG_COUNT_FREE_RECITAL', 5);   // Cantidad de recitales que puede publicar gratis
 
 
 /* End of file constants.php */

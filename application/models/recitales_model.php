@@ -10,21 +10,54 @@ class recitales_model extends Model {
      */
     public function create($data = array()) {
 
-        //Insert account into the database
+        $lugarvta_id = $data['lugarvta_id'];
+        unset($data['lugarvta_id']);
+
         if( !$this->db->insert(TBL_RECITALES, $data) ) {
             show_error(sprintf(ERR_DB_INSERT, TBL_RECITALES));
         }
+        
+        $recital_id = $this->db->insert_id();
 
-        return $this->db->insert_id();
+        foreach( $lugarvta_id as $id ){
+            $data = array('recital_id'=>$recital_id, 'lugar_id'=>$id);
+            if( !$this->db->insert(TBL_RECITALES_TO_LUGARVTA, $data) ) {
+                show_error(sprintf(ERR_DB_INSERT, TBL_RECITALES_TO_LUGARVTA));
+            }
+        }
+
+        return true;
     }
 
-    public function modified($data = array(), $recital_id=null) {
+    public function edit($data = array(), $recital_id=null) {
 
-        //Update account into the database
+        $lugarvta_id = $data['lugarvta_id'];
+        $lugarvta_id_del = $data['lugarvta_id_del'];
+        unset($data['lugarvta_id']);
+        unset($data['lugarvta_id_del']);
+
         $this->db->where('recital_id', $recital_id);
-
         if( !$this->db->update(TBL_RECITALES, $data) ) {
             show_error(sprintf(ERR_DB_UPDATE, TBL_RECITALES));
+        }
+
+        $result_table = $this->db->get_where(TBL_RECITALES_TO_LUGARVTA, array('recital_id'=>$recital_id))->result_array();
+
+        foreach( $lugarvta_id as $id ){
+            if( !arr_search($result_table, "lugar_id==".$id) ){
+                $data = array('recital_id'=>$recital_id, 'lugar_id'=>$id);
+                if( !$this->db->insert(TBL_RECITALES_TO_LUGARVTA, $data) ) {
+                    show_error(sprintf(ERR_DB_INSERT, TBL_RECITALES_TO_LUGARVTA));
+                }
+            }
+        }
+
+        if( $lugarvta_id_del!="" ){
+            explode(",", $lugarvta_id_del);
+
+
+            $this->db->where_in('id', explode(",", $lugarvta_id_del));
+            $this->db->delete(TBL_RECITALES_TO_LUGARVTA);
         }
         return true;
     }
@@ -33,20 +66,119 @@ class recitales_model extends Model {
         if( !$this->db->query('DELETE FROM '.TBL_RECITALES.' WHERE recital_id in('. implode(",", $id) .')') ){
             show_error(sprintf(ERR_DB_DELETE, TBL_RECITALES));
         }
+        if( !$this->db->query('DELETE FROM '.TBL_RECITALES_TO_LUGARVTA.' WHERE recital_id in('. implode(",", $id) .')') ){
+            show_error(sprintf(ERR_DB_DELETE, TBL_RECITALES_TO_LUGARVTA));
+        }
+
         return true;
     }
 
     public function get_list() {
-        $this->db->where(array('user_id'=>$this->session->userdata('user_id')));
+        $sql = 'recital_id,';
+        $sql.= 'banda,';
+        $sql.= '`date`,';
+        $sql.= "(SELECT name FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_name,";
+        $sql.= "(SELECT address FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_address";
+
+        $this->db->select($sql, false);
+        $this->db->where('user_id', $this->session->userdata('user_id'));
         $this->db->order_by('recital_id', 'desc');
         $this->db->order_by('banda', 'asc');
         $query = $this->db->get(TBL_RECITALES);
+
         return $query;
     }
 
+    public function get_list_paginator($limit, $offset) {
+        $sql = 'recital_id,';
+        $sql.= 'banda,';
+        $sql.= '`date`,';
+        $sql.= "(SELECT name FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_name,";
+        $sql.= "(SELECT address FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_address";
+
+        $this->db->select($sql, false);
+        $this->db->from(TBL_RECITALES);
+
+        if( $_SERVER['REQUEST_METHOD']=="POST" ){
+            $this->db->like($_POST['cboSearchBy'], $_POST['txtSearch']);
+        }
+
+        $count_rows = $this->db->count_all_results();
+
+        $this->db->select($sql, false);
+        $this->db->order_by('recital_id', 'desc');
+        $this->db->order_by('banda', 'asc');
+        if( $_SERVER['REQUEST_METHOD']=="POST" ){
+            $this->db->like($_POST['cboSearchBy'], $_POST['txtSearch']);
+        }
+        $query = $this->db->get(TBL_RECITALES, $limit, $offset);
+
+        return array(
+            'result'     => $query,
+            'count_rows' => $count_rows
+        );
+    }
+
     public function get_recital($recital_id) {
-        $query = $this->db->get_where(TBL_RECITALES, array('recital_id'=>$recital_id));
-        return $query->row_array();
+        $sql = TBL_RECITALES.'.*,';
+        $sql.= TBL_LUGARES .'.name as lugar_name,';
+        $sql.= TBL_LUGARES .'.address as lugar_address';
+
+        // Extrae datos del Recital
+        $this->db->select($sql, false);
+        $this->db->from(TBL_RECITALES);
+        $this->db->join(TBL_LUGARES, TBL_RECITALES.'.lugar_id = '.TBL_LUGARES.'.lugar_id');
+        $this->db->where('recital_id', $recital_id);
+
+        $info = $query = $this->db->get()->row_array();
+
+        // Extrae datos de los lugares de ventas
+        $sql = TBL_LUGARES.'.lugar_id,';
+        $sql.= TBL_LUGARES.'.name as lugar_name,';
+        $sql.= TBL_LUGARES.'.address as lugar_address,';
+        $sql.= TBL_RECITALES_TO_LUGARVTA.'.id';
+        $this->db->select($sql, false);
+        $this->db->from(TBL_LUGARES);
+        $this->db->join(TBL_RECITALES_TO_LUGARVTA, TBL_LUGARES.'.lugar_id = '.TBL_RECITALES_TO_LUGARVTA.'.lugar_id');
+        $this->db->where(TBL_RECITALES_TO_LUGARVTA.'.recital_id', $recital_id);
+
+        $info['lugarvta'] = $this->db->get();
+
+        return $info;
+    }
+
+    public function get_view_recital($recital_id) {
+        $sql = TBL_RECITALES.'.*,';
+        $sql.= TBL_LUGARES .'.name as lugar_name,';
+        $sql.= TBL_LUGARES .'.address as lugar_address,';
+        $sql.= "(SELECT name FROM ".TBL_GENEROS." WHERE genero_id = ".TBL_RECITALES.".genero_id) as genero_name";
+
+        // Extrae datos del Recital
+        $this->db->select($sql, false);
+        $this->db->from(TBL_RECITALES);
+        $this->db->join(TBL_LUGARES, TBL_RECITALES.'.lugar_id = '.TBL_LUGARES.'.lugar_id');
+        $this->db->where('recital_id', $recital_id);
+
+        $info = $query = $this->db->get()->row_array();
+
+        // Extrae datos de los lugares de ventas
+        $sql = TBL_LUGARES.'.lugar_id,';
+        $sql.= TBL_LUGARES.'.name as lugar_name,';
+        $sql.= TBL_LUGARES.'.address as lugar_address,';
+        $sql.= TBL_RECITALES_TO_LUGARVTA.'.id';
+        $this->db->select($sql, false);
+        $this->db->from(TBL_LUGARES);
+        $this->db->join(TBL_RECITALES_TO_LUGARVTA, TBL_LUGARES.'.lugar_id = '.TBL_RECITALES_TO_LUGARVTA.'.lugar_id');
+        $this->db->where(TBL_RECITALES_TO_LUGARVTA.'.recital_id', $recital_id);
+
+        $info['lugarvta'] = $this->db->get();
+
+        return $info;
+    }
+
+    public function get_count_recitales(){
+        $this->db->where(array('user_id'=>$this->session->userdata('user_id')));
+        return $this->db->get(TBL_RECITALES)->num_rows;
     }
 
     public function check($banda, $recital_id=''){
@@ -97,6 +229,7 @@ class recitales_model extends Model {
     }
 
     public function list_lugares($city_id){
+        $this->db->where('user_id', $this->session->userdata('user_id'));
         $this->db->where('city_id', $city_id);
         $this->db->order_by('name', 'asc');
         return $this->db->get(TBL_LUGARES)->result_array();
@@ -104,8 +237,10 @@ class recitales_model extends Model {
 
     public function save_lugares(){
         $data = array(
-            'name'      =>  urldecode($_POST['name']),
-            'city_id'   =>  $_POST['city_id']
+            'user_id'  =>  $this->session->userdata('user_id'),
+            'name'     =>  urldecode($_POST['name']),
+            'address'  =>  urldecode($_POST['address']),
+            'city_id'  =>  $_POST['id']
         );
         if( !$this->db->insert(TBL_LUGARES, $data) ){
             show_error(sprintf(ERR_DB_INSERT, TBL_LUGARES));
@@ -113,11 +248,42 @@ class recitales_model extends Model {
         return true;
     }
     public function delete_lugar($lugar_id){
+
+        // Verifica si existe en la tabla Recitales
+        $this->db->where('user_id', $this->session->userdata('user_id'));
+        $this->db->where('lugar_id', $lugar_id);
+        $query = $this->db->get(TBL_RECITALES);
+        if( $query->num_rows>0 ){
+            $data = "";
+            foreach( $query->result_array() as $row ) $data.= $row['banda']."\n";
+            return array(
+                'status' => 'exists_recitales',
+                'data' => $data
+            );
+        }
+
+        // Verifica si existe en los lugares de venta
+        $this->db->select(TBL_RECITALES.".banda");
+        $this->db->from(TBL_RECITALES);
+        $this->db->join(TBL_RECITALES_TO_LUGARVTA, TBL_RECITALES.'.recital_id = '.TBL_RECITALES_TO_LUGARVTA.".recital_id");
+        $this->db->join(TBL_LUGARES, TBL_RECITALES_TO_LUGARVTA.".lugar_id = ".TBL_LUGARES.'.lugar_id');
+        $this->db->where(TBL_RECITALES.'.user_id', $this->session->userdata('user_id'));
+        $this->db->where(TBL_LUGARES.'.lugar_id', $lugar_id);
+        $query = $this->db->get();
+        if( $query->num_rows>0 ){
+            $data = "";
+            foreach( $query->result_array() as $row ) $data.= $row['banda']."\n";
+            return array(
+                'status' => 'exists_lugarvta',
+                'data' => $data
+            );
+        }
+
         $this->db->where('lugar_id', $lugar_id);
         if( !$this->db->delete(TBL_LUGARES) ){
             show_error(sprintf(ERR_DB_DELETE, TBL_LUGARES));
         }
-        return true;
+        return array('status'=>'ok');
     }
 
 }

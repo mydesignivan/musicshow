@@ -1,7 +1,6 @@
         <h1>Mi Cuenta</h1>
 
-        <form id="form1" action="<?=site_url('/panel/micuenta/modified/');?>" method="post" class="container-form" enctype="application/x-www-form-urlencoded">
-            <div id="mask"></div>
+        <form id="form1" action="<?=site_url('/paneluser/micuenta/modified/');?>" method="post" class="container-form" enctype="application/x-www-form-urlencoded">
             <?php require('application/views/includes/popup_inc.php');?>
 
             <!-- =================  DATOS DEL USUARIO  ================ -->

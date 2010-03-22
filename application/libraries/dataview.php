@@ -37,7 +37,8 @@ class dataview{
         
         foreach( $param1 as $key=>$val ){
             if( array_key_exists($key, $this->_data) ){
-                $this->_data[$key] = $param1[$key];
+                if( $key==null ) unset($this->_data[$key]);
+                else $this->_data[$key] = $param1[$key];
             }else{
                 $this->_data[$key] = $param1[$key];
             }

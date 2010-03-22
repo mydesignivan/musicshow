@@ -1,18 +1,20 @@
         <?php
             if( is_array($info) ){
+                $mode_edit = true;
                 $title = "Modificar Recital";
-                $action = site_url('/panel/recitales/edit/');
+                $action = site_url('/paneluser/recitales/edit/');
                 $genero_id = $info['genero_id'];
             }else{
+                $mode_edit = false;
                 $title = "Nuevo Recital";
-                $action = site_url('/panel/recitales/save/');
+                $action = site_url('/paneluser/recitales/create/');
                 $genero_id = "0";
             }
         ?>
         <h1><?=$title;?></h1>
 
+        <?php if( $show_form ){?>
         <form id="form1" action="<?=$action;?>" method="post" class="container-form" enctype="application/x-www-form-urlencoded">
-            <div id="mask"></div>
             <?php require('application/views/includes/popup_inc.php');?>
 
             <p>
@@ -24,29 +26,62 @@
                 <?=form_dropdown('cboGenero', $comboGeneros,  $genero_id, 'class="select-form validate" id="cboGenero"');?>
             </p>
 
-            <div class="span-14 append-bottom">
-                <div class="float-left"><span class="required">*</span><label class="label-form" for="cboStates">Lugar&nbsp;&nbsp;&nbsp;&nbsp;</label></div>
-                <div class="span-6 last"><a href="javascript:void(Recitales.sel_lugar());" class="link1 float-right">Seleccione un lugar</a></div>
-                <div class="clear">
-                    <p id="txtLugar" class="text-large"></p>
-                </div>
-            </div>
+            <fieldset class="fieldset-form">
+                <legend><span class="required">*</span>Lugar</legend>
+                <button type="button" class="button-large" onclick="Recitales.sel_lugar.open(false);">Seleccionar</button><br />
+                <p class="prepend-top-medium">
+                    <label class="float-left label-form">Nombre</label>
+                    <input type="text" id="txtPlace" class="float-right input-medium" onkeypress="return false;" value="<?=$info['lugar_name'];?>" />
+                </p>
+                <p class="clear">
+                    <label class="float-left label-form">Domicilio</label>
+                    <input type="text" id="txtAddress" class="float-right input-medium" onkeypress="return false;" value="<?=$info['lugar_address'];?>" />
+                </p>
+            </fieldset>
 
-            <p class="clear">
+            <p>
                 <span class="required">*</span><label class="label-form" for="txtDate">Fecha</label><br />
                 <input type="text" id="txtDate" name="txtDate" class="input-date" value="<?=$info['date'];?>" />
             </p>
+
+            <fieldset class="fieldset-form">
+                <legend><span class="required">*</span>Lugar de ventas de entradas</legend>
+                <button type="button" class="button-large" onclick="Recitales.sel_lugar.open(true);">Seleccionar</button>
+                <table id="tblLugaresVta" class="table-lugar prepend-top-small <?php if( !$mode_edit ) echo 'hide';?>" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <td class="cell-1">Lugar</td>
+                            <td class="cell-2">Domicilio</td>
+                            <td class="cell-3">Acci&oacute;n</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php 
+                    if( $info['lugarvta'] ){
+                        foreach( $info['lugarvta']->result_array() as $row2 ){?>
+                            <tr>
+                                <td class="cell-1"><?=$row2['lugar_name'];?></td>
+                                <td class="cell-2"><?=$row2['lugar_address'];?></td>
+                                <td class="cell-3">
+                                    <a href="javascript:void(0)" onclick="Recitales.action.lugar_remove(this, <?=$row2['id'];?>)" class="link1">Quitar</a>
+                                    <input type="hidden" name="lugarvta_id[]" value="<?=$row2['lugar_id'];?>" />
+                                </td>
+                            </tr>
+                        <?php }
+                    }?>
+                    </tbody>
+                </table>
+
+                <div id="msg-validator-lugar" class="prepend-top"></div>
+            </fieldset>
+
             <p>
-                <span class="required">*</span><label class="label-form" for="txtPlace2">Lugar de ventas de entradas</label><br />
-                <input type="text" id="txtPlace2" name="txtPlace2" class="input-form validate" value="<?=$info['place2'];?>" />
-            </p>
-            <p>
-                <span class="required">*</span><label class="label-form" for="txtPrice">Precio de entradas anticipadas</label><br />
-                <input type="text" id="txtPrice" name="txtPrice" class="input-form validate" value="<?=$info['price'];?>" />
+                <label class="label-form" for="txtPrice">Precio de entradas anticipadas</label><br />
+                <input type="text" id="txtPrice" name="txtPrice" class="input-form" value="<?=$info['price'];?>" />
             </p>
             <p>
                 <label class="label-form" for="txtPrice2">Precio de entradas en puertas</label><br />
-                <input type="text" id="txtPrice2" name="txtPrice2" class="input-form" value="<?=$info['place2'];?>" />
+                <input type="text" id="txtPrice2" name="txtPrice2" class="input-form" value="<?=$info['price2'];?>" />
             </p>
 
             <p class="clear"><br /><label class="label-legend">(*) Campos Obligatorios</label></p>
@@ -56,6 +91,8 @@
             </p>
 
             <input type="hidden" name="recital_id" value="<?=$info['recital_id'];?>" />
+            <input type="hidden" name="lugar_id" value="<?=$info['lugar_id'];?>" />
+            <input type="hidden" name="extra_post" />
         </form>
 
         <script type="text/javascript">
@@ -63,3 +100,8 @@
             Recitales.initializer();
         -->
         </script>
+        <?php }else{?>
+
+        <div class="notice"><?=$message;?></div>
+
+        <?php }?>

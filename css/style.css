@@ -15,6 +15,9 @@ body {
 .text-center{text-align: center !important;}
 .margin-left-1{margin-left:15px !important;}
 .prepend-top-small{margin-top: 5px !important;}
+.prepend-top-medium{margin-top: 20px !important;}
+.append-bottom-small{margin-bottom:5px !important;}
+.append-bottom-medium{margin-bottom:10px !important;}
 .border{border:1px solid red !important;}
 ul{
     margin:0;
@@ -41,14 +44,6 @@ h2{
     font-weight: bold;
     color:red;
     margin-right: 5px;
-}
-
-#mask{
-    position: absolute;
-    width:100%;
-    background-color: #fff;
-    display: none;
-    z-index: 1000;
 }
 
 #imgCaptcha{margin-right: 10px; border:1px solid #ccc;}
@@ -143,7 +138,7 @@ input.input-date{
     text-align: center;
 }
 input.input-lugar{
-    width:250px;
+    width:120px;
     background-color: #fff;
     border:1px solid #ccc;
 }
@@ -169,7 +164,10 @@ select{
 select.select-form{
     width: 308px;
 }
-
+select.select-lugar{
+    float: right;
+    width:200px;
+}
 
 /*------------------------------------------------------------------------------
  - ESTILOS PARA BUTTON
@@ -219,6 +217,22 @@ label.label-legend{
     font-size: 80%;
     color: #000;
 }
+
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA FIELDSET
+ -----------------------------------------------------------------------------*/
+fieldset{
+    padding: 10px;
+    font-size: 90%;
+}
+fieldset legend{
+    font-size: 100%;
+}
+fieldset.fieldset-form{
+    width: 285px;
+    border:1px #E7B969 solid;
+}
+
 
 /*------------------------------------------------------------------------------
  - ESTILOS PARA EL HEADER
@@ -428,46 +442,12 @@ ul.list-generos{
     float:left;
     clear:left;
     width:358px;
-    height: 140px;;
+    height: 120px;;
     margin-top:5px;
     border:1px #E7B969 solid;
     background-color:#F7E9CF;
     overflow: auto;
 }
-
-/*------------------------------------------------------------------------------
- - ESTILOS PARA EL POPUP
- -----------------------------------------------------------------------------*/
-.popup{
-    position: fixed;
-    width: 400px;
-    height: inherit;
-    z-index: 2000;
-    display: none;
-}
-    .popup .top{
-        float: left;
-        background: url(../images/popup2_top.png) no-repeat top left;
-        width: 400px;
-        height: 14px;
-    }
-    .popup .middle{
-        float: left;
-        clear: left;
-        background: url(../images/popup2_middle.png) repeat-y left;
-        width: 360px;
-        height: inherit;
-        padding: 10px 20px 10px 20px;
-        font-size: 90%;
-        /*border: 1px solid;*/
-    }
-    .popup .bottom{
-        float: left;
-        clear: left;
-        background: url(../images/popup2_bottom.png) no-repeat top left;
-        width: 400px;
-        height: 14px;
-    }
 
 /*------------------------------------------------------------------------------
  - ESTILOS PARA TABLAS (general)
@@ -517,10 +497,14 @@ table.table-lugar{
     margin-bottom: 0;
 }
     table.table-lugar .cell-1{
-        width:170px;
+        width:100px;
         border-right: 1px dashed #ccc;
     }
     table.table-lugar .cell-2{
+        width:100px;
+        border-right: 1px dashed #ccc;
+    }
+    table.table-lugar .cell-3{
         width:40px;
         text-align: center;
     }

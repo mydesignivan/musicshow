@@ -3,3 +3,4 @@ _website_old/*
 _documentacion/*
 application/config/config.php
 application/config/database.php
+application/controllers/prueba.php
