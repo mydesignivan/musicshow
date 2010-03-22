@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Recitales extends Controller{
+class Usuarios extends Controller{
 
     /* CONSTRUCTOR
      **************************************************************************/
@@ -7,16 +7,16 @@ class Recitales extends Controller{
         parent::Controller();
         if( !$this->session->userdata('logged_in') || $this->session->userdata('level')==0 ) redirect('/index/');
         
-        $this->load->model('recitales_model');
+        $this->load->model('users_model');
         $this->load->library('dataview');
         $this->load->library('pagination');
 
         $this->dataview->initializer('paneladmin');
         $this->_data = $this->dataview->set_data(array(
-            'tlp_section'  => 'paneladmin/recitales_list_view.php',
-            'tlp_title'    => 'Recitales'
+            'tlp_section'  => 'paneladmin/users_list_view.php',
+            'tlp_title'    => 'Usuarios'
         ));
-        $this->count_per_page=10;
+        $this->count_per_page=3;
     }
 
     /* PRIVATE PROPERTIES
@@ -31,12 +31,12 @@ class Recitales extends Controller{
     }
 
     public function view(){
-        $info = $this->recitales_model->get_view_recital($this->uri->segment(4));
+        $info = $this->users_model->get_user_view($this->uri->segment(4));
 
         $this->_data = $this->dataview->set_data(array(
-            'tlp_section'   => 'paneladmin/recitales_view_view.php',
-            'tlp_title'     => 'Recital Detalle',
-            'listRecitales' => null,
+            'tlp_section'   => 'paneladmin/users_view_view.php',
+            'tlp_title'     => 'Usuario Detalle',
+            'listUsers' => null,
             'info'          => $info
         ));
         $this->load->view("template_paneladmin_view", $this->_data);
@@ -47,8 +47,8 @@ class Recitales extends Controller{
             $id = $this->uri->segment_array();
             array_splice($id, 0,3);
 
-            if( $this->recitales_model->delete($id) ){
-                redirect('/paneladmin/recitales/');
+            if( $this->users_model->delete($id) ){
+                redirect('/paneladmin/usuarios/');
             }else{
                 show_error(ERR_RECITAL_DELETE);
             }
@@ -58,7 +58,7 @@ class Recitales extends Controller{
     public function search(){
         $seg1 = $this->uri->segment(4);
         $seg2 = $this->uri->segment(5);
-        if( $seg1 && $seg2 ){
+        if( $seg1!="" && $seg2!="" ){
             $this->_display(array($seg1=>$seg2));
         }
     }
@@ -68,24 +68,24 @@ class Recitales extends Controller{
      **************************************************************************/
     private function _display($where){
         if( count($where)==0 ){
-            $base_url = site_url('/paneladmin/recitales/index/');
+            $base_url = site_url('/paneladmin/usuarios/index/');
             $uri_segment = 4;
 
         }else{
-            $base_url = site_url('/paneladmin/recitales/search/'.key($where)."/".current($where));
+            $base_url = site_url('/paneladmin/usuarios/search/'.key($where)."/".current($where));
             $uri_segment = 6;
         }
 
         $offset = !is_numeric($this->uri->segment($uri_segment)) ? 0 : $this->uri->segment($uri_segment);
-        $listRecitales = $this->recitales_model->get_list_paginator($this->count_per_page, $offset, $where);
+        $listUsers = $this->users_model->get_list_paginator($this->count_per_page, $offset, $where);
 
         $this->_data = $this->dataview->set_data(array(
-            'tlp_script'    => 'recitales_list',
-            'listRecitales' =>  $listRecitales['result']
+            'tlp_script'    => 'account',
+            'listUsers' =>  $listUsers['result']
         ));
 
         $config['base_url'] = str_replace(".html", "", $base_url);
-        $config['total_rows'] = $listRecitales['count_rows'];
+        $config['total_rows'] = $listUsers['count_rows'];
         $config['per_page'] = $this->count_per_page;
         $config['uri_segment'] = $uri_segment;
         $this->pagination->initialize($config);

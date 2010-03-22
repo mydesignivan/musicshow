@@ -1,6 +1,10 @@
         <h1>Detalle Recital</h1>
 
         <div class="append-bottom-small">
+            <div class="span-4"><label class="label-form">Usuario</label></div>
+            <span class="text-medium"><?=$info['username'];?></span>
+        </div>
+        <div class="append-bottom-small">
             <div class="span-4"><label class="label-form">Banda</label></div>
             <span class="text-medium"><?=$info['banda'];?></span>
         </div>

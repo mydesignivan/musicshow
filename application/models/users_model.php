@@ -19,7 +19,7 @@ class users_model extends Model {
         return $this->db->insert_id();
     }
 
-    public function modified($data = array(), $user_id=null) {
+    public function edit($data = array(), $user_id=null) {
 
         if( empty($data["password"]) ) unset($data["password"]);
 
@@ -40,6 +40,53 @@ class users_model extends Model {
         $query = $this->db->get_where(TBL_USERS, array('user_id'=>$this->session->userdata('user_id'), 'active'=>1));
         return $query->row_array();
     }
+    
+    public function get_user_view($user_id) {
+        $sql = "username,";
+        $sql.= "CONCAT(firstname,', ',lastname) as name,";
+        $sql.= "CONCAT('(',phone_area,') ',phone) as phone,";
+        $sql.= "email,";
+        $sql.= "city,";
+        $sql.= "address,";
+        $sql.= "newsletter,";
+        $sql.= "(SELECT name FROM ".TBL_COUNTRY." WHERE country_id=".TBL_USERS.".country_id) as country,";
+        $sql.= "(SELECT name FROM ".TBL_STATES." WHERE state_id=".TBL_USERS.".state_id) as state ";
+
+        $this->db->select($sql, false);
+        $this->db->where('user_id', $user_id);
+        $query = $this->db->get(TBL_USERS);
+        return $query->row_array();
+    }
+
+    public function get_list_paginator($limit, $offset, $where) {
+        $sql = "SELECT * FROM (SELECT ";
+        $sql.= 'user_id,';
+        $sql.= 'username,';
+        $sql.= 'active,';
+        $sql.= 'level,';
+        $sql.= "CONCAT(firstname, ', ', lastname) AS name ";
+        $sql.= "FROM ".TBL_USERS.") a WHERE level=0 ";
+        if( count($where)>0 ){
+            $field = key($where);
+            $search = current($where);
+            $sql.= "AND $field LIKE '%$search%' ";
+        }
+        $sql.= "ORDER BY user_id desc ";
+
+        $query = $this->db->query($sql);
+        $count_rows = $query->num_rows;
+
+        $sql.= "LIMIT $limit";
+        if( $offset!=0 ) $sql.=",$offset";
+
+        $query = $this->db->query($sql);
+
+        return array(
+            'result'     => $query,
+            'count_rows' => $count_rows
+        );
+    }
+
 
     public function check($username, $email, $user_id=''){
         if( $user_id=="" ){

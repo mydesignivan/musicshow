@@ -84,13 +84,52 @@ var Account = new (function(){
         return false;
     };
 
-    this.delete_account = function(id){
-        var msg = "Si elimina su usuario se eliminara también las propiedades associadas.\n";
-        msg+= "¿Está seguro de confirmar la eliminación del usuario?.";
-        if( confirm(msg) ){
-            location.href = baseURI+"paneluser/micuenta/delete/"+id;
+    this.action={
+        search : function(){
+            var input = $('#txtSearch');
+            var search = input.val();
+
+            if( $('#cboSearchBy').val()!="active" && search=='' ){
+                alert('Ingrese una palabara a buscar.')
+                input.focus();
+                return false;
+            }
+
+            search = search.replace(/\//gi, "");
+
+            if( $('#cboSearchBy').val()=="active" ) search = $('#cboUserActive').val();
+
+            location.href = baseURI+"paneladmin/usuarios/search/"+$('#cboSearchBy').val()+"/"+search;
+            return false;
+        },
+        del : function(){
+            var list = $("#tbl-list tbody input:checked");
+            if( list.length==0 ){
+                alert("Debe seleccionar al menos un recital.");
+                return false;
+            }
+
+            var data = get_data(list);
+
+            if( confirm("¿Está seguro de eliminar?\n\n"+data.names) ){
+                var controler = location.search.indexOf('/paneluser/')>-1 ? 'paneluser' : 'paneladmin';
+                location.href = baseURI+controler+'/recitales/delete/'+data.id;
+            }
+            return false;
         }
-        return false;
+    };
+
+    this.events={
+        change_searchby : function(value){
+            $('#txtSearch').val("");
+            if( value=="active" ) {
+                $('#cboUserActive').show();
+                $('#txtSearch').hide();
+            }else {
+                $('#cboUserActive').hide();
+                $('#txtSearch').show();
+            }
+        }
     };
 
     /* PRIVATE PROPERTIES

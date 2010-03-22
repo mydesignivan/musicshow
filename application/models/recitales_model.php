@@ -89,29 +89,33 @@ class recitales_model extends Model {
         return $query;
     }
 
-    public function get_list_paginator($limit, $offset) {
-        $sql = 'recital_id,';
+    public function get_list_paginator($limit, $offset, $where) {
+        $sql = "SELECT * FROM (SELECT ";
+        $sql.= 'recital_id,';
         $sql.= 'banda,';
         $sql.= '`date`,';
         $sql.= "(SELECT name FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_name,";
-        $sql.= "(SELECT address FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_address";
+        $sql.= "(SELECT address FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_address ";
+        $sql.= "FROM ".TBL_RECITALES.") a ";
+        if( count($where)>0 ){
+            $field = key($where);
+            $search = current($where);
 
-        $this->db->select($sql, false);
-        $this->db->from(TBL_RECITALES);
+            if( $field=="date" ) {
+                $search = str_replace("-", "/", $search);
+            }
 
-        if( $_SERVER['REQUEST_METHOD']=="POST" ){
-            $this->db->like($_POST['cboSearchBy'], $_POST['txtSearch']);
+            $sql.= "WHERE $field LIKE '%$search%' ";
         }
+        $sql.= "ORDER BY recital_id desc, banda asc ";
 
-        $count_rows = $this->db->count_all_results();
+        $query = $this->db->query($sql);
+        $count_rows = $query->num_rows;
 
-        $this->db->select($sql, false);
-        $this->db->order_by('recital_id', 'desc');
-        $this->db->order_by('banda', 'asc');
-        if( $_SERVER['REQUEST_METHOD']=="POST" ){
-            $this->db->like($_POST['cboSearchBy'], $_POST['txtSearch']);
-        }
-        $query = $this->db->get(TBL_RECITALES, $limit, $offset);
+        $sql.= "LIMIT $limit";
+        if( $offset!=0 ) $sql.=",$offset";
+
+        $query = $this->db->query($sql);
 
         return array(
             'result'     => $query,
@@ -151,7 +155,8 @@ class recitales_model extends Model {
         $sql = TBL_RECITALES.'.*,';
         $sql.= TBL_LUGARES .'.name as lugar_name,';
         $sql.= TBL_LUGARES .'.address as lugar_address,';
-        $sql.= "(SELECT name FROM ".TBL_GENEROS." WHERE genero_id = ".TBL_RECITALES.".genero_id) as genero_name";
+        $sql.= "(SELECT name FROM ".TBL_GENEROS." WHERE genero_id = ".TBL_RECITALES.".genero_id) as genero_name,";
+        $sql.= "(SELECT username FROM ".TBL_USERS." WHERE user_id = ".TBL_RECITALES.".user_id) as username";
 
         // Extrae datos del Recital
         $this->db->select($sql, false);

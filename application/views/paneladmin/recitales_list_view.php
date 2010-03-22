@@ -1,16 +1,22 @@
         <h1>Recitales</h1>
 
         <div class="float-left">
-            <form name="formSearch" action="<?=site_url('/paneladmin/recitales/');?>" method="get" enctype="application/x-www-form-urlencoded">
-                <label class="label-form">Buscar por:&nbsp;</label>
-                <select name="cboSearchBy">
-                    <option value="banda" <?php if( @$_POST['cboSearchBy']=="banda" ) echo 'selected="selected"';?>>Banda</option>
-                    <option value="lugar_name" <?php if( @$_POST['cboSearchBy']=="lugar_name" ) echo 'selected="selected"';?>>Lugar</option>
-                    <option value="date" <?php if( @$_POST['cboSearchBy']=="date" ) echo 'selected="selected"';?>>Fecha</option>
-                </select>
-                <input type="text" class="input-medium" name="txtSearch" value="<?=@$_POST['txtSearch'];?>" />
-                <button type="submit" class="button-medium">Buscar</button>
-            </form>
+            <?php
+                $cboSearchBy = "banda";
+                $txtSearch = "";
+                if( $this->uri->segment(3)=="search" ){
+                    $cboSearchBy = $this->uri->segment(4);
+                    $txtSearch = $this->uri->segment(5);
+                }
+            ?>
+            <label class="label-form">Buscar por:&nbsp;</label>
+            <select id="cboSearchBy">
+                <option value="banda" <?php if( $cboSearchBy=="banda" ) echo 'selected="selected"';?>>Banda</option>
+                <option value="lugar_name" <?php if( $cboSearchBy=="lugar_name" ) echo 'selected="selected"';?>>Lugar</option>
+                <option value="date" <?php if( $cboSearchBy=="date" ) echo 'selected="selected"';?>>Fecha</option>
+            </select>
+            <input type="text" class="input-medium" id="txtSearch" value="<?=$txtSearch;?>" onkeypress="if( getKeyCode(event)==13 ) Recitales.action.search();" />
+            <button type="button" class="button-medium" onclick="Recitales.action.search();">Buscar</button>
         </div>
         <div class="float-right">
             <button type="button" class="button-large" onclick="Recitales.action.del()">Eliminar</button>
@@ -48,8 +54,8 @@
             <div class="text-center"><?= $this->pagination->create_links();?></div>
 
 
-        <?php }else{?>
+        <?php }else{
+            
+            echo '<div class="notice">No hay recitales cargados</div>';
 
-            <div class="notice">No hay recitales cargados</div>
-
-        <?php }?>
+        }?>

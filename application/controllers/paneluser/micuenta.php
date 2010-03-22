@@ -32,7 +32,7 @@ class Micuenta extends Controller{
         $this->load->view("template_paneluser_view", $this->_data);
     }
 
-    public function modified(){
+    public function edit(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
             
             $data = array(
@@ -51,7 +51,7 @@ class Micuenta extends Controller{
                 'last_modified' => date('Y-m-d h:i:s')
             );
 
-            $status = $this->users_model->modified($data, $_POST["user_id"]);
+            $status = $this->users_model->edit($data, $_POST["user_id"]);
 
             if( $status ){
                 $this->simplelogin->logout();

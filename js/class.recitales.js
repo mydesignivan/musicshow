@@ -187,6 +187,19 @@ var Recitales = new (function(){
                 }
                 lugarvta_id_del.push(id);
             }
+        },
+        search : function(){
+            if( $('#txtSearch').val()=='' ){
+                alert('Ingrese una palabara a buscar.')
+                $('#txtSearch').focus();
+                return false;
+            }
+
+            if( $('#cboSearchBy').val()=="date" ) $('#txtSearch').val($('#txtSearch').val().replace(/\//gi, "-"));
+            else $('#txtSearch').val($('#txtSearch').val().replace(/\//gi, ""));
+
+            location.href = baseURI+"paneladmin/recitales/search/"+$('#cboSearchBy').val()+"/"+$('#txtSearch').val();
+            return false;
         }
 
     };
