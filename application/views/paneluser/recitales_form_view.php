@@ -14,7 +14,8 @@
         <h1><?=$title;?></h1>
 
         <?php if( $show_form ){?>
-        <form id="form1" action="<?=$action;?>" method="post" class="container-form" enctype="application/x-www-form-urlencoded">
+        <!--<form id="form1" action="<?=$action;?>" method="post" class="container-form" enctype="application/x-www-form-urlencoded">-->
+        <form id="form1" action="<?=$action;?>" method="post" class="container-form" enctype="multipart/form-data">
             <?php require('application/views/includes/popup_inc.php');?>
 
             <p>
@@ -75,7 +76,40 @@
                 <div id="msg-validator-lugar" class="prepend-top"></div>
             </fieldset>
 
-            <p>
+            <?php if( !$mode_edit ){?>
+
+                <?php for( $n=1; $n<=5; $n++ ){?>
+                <div class="append-bottom-small">
+                    <div class="span-2"><label class="label-form">Imagen <?=$n?></label></div>
+                    <input type="file" class="input-form" name="fileUpload[]" />
+                </div>
+                <?php }?>
+
+            <?php }else{?>
+
+                <?php for( $n=1; $n<=5; $n++ ){
+                    $prefix = 'image'.$n;
+                    $image_full = $info[$prefix.'_full'];
+                    $image_thumb = $info[$prefix.'_thumb'];
+                ?>
+
+                <div class="span-16 append-bottom-small">
+                    <div class="span-2"><label class="label-form">Imagen <?=$n?></label></div>
+                    <?php if( $image_full!='' ){?> 
+                        <div class="float-left"><a href="<?=$image_full;?>" rel="group"><img src="<?=UPLOAD_DIR.$image_thumb;?>" alt="<?=$image_thumb;?>" /></a></div>
+                        <div class="float-left margin-left-small">
+                            <input type="file" class="input-form" name="fileUpload[]" />
+                            <button type="button" class="button-large margin-left-small" onclick="Recitales.action.del_image(this, '<?=$prefix;?>');">Eliminar</button>
+                        </div>
+                    <?php }else{?>
+                            <input type="file" class="input-form" name="fileUpload[]" />
+                    <?php }?>
+                </div>
+                <?php }?>
+
+            <?php }?>
+
+            <p class="clear prepend-top"><br />
                 <label class="label-form" for="txtPrice">Precio de entradas anticipadas</label><br />
                 <input type="text" id="txtPrice" name="txtPrice" class="input-form" value="<?=$info['price'];?>" />
             </p>
@@ -92,7 +126,7 @@
 
             <input type="hidden" name="recital_id" value="<?=$info['recital_id'];?>" />
             <input type="hidden" name="lugar_id" value="<?=$info['lugar_id'];?>" />
-            <input type="hidden" name="extra_post" />
+            <input type="hidden" name="json" />
         </form>
 
         <script type="text/javascript">

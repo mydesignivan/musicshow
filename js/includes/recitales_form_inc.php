@@ -3,4 +3,7 @@
     <script type="text/javascript" src="js/jquery.datepicker/ui.datepicker.min.js"></script>
     <!--END SCRIPT-->
 
+    <script type="text/javascript" src="js/json.js"></script>
+
     <script type="text/javascript" src="js/class.recitales.js"></script>
+

@@ -1,6 +1,7 @@
 nbproject/*
 _website_old/*
 _documentacion/*
+uploads/*
 application/config/config.php
 application/config/database.php
 application/controllers/prueba.php

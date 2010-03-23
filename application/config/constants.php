@@ -51,6 +51,21 @@ define('TBL_RECITALES', 'recitales');
 define('TBL_RECITALES_TO_LUGARVTA', 'recitales_to_lugarvta');
 define('TBL_LUGARES', 'lugares');
 define('TBL_CONTENT', 'content_index');
+define('TBL_DESTACADOS', 'destacados');
+
+/*
+|--------------------------------------------------------------------------
+| UPLOAD FILE
+|--------------------------------------------------------------------------
+*/
+define('UPLOAD_DIR', './uploads/');
+define('UPLOAD_FILETYPE', 'gif|jpg|png');
+define('UPLOAD_MAXSIZE', 1024); //Expresado en Kylobytes
+
+define('IMAGE_THUMB_WIDTH', 107);
+define('IMAGE_THUMB_HEIGHT', 90);
+define('IMAGE_ORIGINAL_WIDTH', 800);
+define('IMAGE_ORIGINAL_HEIGHT', 600);
 
 /*
 |--------------------------------------------------------------------------

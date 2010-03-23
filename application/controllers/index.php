@@ -5,7 +5,7 @@ class Index extends Controller {
     function  __construct() {
         parent::Controller();
         $this->load->library('dataview');
-        
+
         $this->dataview->initializer('frontpage');
         $this->_data = $this->dataview->set_data(array(
             'tlp_section' => 'frontpage/index_view.php',

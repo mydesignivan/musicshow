@@ -52,28 +52,55 @@ class Recitales extends Controller{
 
     public function create(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
-            $data = $this->_request_fields();
-            $data = array_merge(array(
-                'user_id'    => $this->session->userdata('user_id'),
-                'date_added' => date('Y-m-d h:i:s')
-            ), $data);
+            $resultUpload = $this->_upload();
+            if( $resultUpload['status']=="ok" ){
+                // Guardo los datos
+                $data = $this->_request_fields();
+                $data = array_merge(array(
+                    'image1_full'    => $resultUpload['image_full'][0],
+                    'image2_full'    => $resultUpload['image_full'][1],
+                    'image3_full'    => $resultUpload['image_full'][2],
+                    'image4_full'    => $resultUpload['image_full'][3],
+                    'image5_full'    => $resultUpload['image_full'][4],
+                    'image1_thumb'   => $resultUpload['image_thumb'][0],
+                    'image2_thumb'   => $resultUpload['image_thumb'][1],
+                    'image3_thumb'   => $resultUpload['image_thumb'][2],
+                    'image4_thumb'   => $resultUpload['image_thumb'][3],
+                    'image5_thumb'   => $resultUpload['image_thumb'][4],
+                    'user_id'       => $this->session->userdata('user_id'),
+                    'date_added'    => date('Y-m-d h:i:s')
+                ), $data);
+                $this->recitales_model->create($data);
 
-            $this->recitales_model->create($data);
-            redirect('/paneluser/recitales/');
+                redirect('/paneluser/recitales/');
+            }
         }
     }
 
     public function edit(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
+            $resultUpload = $this->_upload();
 
-            $data = $this->_request_fields();
-            $data = array_merge(array(
-                'last_modified'   =>  date('Y-m-d h:i:s'),
-                'lugarvta_id_del' =>  $_POST['extra_post']
-            ), $data);
+            if( $resultUpload['status']=="ok" ){
+                $data = $this->_request_fields();
+                $data = array_merge(array(
+                    'image1_full'    => $resultUpload['image_full'][0],
+                    'image2_full'    => $resultUpload['image_full'][1],
+                    'image3_full'    => $resultUpload['image_full'][2],
+                    'image4_full'    => $resultUpload['image_full'][3],
+                    'image5_full'    => $resultUpload['image_full'][4],
+                    'image1_thumb'   => $resultUpload['image_thumb'][0],
+                    'image2_thumb'   => $resultUpload['image_thumb'][1],
+                    'image3_thumb'   => $resultUpload['image_thumb'][2],
+                    'image4_thumb'   => $resultUpload['image_thumb'][3],
+                    'image5_thumb'   => $resultUpload['image_thumb'][4],
+                    'last_modified'   =>  date('Y-m-d h:i:s'),
+                    'json'            =>  $_POST['json']
+                ), $data);
 
-            $this->recitales_model->edit($data, $_POST['recital_id']);
-            redirect('/paneluser/recitales/');
+                $this->recitales_model->edit($data, $_POST['recital_id']);
+                redirect('/paneluser/recitales/');
+            }
         }
     }
     public function delete(){
@@ -140,6 +167,63 @@ class Recitales extends Controller{
             'price'         => $_POST['txtPrice'],
             'price2'        => $_POST['txtPrice2']
         );
+    }
+
+    private function _upload(){
+        $this->load->library('image_lib');
+
+        /*echo "<pre>";
+        print_r($_FILES);
+        echo "</pre>";*/
+
+        $files = array();
+        $files['name'] = $_FILES['fileUpload']['name'];
+        $files['tmp_name'] = $_FILES['fileUpload']['tmp_name'];
+        $files['type'] = $_FILES['fileUpload']['type'];
+        $return = array();
+
+        for( $n=0; $n<=4; $n++ ) {
+            $return['image_full'][$n]='';
+            $return['image_thumb'][$n]='';
+        }
+
+        for( $n=0; $n<=count($files['name'])-1; $n++ ){
+            $name = $files['name'][$n];
+            if( $name!='' ){
+                $partfile = part_filename(strtolower($name));
+                $filename = $this->session->userdata('user_id') ."_". uniqid(time()) .".".$partfile['ext'];
+
+                // Muevo la imagen original
+                move_uploaded_file($files['tmp_name'][$n], UPLOAD_DIR.$filename);
+
+                // Creo una copia y dimensiono la imagen  (THUMB)
+                $config['image_library'] = 'GD2';
+                $config['source_image'] = UPLOAD_DIR.$filename;
+                $config['create_thumb'] = TRUE;
+                $config['maintain_ratio'] = TRUE;
+                $config['width'] = IMAGE_THUMB_WIDTH;
+                $config['height'] = IMAGE_THUMB_HEIGHT;
+                $this->image_lib->initialize($config);
+                if( !$this->image_lib->resize() ) die($this->image_lib->display_errors());
+
+                // Dimensiono la imagen original   (ORIGINAL)
+                $config['image_library'] = 'GD2';
+                $config['source_image'] = UPLOAD_DIR.$filename;
+                $config['create_thumb'] = FALSE;
+                $config['maintain_ratio'] = TRUE;
+                $config['width'] = IMAGE_ORIGINAL_WIDTH;
+                $config['height'] = IMAGE_ORIGINAL_HEIGHT;
+                $this->image_lib->initialize($config);
+                if( !$this->image_lib->resize() ) die($this->image_lib->display_errors());
+
+                $partfile = part_filename($filename);
+                $return['image_full'][$n] = $filename;
+                $return['image_thumb'][$n] = $partfile['basename']."_thumb.".$partfile['ext'];
+            }
+        }
+
+        $return['status']="ok";
+        return $return;
     }
 
 }

@@ -2,10 +2,8 @@
     <form id="formLogin" action="<?=site_url('/login/logout');?>" method="post" enctype="application/x-www-form-urlencoded">
         <div class="login">
             <span class="text-small"><b>Usuario:&nbsp;</b><?=$this->session->userdata('username');?></span>
-            <?php if( !strpos($this->uri->uri_string(), 'paneluser') ){?>
             &nbsp;&nbsp;&nbsp;
             <a href="<?=site_url('/paneluser/micuenta/');?>" class="link1">(mi cuenta)</a>
-            <?php }?>
             &nbsp;&nbsp;&nbsp;
             <button type="submit" class="button-small">Salir</button>
             &nbsp;&nbsp;&nbsp;

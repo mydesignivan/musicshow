@@ -32,8 +32,18 @@ class users_model extends Model {
         return true;
     }
     
-    public function delete(){
+    public function delete($id){
+        if( !$this->db->query('DELETE FROM '.TBL_USERS.' WHERE user_id in('. implode(",", $id) .')') ){
+            show_error(sprintf(ERR_DB_DELETE, TBL_USERS));
+        }
+        if( !$this->db->query('DELETE FROM '.TBL_RECITALES.' WHERE user_id in('. implode(",", $id) .')') ){
+            show_error(sprintf(ERR_DB_DELETE, TBL_RECITALES));
+        }
+        if( !$this->db->query('DELETE FROM '.TBL_RECITALES_TO_LUGARVTA.' WHERE user_id in('. implode(",", $id) .')') ){
+            show_error(sprintf(ERR_DB_DELETE, TBL_RECITALES_TO_LUGARVTA));
+        }
 
+        return true;
     }
 
     public function get_user() {

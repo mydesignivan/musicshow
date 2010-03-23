@@ -13,7 +13,7 @@ body {
 .margin-null{margin:0 !important;}
 .tag-center{margin: 0 auto !important;}
 .text-center{text-align: center !important;}
-.margin-left-1{margin-left:15px !important;}
+.margin-left-small{margin-left:15px !important;}
 .prepend-top-small{margin-top: 5px !important;}
 .prepend-top-medium{margin-top: 20px !important;}
 .append-bottom-small{margin-bottom:5px !important;}

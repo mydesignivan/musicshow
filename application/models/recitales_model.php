@@ -20,7 +20,11 @@ class recitales_model extends Model {
         $recital_id = $this->db->insert_id();
 
         foreach( $lugarvta_id as $id ){
-            $data = array('recital_id'=>$recital_id, 'lugar_id'=>$id);
+            $data = array(
+                'recital_id' => $recital_id,
+                'lugar_id'   => $id,
+                'user_id'    => $this->session->userdata('user_id')
+            );
             if( !$this->db->insert(TBL_RECITALES_TO_LUGARVTA, $data) ) {
                 show_error(sprintf(ERR_DB_INSERT, TBL_RECITALES_TO_LUGARVTA));
             }
@@ -32,9 +36,9 @@ class recitales_model extends Model {
     public function edit($data = array(), $recital_id=null) {
 
         $lugarvta_id = $data['lugarvta_id'];
-        $lugarvta_id_del = $data['lugarvta_id_del'];
+        $json = json_decode($data['json']);
         unset($data['lugarvta_id']);
-        unset($data['lugarvta_id_del']);
+        unset($data['json']);
 
         $this->db->where('recital_id', $recital_id);
         if( !$this->db->update(TBL_RECITALES, $data) ) {
@@ -45,20 +49,34 @@ class recitales_model extends Model {
 
         foreach( $lugarvta_id as $id ){
             if( !arr_search($result_table, "lugar_id==".$id) ){
-                $data = array('recital_id'=>$recital_id, 'lugar_id'=>$id);
+                $data = array(
+                    'recital_id' => $recital_id,
+                    'lugar_id'   => $id,
+                    'user_id'    => $this->session->userdata('user_id')
+                );
                 if( !$this->db->insert(TBL_RECITALES_TO_LUGARVTA, $data) ) {
                     show_error(sprintf(ERR_DB_INSERT, TBL_RECITALES_TO_LUGARVTA));
                 }
             }
         }
 
-        if( $lugarvta_id_del!="" ){
-            explode(",", $lugarvta_id_del);
-
-
-            $this->db->where_in('id', explode(",", $lugarvta_id_del));
+        // Elimina los lugares asociados con un recital
+        if( count($json['lugarvta_id_del'])>0 ){
+            $this->db->where_in('id', $json['lugarvta_id_del']);
             $this->db->delete(TBL_RECITALES_TO_LUGARVTA);
         }
+
+        // Vacia el/los campos image
+        if( count($json['images_id_del'])>0 ){
+            $data = array();
+            foreach( $json['images_id_del'] as $prefix ){
+                $data[$prefix."_thumb"]="";
+                $data[$prefix."_full"]="";
+            }
+            $this->db->update(TBL_RECITALES, $data);
+            //unlink(UPLOAD_DIR);
+        }
+
         return true;
     }
     

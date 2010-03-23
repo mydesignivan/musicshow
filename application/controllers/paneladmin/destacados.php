@@ -1,5 +1,5 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
-class Usuarios extends Controller{
+class Destacados extends Controller{
 
     /* CONSTRUCTOR
      **************************************************************************/
@@ -7,14 +7,14 @@ class Usuarios extends Controller{
         parent::Controller();
         if( !$this->session->userdata('logged_in') || $this->session->userdata('level')==0 ) redirect('/index/');
         
-        $this->load->model('users_model');
+        $this->load->model('destacados_model');
         $this->load->library('dataview');
         $this->load->library('pagination');
 
         $this->dataview->initializer('paneladmin');
         $this->_data = $this->dataview->set_data(array(
-            'tlp_section'  => 'paneladmin/users_list_view.php',
-            'tlp_title'    => 'Usuarios'
+            'tlp_section'  => 'paneladmin/destacados_list_view.php',
+            'tlp_title'    => 'Destacados'
         ));
         $this->count_per_page=10;
     }
@@ -31,11 +31,11 @@ class Usuarios extends Controller{
     }
 
     public function view(){
-        $info = $this->users_model->get_user_view($this->uri->segment(4));
+        $info = $this->destacados_model->get_user_view($this->uri->segment(4));
 
         $this->_data = $this->dataview->set_data(array(
-            'tlp_section'   => 'paneladmin/users_view_view.php',
-            'tlp_title'     => 'Usuario Detalle',
+            'tlp_section'   => 'paneladmin/destacados_view_view.php',
+            'tlp_title'     => 'Destacado Detalle',
             'listUsers' => null,
             'info'          => $info
         ));
@@ -47,8 +47,8 @@ class Usuarios extends Controller{
             $id = $this->uri->segment_array();
             array_splice($id, 0,3);
 
-            if( $this->users_model->delete($id) ){
-                redirect('/paneladmin/usuarios/');
+            if( $this->destacados_model->delete($id) ){
+                redirect('/paneladmin/destacadps/');
             }else{
                 show_error(ERR_RECITAL_DELETE);
             }
@@ -68,20 +68,20 @@ class Usuarios extends Controller{
      **************************************************************************/
     private function _display($where){
         if( count($where)==0 ){
-            $base_url = site_url('/paneladmin/usuarios/index/');
+            $base_url = site_url('/paneladmin/destacados/index/');
             $uri_segment = 4;
 
         }else{
-            $base_url = site_url('/paneladmin/usuarios/search/'.key($where)."/".current($where));
+            $base_url = site_url('/paneladmin/destacados/search/'.key($where)."/".current($where));
             $uri_segment = 6;
         }
 
         $offset = !is_numeric($this->uri->segment($uri_segment)) ? 0 : $this->uri->segment($uri_segment);
-        $listUsers = $this->users_model->get_list_paginator($this->count_per_page, $offset, $where);
+        $listUsers = $this->destacados_model->get_list_paginator($this->count_per_page, $offset, $where);
 
         $this->_data = $this->dataview->set_data(array(
-            'tlp_script'    => 'account',
-            'listUsers' =>  $listUsers['result']
+            'tlp_script'    => 'disting',
+            'listDestacados' =>  $listDestacados['result']
         ));
 
         $config['base_url'] = str_replace(".html", "", $base_url);
