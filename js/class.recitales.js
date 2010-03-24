@@ -30,12 +30,7 @@ var Recitales = new (function(){
             });
         }
         popup.initializer();
-    };
-
-    var ObjectToString = function(obj){
-        $(obj).each(function(){
-
-        });
+        $('a.jq-fancybox').fancybox();
     };
 
     this.save = function(){
@@ -61,9 +56,13 @@ var Recitales = new (function(){
                             if( $(f.recital_id).val()!='' ){
                                 f.json.value = json_encode({
                                     'lugarvta_id_del' : lugarvta_id_del,
-                                    'images_del'      : images_del
+                                    'images_del' : {
+                                        'field'       :  images_field_del,
+                                        'image_thumb' :  image_thumb_del,
+                                        'image_full'  :  image_full_del
+                                    }
                                 });
-                            };
+                            }
                             f.submit();
                         }else{
                             ajaxloader.hidden();
@@ -107,7 +106,7 @@ var Recitales = new (function(){
             var data = get_data(list);
 
             if( confirm("¿Está seguro de eliminar?\n\n"+data.names) ){
-                var controler = location.search.indexOf('/paneluser/')>-1 ? 'paneluser' : 'paneladmin';
+                var controler = location.pathname.indexOf('/paneluser/')>-1 ? 'paneluser' : 'paneladmin';
                 location.href = baseURI+controler+'/recitales/delete/'+data.id;
             }
             return false;
@@ -214,9 +213,16 @@ var Recitales = new (function(){
         },
         del_image : function(el, filename){
             if( confirm('¿Está seguro de eliminar?') ){
+                var parent = $(el).parent().parent();
+                var tagImg = parent.find('img');
+                var tagA = parent.find('a');
+
                 $(el).hide();
-                $(el).parent().parent().find('img').hide();
-                images_del.push(filename);
+                parent.find('div.jq-preview').hide();
+                
+                images_field_del.push(filename);
+                image_thumb_del.push(tagImg.attr('src'));
+                image_full_del.push(tagA.attr('href'));
             }
         }
 
@@ -293,7 +299,9 @@ var Recitales = new (function(){
     var f=false;
     var This=this;
     var lugarvta_id_del = new Array();
-    var images_del = new Array();
+    var images_field_del = new Array();
+    var image_full_del = new Array();
+    var image_thumb_del = new Array();
 
     /* PRIVATE METHODS
      **************************************************************************/

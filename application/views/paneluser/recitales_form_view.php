@@ -95,8 +95,8 @@
 
                 <div class="span-16 append-bottom-small">
                     <div class="span-2"><label class="label-form">Imagen <?=$n?></label></div>
-                    <?php if( $image_full!='' ){?> 
-                        <div class="float-left"><a href="<?=$image_full;?>" rel="group"><img src="<?=UPLOAD_DIR.$image_thumb;?>" alt="<?=$image_thumb;?>" /></a></div>
+                    <?php if( $image_full!='' ){?>
+                        <div class="float-left jq-preview"><a href="<?=UPLOAD_DIR.$image_full;?>" rel="group" class="jq-fancybox""><img src="<?=UPLOAD_DIR.$image_thumb;?>" alt="<?=$image_thumb;?>" /></a></div>
                         <div class="float-left margin-left-small">
                             <input type="file" class="input-form" name="fileUpload[]" />
                             <button type="button" class="button-large margin-left-small" onclick="Recitales.action.del_image(this, '<?=$prefix;?>');">Eliminar</button>

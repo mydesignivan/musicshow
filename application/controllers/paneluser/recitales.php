@@ -39,7 +39,7 @@ class Recitales extends Controller{
         }
 
         $this->_data = $this->dataview->set_data(array(
-            'tlp_script'   => array('validator', 'popup', 'recitales_form'),
+            'tlp_script'   => array('validator', 'popup', 'fancybox', 'recitales_form'),
             'tlp_section'  => 'paneluser/recitales_form_view.php',
             'comboGeneros' =>  $this->lists_model->get_generos(array("0"=>"Seleccione un Genero")),
             'info'         =>  $info,
@@ -172,15 +172,12 @@ class Recitales extends Controller{
     private function _upload(){
         $this->load->library('image_lib');
 
-        /*echo "<pre>";
-        print_r($_FILES);
-        echo "</pre>";*/
-
+        $return = array();
         $files = array();
         $files['name'] = $_FILES['fileUpload']['name'];
         $files['tmp_name'] = $_FILES['fileUpload']['tmp_name'];
         $files['type'] = $_FILES['fileUpload']['type'];
-        $return = array();
+        $user_id = $this->session->userdata('user_id');
 
         for( $n=0; $n<=4; $n++ ) {
             $return['image_full'][$n]='';
@@ -191,12 +188,13 @@ class Recitales extends Controller{
             $name = $files['name'][$n];
             if( $name!='' ){
                 $partfile = part_filename(strtolower($name));
-                $filename = $this->session->userdata('user_id') ."_". uniqid(time()) .".".$partfile['ext'];
+                $filename = $user_id ."_". uniqid(time()) .".".$partfile['ext'];
 
                 // Muevo la imagen original
                 move_uploaded_file($files['tmp_name'][$n], UPLOAD_DIR.$filename);
 
                 // Creo una copia y dimensiono la imagen  (THUMB)
+                $this->image_lib->clear();
                 $config['image_library'] = 'GD2';
                 $config['source_image'] = UPLOAD_DIR.$filename;
                 $config['create_thumb'] = TRUE;
@@ -206,22 +204,11 @@ class Recitales extends Controller{
                 $this->image_lib->initialize($config);
                 if( !$this->image_lib->resize() ) die($this->image_lib->display_errors());
 
-                // Dimensiono la imagen original   (ORIGINAL)
-                $config['image_library'] = 'GD2';
-                $config['source_image'] = UPLOAD_DIR.$filename;
-                $config['create_thumb'] = FALSE;
-                $config['maintain_ratio'] = TRUE;
-                $config['width'] = IMAGE_ORIGINAL_WIDTH;
-                $config['height'] = IMAGE_ORIGINAL_HEIGHT;
-                $this->image_lib->initialize($config);
-                if( !$this->image_lib->resize() ) die($this->image_lib->display_errors());
-
                 $partfile = part_filename($filename);
                 $return['image_full'][$n] = $filename;
                 $return['image_thumb'][$n] = $partfile['basename']."_thumb.".$partfile['ext'];
             }
         }
-
         $return['status']="ok";
         return $return;
     }

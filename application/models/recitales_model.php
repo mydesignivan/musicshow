@@ -37,6 +37,11 @@ class recitales_model extends Model {
 
         $lugarvta_id = $data['lugarvta_id'];
         $json = json_decode($data['json']);
+
+        /*echo "<pre>";
+        print_r($json);
+        echo "</pre>";*/
+
         unset($data['lugarvta_id']);
         unset($data['json']);
 
@@ -61,15 +66,17 @@ class recitales_model extends Model {
         }
 
         // Elimina los lugares asociados con un recital
-        if( count($json['lugarvta_id_del'])>0 ){
-            $this->db->where_in('id', $json['lugarvta_id_del']);
+        if( count($json->lugarvta_id_del)>0 ){
+            $this->db->where_in('id', $json->lugarvta_id_del);
             $this->db->delete(TBL_RECITALES_TO_LUGARVTA);
         }
 
         // Vacia el/los campos image
-        if( count($json['images_id_del'])>0 ){
+        $data_imgdel = $json->images_del;
+        if( count($data_imgdel->field)>0 ){
             $data = array();
-            foreach( $json['images_id_del'] as $prefix ){
+            for( $n=0; $n<=count($data_imgdel->field)-1; $n++ ){
+                $prefix = $data_imgdel->field[$n];
                 $data[$prefix."_thumb"]="";
                 $data[$prefix."_full"]="";
             }
