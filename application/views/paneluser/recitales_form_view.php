@@ -81,7 +81,7 @@
                 <?php for( $n=1; $n<=5; $n++ ){?>
                 <div class="append-bottom-small">
                     <div class="span-2"><label class="label-form">Imagen <?=$n?></label></div>
-                    <input type="file" class="input-form" name="fileUpload[]" />
+                    <input type="file" class="input-form" name="fileUpload[]" onchange="Recitales.events.inputfile_change(this, 'image<?=$n;?>')" />
                 </div>
                 <?php }?>
 
@@ -98,7 +98,7 @@
                     <?php if( $image_full!='' ){?>
                         <div class="float-left jq-preview"><a href="<?=UPLOAD_DIR.$image_full;?>" rel="group" class="jq-fancybox""><img src="<?=UPLOAD_DIR.$image_thumb;?>" alt="<?=$image_thumb;?>" /></a></div>
                         <div class="float-left margin-left-small">
-                            <input type="file" class="input-form" name="fileUpload[]" />
+                            <input type="file" class="input-form" name="fileUpload[]" onchange="Recitales.events.inputfile_change(this, '<?=$prefix;?>');" />
                             <button type="button" class="button-large margin-left-small" onclick="Recitales.action.del_image(this, '<?=$prefix;?>');">Eliminar</button>
                         </div>
                     <?php }else{?>

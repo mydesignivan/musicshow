@@ -56,20 +56,10 @@ class Recitales extends Controller{
             if( $resultUpload['status']=="ok" ){
                 // Guardo los datos
                 $data = $this->_request_fields();
-                $data = array_merge(array(
-                    'image1_full'    => $resultUpload['image_full'][0],
-                    'image2_full'    => $resultUpload['image_full'][1],
-                    'image3_full'    => $resultUpload['image_full'][2],
-                    'image4_full'    => $resultUpload['image_full'][3],
-                    'image5_full'    => $resultUpload['image_full'][4],
-                    'image1_thumb'   => $resultUpload['image_thumb'][0],
-                    'image2_thumb'   => $resultUpload['image_thumb'][1],
-                    'image3_thumb'   => $resultUpload['image_thumb'][2],
-                    'image4_thumb'   => $resultUpload['image_thumb'][3],
-                    'image5_thumb'   => $resultUpload['image_thumb'][4],
-                    'user_id'       => $this->session->userdata('user_id'),
-                    'date_added'    => date('Y-m-d h:i:s')
-                ), $data);
+                $data['user_id'] = $this->session->userdata('user_id');
+                $data['date_added'] = date('Y-m-d h:i:s');
+                $data = array_merge($resultUpload['result'], $data);
+
                 $this->recitales_model->create($data);
 
                 redirect('/paneluser/recitales/');
@@ -83,20 +73,9 @@ class Recitales extends Controller{
 
             if( $resultUpload['status']=="ok" ){
                 $data = $this->_request_fields();
-                $data = array_merge(array(
-                    'image1_full'    => $resultUpload['image_full'][0],
-                    'image2_full'    => $resultUpload['image_full'][1],
-                    'image3_full'    => $resultUpload['image_full'][2],
-                    'image4_full'    => $resultUpload['image_full'][3],
-                    'image5_full'    => $resultUpload['image_full'][4],
-                    'image1_thumb'   => $resultUpload['image_thumb'][0],
-                    'image2_thumb'   => $resultUpload['image_thumb'][1],
-                    'image3_thumb'   => $resultUpload['image_thumb'][2],
-                    'image4_thumb'   => $resultUpload['image_thumb'][3],
-                    'image5_thumb'   => $resultUpload['image_thumb'][4],
-                    'last_modified'   =>  date('Y-m-d h:i:s'),
-                    'json'            =>  $_POST['json']
-                ), $data);
+                $data['last_modified'] = date('Y-m-d h:i:s');
+                $data['json'] = $_POST['json'];
+                $data = array_merge($resultUpload['result'], $data);
 
                 $this->recitales_model->edit($data, $_POST['recital_id']);
                 redirect('/paneluser/recitales/');
@@ -172,17 +151,15 @@ class Recitales extends Controller{
     private function _upload(){
         $this->load->library('image_lib');
 
-        $return = array();
+        $return = array(
+            'status'=>"ok",
+            'result'=>array()
+        );
         $files = array();
         $files['name'] = $_FILES['fileUpload']['name'];
         $files['tmp_name'] = $_FILES['fileUpload']['tmp_name'];
         $files['type'] = $_FILES['fileUpload']['type'];
         $user_id = $this->session->userdata('user_id');
-
-        for( $n=0; $n<=4; $n++ ) {
-            $return['image_full'][$n]='';
-            $return['image_thumb'][$n]='';
-        }
 
         for( $n=0; $n<=count($files['name'])-1; $n++ ){
             $name = $files['name'][$n];
@@ -205,11 +182,10 @@ class Recitales extends Controller{
                 if( !$this->image_lib->resize() ) die($this->image_lib->display_errors());
 
                 $partfile = part_filename($filename);
-                $return['image_full'][$n] = $filename;
-                $return['image_thumb'][$n] = $partfile['basename']."_thumb.".$partfile['ext'];
+                $return['result']['image'.($n+1).'_full'] = $filename;
+                $return['result']['image'.($n+1).'_thumb'] = $partfile['basename']."_thumb.".$partfile['ext'];
             }
         }
-        $return['status']="ok";
         return $return;
     }
 

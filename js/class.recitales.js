@@ -57,7 +57,7 @@ var Recitales = new (function(){
                                 f.json.value = json_encode({
                                     'lugarvta_id_del' : lugarvta_id_del,
                                     'images_del' : {
-                                        'field'       :  images_field_del,
+                                        'prefix'      :  images_prefix_del,
                                         'image_thumb' :  image_thumb_del,
                                         'image_full'  :  image_full_del
                                     }
@@ -211,21 +211,18 @@ var Recitales = new (function(){
             location.href = baseURI+"paneladmin/recitales/search/"+$('#cboSearchBy').val()+"/"+$('#txtSearch').val();
             return false;
         },
-        del_image : function(el, filename){
+        del_image : function(el, prefix){
             if( confirm('¿Está seguro de eliminar?') ){
-                var parent = $(el).parent().parent();
-                var tagImg = parent.find('img');
-                var tagA = parent.find('a');
-
-                $(el).hide();
-                parent.find('div.jq-preview').hide();
-                
-                images_field_del.push(filename);
-                image_thumb_del.push(tagImg.attr('src'));
-                image_full_del.push(tagA.attr('href'));
+                set_param_imagesdel(el, prefix);
             }
         }
 
+    };
+
+    this.events = {
+        inputfile_change : function(el, prefix){
+            set_param_imagesdel(el, prefix);
+        }
     };
 
     this.sel_lugar={
@@ -299,7 +296,7 @@ var Recitales = new (function(){
     var f=false;
     var This=this;
     var lugarvta_id_del = new Array();
-    var images_field_del = new Array();
+    var images_prefix_del = new Array();
     var image_full_del = new Array();
     var image_thumb_del = new Array();
 
@@ -391,5 +388,18 @@ var Recitales = new (function(){
             names : names
         }
     };
+
+    var set_param_imagesdel = function(el, prefix){
+        if( images_prefix_del.indexOf(prefix)==-1 ){
+            var parent = $(el).parent().parent();
+            var tagImg = parent.find('img');
+            var tagA = parent.find('a');
+
+            images_prefix_del.push(prefix);
+            image_thumb_del.push(tagImg.attr('src'));
+            image_full_del.push(tagA.attr('href'));
+        }        
+    };
+
 
 })();
