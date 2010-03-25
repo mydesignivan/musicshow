@@ -3,18 +3,22 @@
  * Simplelogin Class
  **/
 class Simplelogin{
-    private $CI;
-    private $user_table;
 
+    /* CONSTRUCTOR
+     **************************************************************************/
     function __construct(){
         $this->user_table = TBL_USERS;
         $this->CI =& get_instance();
         $this->CI->load->library('encpss');
     }
 
-    /**
-     * @return	boolean
-     */
+    /* PRIVATE PROPERTIES
+     **************************************************************************/
+    private $CI;
+    private $user_table;
+
+    /* PUBLIC FUNCTIONS
+     **************************************************************************/
     public function login($user = '', $password = '') {
         //Make sure login info was sent
         if( $user == '' OR $password == '' ) {
@@ -66,9 +70,6 @@ class Simplelogin{
         }
     }
 
-    /**
-     * @return	void
-     */
     public function logout() {
         //Destroy session
         $this->CI->session->sess_destroy();

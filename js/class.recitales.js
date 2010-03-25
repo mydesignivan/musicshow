@@ -213,6 +213,8 @@ var Recitales = new (function(){
         },
         del_image : function(el, prefix){
             if( confirm('¿Está seguro de eliminar?') ){
+                $(el).hide();
+                $(el).parent().parent().find('.jq-preview').hide();
                 set_param_imagesdel(el, prefix);
             }
         }

@@ -9,3 +9,9 @@ function load_combo(url, el, id, callback){
         if( typeof callback=="function" ) callback();
     });
 }
+
+function search(){
+    if( $('#txtSearch').val().length>0 ){
+        location.href = baseURI+"search/index/keyword/"+$('#txtSearch').val();
+    }
+}

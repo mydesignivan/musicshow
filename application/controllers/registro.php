@@ -1,7 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Registro extends Controller {
 
-    private $_data;
+    /* CONSTRUCTOR
+     **************************************************************************/
     function  __construct() {
         parent::Controller();
         $this->load->model('users_model');
@@ -9,20 +10,22 @@ class Registro extends Controller {
         $this->load->helper('form');
         $this->load->library('encpss');
         $this->load->library('email');
-        $this->load->library('dataview');
-
-        $this->dataview->initializer('frontpage');
-        $this->_data = $this->dataview->set_data(array(
+        $this->load->library('dataview', array(
+            'listGeneros'  => $this->lists_model->get_generos(),
             'tlp_section'  => 'frontpage/registro_view.php',
             'tlp_script'   => array('validator', 'account'),
             'tlp_title'    => TITLE_REGISTRO,
             'comboCountry' => $this->lists_model->get_country(array("0"=>"Seleccione un Pa&iacute;s")),
         ));
+        $this->_data = $this->dataview->get_data();
     }
 
-    /*
-     * FUNCTIONS PUBLIC
-     */
+    /* PRIVATE PROPERTIES
+     **************************************************************************/
+    private $_data;
+
+    /* PUBLIC FUNCTIONS
+     **************************************************************************/
     public function index(){
         $this->load->view('template_frontpage_view', $this->_data);
     }
@@ -130,10 +133,6 @@ class Registro extends Controller {
 
         die("ok");
     }
-
-    /*
-     * FUNCTIONS PRIVATE
-     */
 
 }
 ?>

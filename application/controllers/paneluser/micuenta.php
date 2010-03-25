@@ -1,26 +1,31 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Micuenta extends Controller{
 
-    private $_data;
+    /* CONSTRUCTOR
+     **************************************************************************/
     function __construct(){
         parent::Controller();
         if( !$this->session->userdata('logged_in') || $this->session->userdata('level')==1 ) redirect('/index/');
         
         $this->load->model('users_model');
         $this->load->model('lists_model');
+        $this->load->helper('form');
         $this->load->library('simplelogin');
         $this->load->library('encpss');
-        $this->load->library('dataview');
-        $this->load->helper('form');
-
-        $this->dataview->initializer('paneluser');
-        $this->_data = $this->dataview->set_data(array(
+        $this->load->library('dataview', array(
             'tlp_section'  => 'paneluser/myaccount_view.php',
             'tlp_title'    => 'Mi Cuenta',
             'tlp_script'   => array('validator', 'popup', 'account')
         ));
+        $this->_data = $this->dataview->get_data();
     }
 
+    /* PRIVATE PROPERTIES
+     **************************************************************************/
+    private $_data;
+
+    /* PUBLIC FUNCTIONS
+     **************************************************************************/
     public function index(){
         $info = $this->users_model->get_user();
         $this->_data = $this->dataview->set_data(array(

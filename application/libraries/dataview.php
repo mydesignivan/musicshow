@@ -2,29 +2,21 @@
 
 class dataview{
 
+    /* CONSTRUCTOR
+     **************************************************************************/
+    function  __construct($mydata=array()) {
+        $this->CI =& get_instance();
+        $this->_data = $mydata;
+    }
+
+    /* PRIVATE PROPERTIES
+     **************************************************************************/
     private $CI;
     private $_data;
-    function  __construct() {
-        $this->CI =& get_instance();
-        $this->_data = array();
-    }
 
-    public function initializer($type){
-        switch($type){
-            case "frontpage": default:
-                $this->CI->load->model('lists_model');
-                $this->_data = array(
-                    'listGeneros'  => $this->CI->lists_model->get_generos()
-                );
-            break;
-            case "paneluser":
-            break;
-            case "paneladmin":
-            break;
-        }
-    }
-
-    public function data($key=null){
+    /* PUBLIC FUNCTIONS
+     **************************************************************************/
+    public function get_data($key=null){
         if( $key!=null ) 
             return $this->_data[$key];
         else 
@@ -34,18 +26,14 @@ class dataview{
     public function set_data($param1, $param2=null){
         if( is_string($param1) && is_string($param1) )
             $param1 = array($param1=>$param2);
+
+        $data = $this->_data;
         
         foreach( $param1 as $key=>$val ){
-            if( array_key_exists($key, $this->_data) ){
-                if( $key==null ) unset($this->_data[$key]);
-                else $this->_data[$key] = $param1[$key];
-            }else{
-                $this->_data[$key] = $param1[$key];
-            }
+            $data[$key] = $param1[$key];
         }
-        return $this->_data;
+        return $data;
     }
-
 
 }
 ?>

@@ -1,14 +1,16 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class users_model extends Model {
 
+    /* CONSTRUCTOR
+     **************************************************************************/
     function  __construct() {
         parent::Model();
         $this->load->library('encpss');
+        $this->load->model('recitales_model');
     }
 
-    /*
-     * FUNCTIONS PUBLIC
-     */
+    /* PUBLIC FUNCTIONS
+     **************************************************************************/
     public function create($data = array()) {
 
         //Insert account into the database
@@ -33,16 +35,15 @@ class users_model extends Model {
     }
     
     public function delete($id){
+        $this->recitales_model->delete(array('user_id'=>$id));
+
         if( !$this->db->query('DELETE FROM '.TBL_USERS.' WHERE user_id in('. implode(",", $id) .')') ){
             show_error(sprintf(ERR_DB_DELETE, TBL_USERS));
         }
-        if( !$this->db->query('DELETE FROM '.TBL_RECITALES.' WHERE user_id in('. implode(",", $id) .')') ){
-            show_error(sprintf(ERR_DB_DELETE, TBL_RECITALES));
+        if( !$this->db->query('DELETE FROM '.TBL_LUGARES.' WHERE user_id in('. implode(",", $id) .')') ){
+            show_error(sprintf(ERR_DB_DELETE, TBL_LUGARES));
         }
-        if( !$this->db->query('DELETE FROM '.TBL_RECITALES_TO_LUGARVTA.' WHERE user_id in('. implode(",", $id) .')') ){
-            show_error(sprintf(ERR_DB_DELETE, TBL_RECITALES_TO_LUGARVTA));
-        }
-
+        
         return true;
     }
 

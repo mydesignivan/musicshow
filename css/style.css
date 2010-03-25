@@ -142,6 +142,9 @@ input.input-lugar{
     background-color: #fff;
     border:1px solid #ccc;
 }
+input.input-search{
+    width: 150px;
+}
 textarea.textarea-contact{
     width: 450px;
     height: 180px;
@@ -393,9 +396,13 @@ ul.menu{
         float:left;
         width: 120px;
         text-align: center;
+        /*border:1px solid red;*/
     }
     .anunciante .col-2{
+        float:left;
+        width: 510px;
         font-size: 90%;
+        /*border:1px solid red;*/
     }
 
 /*------------------------------------------------------------------------------

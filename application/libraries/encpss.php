@@ -2,7 +2,8 @@
 
 class Encpss{
 
-    private $CI;
+    /* CONSTRUCTOR
+     **************************************************************************/
     function  __construct() {
         $this->CI =& get_instance();
         $this->CI->load->library('encrypt');
@@ -10,6 +11,12 @@ class Encpss{
         $this->CI->encrypt->set_mode(MCRYPT_MODE_CFB);
     }
 
+    /* PRIVATE PROPERTIES
+     **************************************************************************/
+    private $CI;
+
+    /* PUBLIC FUNCTIONS
+     **************************************************************************/
     public function encode($pss){
         if( empty($pss) ) return '';
 

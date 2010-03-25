@@ -1,11 +1,15 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Captcha extends Controller {
 
+    /* CONSTRUCTOR
+     **************************************************************************/
     function __construct(){
         parent::Controller();
         $this->load->library('captcha/securimage');
     }
 
+    /* PUBLIC FUNCTIONS
+     **************************************************************************/
     public function index(){
         // Change some settings
 

@@ -1,13 +1,14 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class recitales_model extends Model {
 
+    /* CONSTRUCTOR
+     **************************************************************************/
     function  __construct() {
         parent::Model();
     }
 
-    /*
-     * FUNCTIONS PUBLIC
-     */
+    /* PUBLIC FUNCTIONS
+     **************************************************************************/
     public function create($data = array()) {
 
         $lugarvta_id = $data['lugarvta_id'];
@@ -38,11 +39,11 @@ class recitales_model extends Model {
         $lugarvta_id = $data['lugarvta_id'];
         $json = json_decode($data['json']);
 
-        echo "<pre>";
+        /*echo "<pre>";
         print_r($json);
-        echo "</pre>";
+        echo "</pre>";*/
 
-        /*die();*/
+        //die();
 
         unset($data['lugarvta_id']);
         unset($data['json']);
@@ -93,11 +94,25 @@ class recitales_model extends Model {
         return true;
     }
     
-    public function delete($id){
-        if( !$this->db->query('DELETE FROM '.TBL_RECITALES.' WHERE recital_id in('. implode(",", $id) .')') ){
+    public function delete($where){
+        $this->db->select('image1_thumb,image2_thumb,image3_thumb,image4_thumb,image5_thumb,image1_full,image2_full,image3_full,image4_full,image5_full');
+        $this->db->where_in(key($where), current($where));
+        $query = $this->db->get(TBL_RECITALES);
+        foreach( $query->result_array() as $row ){
+            for( $n=1; $n<=5; $n++ ){
+                $fn_image_thumb = $row['image'.$n.'_thumb'];
+                $fn_image_full = $row['image'.$n.'_full'];
+                if( $fn_image_thumb!="" ){
+                    @unlink(UPLOAD_DIR.$fn_image_thumb);
+                    @unlink(UPLOAD_DIR.$fn_image_full);
+                }
+            }
+        }
+        
+        if( !$this->db->query('DELETE FROM '.TBL_RECITALES.' WHERE '.key($where).' in('. implode(",", current($where)) .')') ){
             show_error(sprintf(ERR_DB_DELETE, TBL_RECITALES));
         }
-        if( !$this->db->query('DELETE FROM '.TBL_RECITALES_TO_LUGARVTA.' WHERE recital_id in('. implode(",", $id) .')') ){
+        if( !$this->db->query('DELETE FROM '.TBL_RECITALES_TO_LUGARVTA.' WHERE '.key($where).' in('. implode(",", current($where)) .')') ){
             show_error(sprintf(ERR_DB_DELETE, TBL_RECITALES_TO_LUGARVTA));
         }
 

@@ -2,11 +2,15 @@
 
 class Login extends Controller{
 
+    /* CONSTRUCTOR
+     **************************************************************************/
     function __construct(){
         parent::Controller();
         $this->load->library('simplelogin');
     }
 
+    /* PUBLIC FUNCTIONS
+     **************************************************************************/
     public function index(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
             $statusLogin = $this->simplelogin->login($_POST["txtLoginUser"], $_POST["txtLoginPass"]);

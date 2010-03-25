@@ -1,7 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Recitales extends Controller{
 
-    private $_data;
+    /* CONSTRUCTOR
+     **************************************************************************/
     function __construct(){
         parent::Controller();
         if( !$this->session->userdata('logged_in') || $this->session->userdata('level')==1 ) redirect('/index/');
@@ -9,15 +10,19 @@ class Recitales extends Controller{
         $this->load->model('recitales_model');
         $this->load->model('lists_model');
         $this->load->helper('form');
-        $this->load->library('dataview');
-
-        $this->dataview->initializer('paneluser');
-        $this->_data = $this->dataview->set_data(array(
+        $this->load->library('dataview', array(
             'tlp_section'  => 'paneluser/recitales_list_view.php',
             'tlp_title'    => 'Recitales'
         ));
+        $this->_data = $this->dataview->get_data();
     }
 
+    /* PRIVATE PROPERTIES
+     **************************************************************************/
+    private $_data;
+
+    /* PUBLIC FUNCTIONS
+     **************************************************************************/
     public function index(){
         $this->_data = $this->dataview->set_data(array(
             'tlp_script'    => 'recitales_list',
@@ -87,7 +92,7 @@ class Recitales extends Controller{
             $id = $this->uri->segment_array();
             array_splice($id, 0,3);
 
-            if( $this->recitales_model->delete($id) ){
+            if( $this->recitales_model->delete(array('recital_id'=>$id)) ){
                 redirect('/paneluser/recitales/');
             }else{
                 show_error(ERR_RECITAL_DELETE);

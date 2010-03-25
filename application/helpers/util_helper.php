@@ -1,5 +1,11 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+function print_array($arr){
+    echo "<pre>";
+    print_r($arr);
+    echo "</pre>";
+}
+
 function file_search_special($dir, $filename_search){
     if( substr($dir,-1)=="/" ) $dir = substr($dir, 0, strlen($dir)-1);
     if( is_dir($dir) ){

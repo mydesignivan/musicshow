@@ -8,15 +8,13 @@ class Usuarios extends Controller{
         if( !$this->session->userdata('logged_in') || $this->session->userdata('level')==0 ) redirect('/index/');
         
         $this->load->model('users_model');
-        $this->load->library('dataview');
         $this->load->library('pagination');
-
-        $this->dataview->initializer('paneladmin');
-        $this->_data = $this->dataview->set_data(array(
+        $this->load->library('dataview', array(
             'tlp_section'  => 'paneladmin/users_list_view.php',
             'tlp_title'    => 'Usuarios'
         ));
-        $this->count_per_page=10;
+        $this->_data = $this->dataview->get_data();
+        $this->count_per_page = 10;
     }
 
     /* PRIVATE PROPERTIES

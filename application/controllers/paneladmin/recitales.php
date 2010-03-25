@@ -8,14 +8,13 @@ class Recitales extends Controller{
         if( !$this->session->userdata('logged_in') || $this->session->userdata('level')==0 ) redirect('/index/');
         
         $this->load->model('recitales_model');
-        $this->load->library('dataview');
         $this->load->library('pagination');
-
-        $this->dataview->initializer('paneladmin');
-        $this->_data = $this->dataview->set_data(array(
+        $this->load->library('dataview', array(
             'tlp_section'  => 'paneladmin/recitales_list_view.php',
             'tlp_title'    => 'Recitales'
         ));
+
+        $this->_data = $this->dataview->get_data();
         $this->count_per_page=10;
     }
 

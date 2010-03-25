@@ -1,7 +1,8 @@
 <?php if (!defined('BASEPATH')) exit('No direct script access allowed');
 class Index extends Controller{
 
-    private $_data;
+    /* CONSTRUCTOR
+     **************************************************************************/
     function __construct(){
         parent::Controller();
         if( !$this->session->userdata('logged_in') || $this->session->userdata('level')==0 ) redirect('/index/');
@@ -9,9 +10,15 @@ class Index extends Controller{
         $this->load->model('content_model');
         $this->load->library('dataview');
 
-        $this->dataview->initializer('paneladmin');
+        $this->_data = $this->dataview->get_data();
     }
 
+    /* PRIVATE PROPERTIES
+     **************************************************************************/
+    private $_data;
+
+    /* PUBLIC FUNCTIONS
+     **************************************************************************/
     public function index(){
         $this->_data = $this->dataview->set_data(array(
             'tlp_section'  => 'paneladmin/index_view.php',
