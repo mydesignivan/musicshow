@@ -38,7 +38,7 @@ class destacados_model extends Model {
         return true;
     }
     
-    public function get_user_view($user_id) {
+    public function get_destacado_view($user_id) {
         $sql = "username,";
         $sql.= "CONCAT(firstname,', ',lastname) as name,";
         $sql.= "CONCAT('(',phone_area,') ',phone) as phone,";
@@ -83,6 +83,12 @@ class destacados_model extends Model {
         if( $result->num_rows>0 ) return "existsuser";
 
         return "ok";
+    }
+
+    public function get_content(){
+        $this->db->select('content');
+        $query = $this->db->get(TBL_CONTENT);
+        return $query->row_array();
     }
 
 

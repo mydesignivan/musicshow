@@ -6,6 +6,7 @@ class Index extends Controller {
     function  __construct() {
         parent::Controller();
         $this->load->model('lists_model');
+        $this->load->model('destacados_model');
 
         $this->load->library('dataview', array(
             'listGeneros'  => $this->lists_model->get_generos(),
@@ -22,6 +23,9 @@ class Index extends Controller {
     /* PUBLIC FUNCTIONS
      **************************************************************************/
     public function index(){
+        $this->_data = $this->dataview->set_data(array(
+            'info' => $this->destacados_model->get_content()
+        ));
         $this->load->view('template_frontpage_view', $this->_data);
     }
     

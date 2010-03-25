@@ -46,7 +46,7 @@ class Recitales extends Controller{
             $id = $this->uri->segment_array();
             array_splice($id, 0,3);
 
-            if( $this->recitales_model->delete($id) ){
+            if( $this->recitales_model->delete(array('recital_id'=>$id)) ){
                 redirect('/paneladmin/recitales/');
             }else{
                 show_error(ERR_RECITAL_DELETE);

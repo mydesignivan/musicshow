@@ -29,16 +29,16 @@ class Search extends Controller {
         $arr_seg = $this->uri->uri_to_assoc(3, array('genero', 'keyword', 'date'));
         $offset = (!isset($arr_seg['page']) || $arr_seg['page']=='') ? 0 : $arr_seg['page'];
         $base_url = site_url('/search/index/');
-        $listResult = $this->search_model->search($this->count_per_page, $offset, $arr_seg);
+        $listResultSearch = $this->search_model->search($arr_seg, null, $this->count_per_page, $offset);
 
         $config['base_url'] = $this->get_basename();
-        $config['total_rows'] = $listResult['count_rows'];
+        $config['total_rows'] = $listResultSearch['count_rows'];
         $config['per_page'] = $this->count_per_page;
         $config['uri_segment'] = $this->uri->total_segments();
         $this->pagination->initialize($config);
 
         $this->_data = $this->dataview->set_data(array(
-            'listResult' => $listResult['result']
+            'listResultSearch' => $listResultSearch['result']
         ));
 
         $this->load->view('template_frontpage_view', $this->_data);

@@ -122,7 +122,7 @@ class recitales_model extends Model {
     public function get_list() {
         $sql = 'recital_id,';
         $sql.= 'banda,';
-        $sql.= '`date`,';
+        $sql.= "REPLACE(`date`, CHAR(44), '/') as `date`,";
         $sql.= "(SELECT name FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_name,";
         $sql.= "(SELECT address FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_address";
 
@@ -139,7 +139,7 @@ class recitales_model extends Model {
         $sql = "SELECT * FROM (SELECT ";
         $sql.= 'recital_id,';
         $sql.= 'banda,';
-        $sql.= '`date`,';
+        $sql.= "REPLACE(`date`, CHAR(44), '/') as `date`,";
         $sql.= "(SELECT name FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_name,";
         $sql.= "(SELECT address FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_address ";
         $sql.= "FROM ".TBL_RECITALES.") a ";
@@ -171,6 +171,7 @@ class recitales_model extends Model {
 
     public function get_recital($recital_id) {
         $sql = TBL_RECITALES.'.*,';
+        $sql.= "REPLACE(".TBL_RECITALES.".`date`, CHAR(44), '/') as `date`,";
         $sql.= TBL_LUGARES .'.name as lugar_name,';
         $sql.= TBL_LUGARES .'.address as lugar_address';
 
@@ -199,6 +200,7 @@ class recitales_model extends Model {
 
     public function get_view_recital($recital_id) {
         $sql = TBL_RECITALES.'.*,';
+        $sql.= "REPLACE(".TBL_RECITALES.".`date`, CHAR(44), '/') as `date`,";
         $sql.= TBL_LUGARES .'.name as lugar_name,';
         $sql.= TBL_LUGARES .'.address as lugar_address,';
         $sql.= "(SELECT name FROM ".TBL_GENEROS." WHERE genero_id = ".TBL_RECITALES.".genero_id) as genero_name,";
@@ -242,41 +244,6 @@ class recitales_model extends Model {
         if( $result->num_rows>0 ) return "exists";
 
         return "ok";
-    }
-
-    public function activate($user_id){
-        $result = $this->db->get_where(TBL_USERS, array('user_id'=>$user_id));
-        if( $result->num_rows>0 ) {
-            $row = $result->row_array();
-
-            if( $row['active']==1 ) return false;
-
-            $this->db->where('user_id', $user_id);
-            if( !$this->db->update(TBL_USERS, array('active'=>1)) ){
-                show_error(sprintf(ERR_DB_UPDATE, TBL_USERS));
-            }
-            return $result;
-
-        }else return false;
-
-    }
-
-    public function rememberpass($field){
-        $result = $this->db->get_where(TBL_USERS, "(email = '".$field."' or username='".$field."') and active=0");
-        if( $result->num_rows >0 ) return array("status"=>"userinactive");
-
-        $result = $this->db->get_where(TBL_USERS, "(email = '".$field."' or username='".$field."') and active=1");
-        if( $result->num_rows==0 ) return array("status"=>"notexists");
-
-        $data = $result->row_array();
-        $data['token'] = uniqid(time());
-
-        $this->db->where('user_id', $data['user_id']);
-        if( !$this->db->update(TBL_USERS, array('token'=>$data['token'])) ){
-            show_error(sprintf(ERR_DB_UPDATE, TBL_USERS));
-        }
-
-        return array("status"=>"ok", "data"=>$data);
     }
 
     public function list_lugares($city_id){

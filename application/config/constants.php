@@ -182,7 +182,7 @@ define('META_DESCRIPTION', '');
 | CONFIG
 |--------------------------------------------------------------------------
 */
-define('CFG_COUNT_FREE_RECITAL', 5);   // Cantidad de recitales que puede publicar gratis
+define('CFG_COUNT_FREE_RECITAL', 50);   // Cantidad de recitales que puede publicar gratis
 
 
 /* End of file constants.php */

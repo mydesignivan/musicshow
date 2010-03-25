@@ -9,13 +9,13 @@ class search_model extends Model {
 
     /* PUBLIC FUNCTIONS
      **************************************************************************/
-    public function search($limit, $offset, $where) {
+    public function search($where, $orderby=null, $limit=null, $offset=null) {
         $sql = "SELECT * FROM (SELECT ";
         $sql.= 'recital_id,';
         $sql.= 'genero_id,';
         $sql.= "(SELECT name FROM ".TBL_GENEROS." WHERE genero_id=".TBL_RECITALES.".genero_id) AS genero,";
         $sql.= 'banda,';
-        $sql.= '`date`,';
+        $sql.= "`date`,";
         $sql.= '`image1_thumb`,';
         $sql.= '`image1_full`,';
         $sql.= "(SELECT lc.name FROM list_city lc JOIN lugares l ON lc.city_id = l.city_id WHERE l.lugar_id = ".TBL_RECITALES.".lugar_id) as city,";
@@ -25,26 +25,32 @@ class search_model extends Model {
 
         $arr_where = array();
         if( !empty($where['genero']) ) $arr_where[] = "genero_id = ".$where['genero'];
-        if( !empty($where['keyword']) ) $arr_where[] = "banda LIKE '%".$where['keyword']."%' OR lugar_name LIKE '%".$where['keyword']."%' OR lugar_address LIKE '%".$where['keyword']."%'";
-        if( !empty($where['date']) ) $arr_where[] = "date = '".$where['date']."'";
+        if( !empty($where['keyword']) ) $arr_where[] = "banda LIKE '%".$where['keyword']."%' OR lugar_name LIKE '%".$where['keyword']."%' OR lugar_address LIKE '%".$where['keyword']."%' OR city LIKE '%".$where['keyword']."%'";
+        if( !empty($where['date']) ) $arr_where[] = "date LIKE '".$where['date']."'";
         
         $sql.= implode(" AND ", $arr_where);
-        $sql.= " ORDER BY recital_id desc ";
+        $sql.= " ORDER BY ";
+        if( $orderby==null ) $sql.= "recital_id desc ";
+        else $sql.= $orderby;
 
         //die($sql);
 
-        $query = $this->db->query($sql);
-        $count_rows = $query->num_rows;
+        $return = array();
 
-        $sql.= "LIMIT $limit";
-        if( $offset!=0 ) $sql.=",$offset";
+        if( is_numeric($limit) && is_numeric($offset) ){
+            $query = $this->db->query($sql);
+            $return['count_rows'] = $query->num_rows;
 
-        $query = $this->db->query($sql);
+            $sql.= "LIMIT $limit";
+            if( $offset!=0 ) $sql.=",$offset";
+        }
 
-        return array(
-            'result'     => $query,
-            'count_rows' => $count_rows
-        );
+        $return['result'] = $this->db->query($sql);
+
+        return $return;
+    }
+
+    public function search_in_all_months(){
     }
 
 }
