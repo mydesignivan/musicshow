@@ -12,6 +12,9 @@ var Dates = new (function(){
         params.slide = params.divmonth.width();
         params.count_pages = params.divmonth.length;
         $('#cal-ajaxloader .mask').css('opacity', '0.5');
+        /*$('#cal-slide .calendar-cont-months').css({
+            width : (params.count_pages*params.slide)+"px"
+        });*/
     };
 
     this.next = function(){
