@@ -1,7 +1,6 @@
 /* 
  * Clase Account
  *
- * Llamada por las vistas: front_registro_view, paneluser_myaccount_view
  * Su funcion: Crear, Modificar o Eliminar usuarios
  *
  */
@@ -90,7 +89,7 @@ var Account = new (function(){
             var search = input.val();
 
             if( $('#cboSearchBy').val()!="active" && search=='' ){
-                alert('Ingrese una palabara a buscar.')
+                alert('Ingrese una palabara a buscar.');
                 input.focus();
                 return false;
             }
@@ -139,13 +138,6 @@ var Account = new (function(){
 
     /* PRIVATE METHODS
      **************************************************************************/
-    var show_error = function(el, msg){
-        $.validator.show(el,{
-            message : msg
-        });
-        el.focus();
-    };
-
     var get_data = function(arr){
         var names="", id="";
 

@@ -1,7 +1,6 @@
 /* 
  * Clase Recitales
  *
- * Llamada por las vistas: paneluser_recitales_view, paneluser_recitalesform_view
  * Su funcion: Crear, Modificar o Eliminar recitales
  *
  */
@@ -10,7 +9,9 @@ var Recitales = new (function(){
 
     /* PUBLIC METHODS
      **************************************************************************/
-    this.initializer = function(){
+    this.initializer = function(param){
+        mode_edit=param;
+
         f = $('#form1')[0];
         if( typeof f!="undefined" ){
             $.validator.setting('#form1 .validate', {
@@ -38,7 +39,7 @@ var Recitales = new (function(){
         
         ajaxloader.show('Validando Formulario');
         $.validator.validate('#form1 .validate', function(error){
-            if( !error && validDate() && validLugar() ){
+            if( !error && validDate() && validLugar() && validImages() ){
                 ajaxloader.show('Enviando Formulario');
 
                 $.ajax({
@@ -53,7 +54,7 @@ var Recitales = new (function(){
                             ajaxloader.hidden();
                             show_error(f.txtBanda, 'La banda ingresada ya existe.');
                         }else if( data=="ok" ){
-                            if( $(f.recital_id).val()!='' ){
+                            if( mode_edit ){
                                 f.json.value = json_encode({
                                     'lugarvta_id_del' : lugarvta_id_del,
                                     'images_del' : {
@@ -200,7 +201,7 @@ var Recitales = new (function(){
         },
         search : function(){
             if( $('#txtSearch').val()=='' ){
-                alert('Ingrese una palabara a buscar.')
+                alert('Ingrese una palabara a buscar.');
                 $('#txtSearch').focus();
                 return false;
             }
@@ -231,7 +232,11 @@ var Recitales = new (function(){
         multiple : false,
         open : function(multiple){
             this.multiple = multiple;
-            popup.load({ajaxUrl : baseURI+'paneluser/recitales/ajax_load_lugar'}, {reload : false});
+            popup.load({ajaxUrl : baseURI+'paneluser/recitales/ajax_load_lugar'}, {
+                reload         : reloadPopup,
+                contentDefault : '<div class="text-center"><img src="images/ajax-loader2.gif" alt="Cargando..." /></div>'
+            });
+            reloadPopup=false;
         },
         select : function(el, lugar_id){
             var cell = $(el).parent().parent().find('td');
@@ -249,6 +254,15 @@ var Recitales = new (function(){
             }else{
                 var table = $('#tblLugaresVta');
                 table.fadeIn('slow');
+                try{
+                    $('#tblLugaresVta tbody .cell-1').each(function(){
+                        if( $(this).text()==lugar ){
+                           alert('El nombre del lugar "'+ lugar +'" ya existe.');
+                           throw true;
+                        }
+                    });
+                }catch(e){return false;}
+
                 var html = '<tr>';
                     html+= '<td class="cell-1">'+ lugar +'</td>';
                     html+= '<td class="cell-2">'+ address +'</td>';
@@ -295,25 +309,17 @@ var Recitales = new (function(){
      **************************************************************************/
     var working=false;
     var working2=false;
+    var mode_edit=false;
     var f=false;
     var This=this;
     var lugarvta_id_del = new Array();
     var images_prefix_del = new Array();
     var image_full_del = new Array();
     var image_thumb_del = new Array();
+    var reloadPopup=true;
 
     /* PRIVATE METHODS
      **************************************************************************/
-    var show_error = function(el, msg, container){
-        if( typeof container=="undefined" ) container=null;
-        $.validator.show(el,{
-            message : msg,
-            container : container
-        });
-        try{el.focus();}
-        catch(e){}        
-    };
-
     var validDate = function(){
         var el = $('#txtDate');
         if( el.val()=="" ){
@@ -338,6 +344,18 @@ var Recitales = new (function(){
         return true;
     };
 
+    var validImages = function(){
+        var selector = "#msg-validator-images";
+        if( (!mode_edit && $('input.jq-inputfile[value!=""]').length==0) || (mode_edit && $('div.jq-preview:visible').length==0) ){
+            show_error(selector, "Debe seleccionar al menos una imagen.", selector);
+            return false;
+        }
+
+        $.validator.hide('#msg-validator-images');
+
+        return true;
+    };
+
     var ajaxloader ={
         show : function(msg){
             var html = '<div class="text-center">';
@@ -345,6 +363,7 @@ var Recitales = new (function(){
                 html+= '<img src="images/ajax-loader.gif" alt="" />';
                 html+= '</div>';
 
+            reloadPopup=true;
             popup.load({html : html}, {
                 reload  : true,
                 bloqEsc : true,
@@ -361,7 +380,7 @@ var Recitales = new (function(){
         img : false,
         a   : false,
         show : function(img){
-            this.img = img
+            this.img = img;
             this.a = this.img.parent().find('a');
             this.img.show();
             this.a.hide();

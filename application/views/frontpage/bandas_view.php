@@ -1,0 +1,1 @@
+<div class="text-center"><img src="images/lema.png" alt="" /></div>

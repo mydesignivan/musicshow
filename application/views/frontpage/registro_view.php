@@ -2,7 +2,6 @@
 
 <?php if( !$this->session->flashdata('statusrecord') ){?>
         <form id="form1" action="<?=site_url('/registro/create/');?>" style="position: relative;" method="post" class="container-form" enctype="application/x-www-form-urlencoded">
-            <div id="mask"></div>
             <?php require('application/views/includes/popup_inc.php');?>
 
             <!-- =================  DATOS DEL USUARIO  ================ -->

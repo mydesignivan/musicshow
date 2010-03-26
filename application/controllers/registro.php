@@ -5,6 +5,8 @@ class Registro extends Controller {
      **************************************************************************/
     function  __construct() {
         parent::Controller();
+        if( $this->session->userdata('logged_in') ) redirect('/index/');
+        
         $this->load->model('users_model');
         $this->load->model('lists_model');
         $this->load->helper('form');
@@ -13,7 +15,7 @@ class Registro extends Controller {
         $this->load->library('dataview', array(
             'listGeneros'  => $this->lists_model->get_generos(),
             'tlp_section'  => 'frontpage/registro_view.php',
-            'tlp_script'   => array('validator', 'account'),
+            'tlp_script'   => array('validator', 'popup', 'account'),
             'tlp_title'    => TITLE_REGISTRO,
             'comboCountry' => $this->lists_model->get_country(array("0"=>"Seleccione un Pa&iacute;s")),
         ));

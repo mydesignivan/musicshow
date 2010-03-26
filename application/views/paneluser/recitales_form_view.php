@@ -76,12 +76,14 @@
                 <div id="msg-validator-lugar" class="prepend-top"></div>
             </fieldset>
 
+            <div id="msg-validator-images" class="append-bottom"></div>
+
             <?php if( !$mode_edit ){?>
 
                 <?php for( $n=1; $n<=5; $n++ ){?>
                 <div class="append-bottom-small">
                     <div class="span-2"><label class="label-form">Imagen <?=$n?></label></div>
-                    <input type="file" class="input-form" name="fileUpload[]" onchange="Recitales.events.inputfile_change(this, 'image<?=$n;?>')" />
+                    <input type="file" class="input-form jq-inputfile" name="fileUpload[]" />
                 </div>
                 <?php }?>
 
@@ -96,7 +98,7 @@
                 <div class="span-16 append-bottom-small">
                     <div class="span-2"><label class="label-form">Imagen <?=$n?></label></div>
                     <?php if( $image_full!='' ){?>
-                        <div class="float-left jq-preview"><a href="<?=UPLOAD_DIR.$image_full;?>" rel="group" class="jq-fancybox""><img src="<?=UPLOAD_DIR.$image_thumb;?>" alt="<?=$image_thumb;?>" /></a></div>
+                        <div class="float-left jq-preview"><a href="<?=UPLOAD_DIR.$image_full;?>" rel="group" class="jq-fancybox"><img src="<?=UPLOAD_DIR.$image_thumb;?>" alt="<?=$image_thumb;?>" /></a></div>
                         <div class="float-left margin-left-small">
                             <input type="file" class="input-form" name="fileUpload[]" onchange="Recitales.events.inputfile_change(this, '<?=$prefix;?>');" />
                             <button type="button" class="button-large margin-left-small" onclick="Recitales.action.del_image(this, '<?=$prefix;?>');">Eliminar</button>
@@ -131,7 +133,7 @@
 
         <script type="text/javascript">
         <!--
-            Recitales.initializer();
+            Recitales.initializer(<?=$mode_edit ? 'true' : 'false';?>);
         -->
         </script>
         <?php }else{?>

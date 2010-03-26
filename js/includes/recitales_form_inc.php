@@ -5,5 +5,5 @@
 
     <script type="text/javascript" src="js/json.js"></script>
 
-    <script type="text/javascript" src="js/class.recitales.js"></script>
+    <script type="text/javascript" src="js/class.recitales<?=$optimizerjs;?>.js"></script>
 

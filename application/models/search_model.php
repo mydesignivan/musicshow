@@ -26,10 +26,11 @@ class search_model extends Model {
         $arr_where = array();
         if( !empty($where['genero']) ) $arr_where[] = "genero_id = ".$where['genero'];
         if( !empty($where['keyword']) ) $arr_where[] = "banda LIKE '%".$where['keyword']."%' OR lugar_name LIKE '%".$where['keyword']."%' OR lugar_address LIKE '%".$where['keyword']."%' OR city LIKE '%".$where['keyword']."%'";
-        if( !empty($where['date']) ) $arr_where[] = "date LIKE '".$where['date']."'";
+        if( !empty($where['date']) ) $arr_where[] = $where['date'];
         
         $sql.= implode(" AND ", $arr_where);
         $sql.= " ORDER BY ";
+
         if( $orderby==null ) $sql.= "recital_id desc ";
         else $sql.= $orderby;
 
@@ -41,9 +42,10 @@ class search_model extends Model {
             $query = $this->db->query($sql);
             $return['count_rows'] = $query->num_rows;
 
-            $sql.= "LIMIT $limit";
+            $sql.= " LIMIT $limit";
             if( $offset!=0 ) $sql.=",$offset";
         }
+
 
         $return['result'] = $this->db->query($sql);
 

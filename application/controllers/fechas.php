@@ -22,7 +22,7 @@ class Fechas extends Controller {
 
            {cal_row_start}<tr>{/cal_row_start}
            {cal_cell_start}<td>{/cal_cell_start}
-           {cal_cell_content}<a href="{content}">{day}</a>{/cal_cell_content}
+           {cal_cell_content}<a href="{content}" class="mark">{day}</a>{/cal_cell_content}
            {cal_cell_content_today}<div class="highlight"><a href="{content}">{day}</a></div>{/cal_cell_content_today}
            {cal_cell_no_content}{day}{/cal_cell_no_content}
            {cal_cell_no_content_today}<div class="highlight">{day}</div>{/cal_cell_no_content_today}
@@ -50,11 +50,15 @@ class Fechas extends Controller {
      **************************************************************************/
     public function index(){
         $where = $orderby = array();
-        $where['date'] = '%,%,'.date('Y');
+        $where['date'] = "str_to_date(`date`, '%d,%m,%Y') >= str_to_date('".date('d,m,Y')."', '%d,%m,%Y') and str_to_date(`date`,'%d,%m,%Y') <= str_to_date('31,12,2010', '%d,%m,%Y')";
         $orderby = "CAST(str_to_date(`date`, '%d,%m,%Y') as datetime)";
 
         $listResult = $this->search_model->search($where, $orderby);
-        $listResultSearch = $this->search_model->search(array('date'=>date('d,m,Y')));
+
+        $row = $listResult['result']->row_array();
+
+        $where['date'] = "`date`='".$row['date']."'";
+        $listResultSearch = $this->search_model->search($where);
 
         $this->_data = $this->dataview->set_data(array(
             'listResult' => $listResult['result'],
@@ -66,13 +70,14 @@ class Fechas extends Controller {
     
     /* FUNCTIONS AJAX
      **************************************************************************/
-     public function ajax_show_result(){
-        $listResultSearch = $this->search_model->search(array('date'=>date($_POST['date'])));
+    public function ajax_show_result(){
+        $where['date'] = "`date`='".$_POST['date']."'";
+        $listResultSearch = $this->search_model->search($where);
         $this->load->view('ajax_view', array(
             'section'          =>  'frontpage/ajax/search_list_view.php',
             'listResultSearch' => $listResultSearch['result']
         ));
-     }
+    }
 
 }
 ?>

@@ -1,7 +1,6 @@
 /* 
  * Clase Login
  *
- * Llamada por las vistas: header_inc
  * Su funcion: Muestra/Oculta el form de login y permite el logeo al panel.
  *
  */

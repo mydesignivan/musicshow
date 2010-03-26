@@ -15,3 +15,13 @@ function search(){
         location.href = baseURI+"search/index/keyword/"+$('#txtSearch').val();
     }
 }
+
+function show_error(el, msg, container){
+    if( typeof container=="undefined" ) container=null;
+    $.validator.show(el,{
+        message : msg,
+        container : container
+    });
+    try{el.focus();}
+    catch(e){}
+}

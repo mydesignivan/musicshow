@@ -10,6 +10,16 @@ class Recitales extends Controller{
         $this->load->model('recitales_model');
         $this->load->model('lists_model');
         $this->load->helper('form');
+        $this->load->library('uploadimages', array(
+            'filename'           => 'fileUpload',
+            'upload_dir'         => UPLOAD_DIR,
+            /*'upload_maxsize'     => UPLOAD_MAXSIZE,
+            'upload_filetype'    => UPLOAD_FILETYPE,*/
+            'active_valid'       => false,
+            'image_thumb_width'  => IMAGE_THUMB_WIDTH,
+            'image_thumb_height' => IMAGE_THUMB_HEIGHT
+        ));
+
         $this->load->library('dataview', array(
             'tlp_section'  => 'paneluser/recitales_list_view.php',
             'tlp_title'    => 'Recitales'
@@ -57,7 +67,8 @@ class Recitales extends Controller{
 
     public function create(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
-            $resultUpload = $this->_upload();
+            $resultUpload = $this->uploadimages->upload();
+            
             if( $resultUpload['status']=="ok" ){
                 // Guardo los datos
                 $data = $this->_request_fields();
@@ -74,7 +85,7 @@ class Recitales extends Controller{
 
     public function edit(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
-            $resultUpload = $this->_upload();
+            $resultUpload = $this->uploadimages->upload();
 
             if( $resultUpload['status']=="ok" ){
                 $data = $this->_request_fields();
@@ -151,47 +162,6 @@ class Recitales extends Controller{
             'price'         => $_POST['txtPrice'],
             'price2'        => $_POST['txtPrice2']
         );
-    }
-
-    private function _upload(){
-        $this->load->library('image_lib');
-
-        $return = array(
-            'status'=>"ok",
-            'result'=>array()
-        );
-        $files = array();
-        $files['name'] = $_FILES['fileUpload']['name'];
-        $files['tmp_name'] = $_FILES['fileUpload']['tmp_name'];
-        $files['type'] = $_FILES['fileUpload']['type'];
-        $user_id = $this->session->userdata('user_id');
-
-        for( $n=0; $n<=count($files['name'])-1; $n++ ){
-            $name = $files['name'][$n];
-            if( $name!='' ){
-                $partfile = part_filename(strtolower($name));
-                $filename = $user_id ."_". uniqid(time()) .".".$partfile['ext'];
-
-                // Muevo la imagen original
-                move_uploaded_file($files['tmp_name'][$n], UPLOAD_DIR.$filename);
-
-                // Creo una copia y dimensiono la imagen  (THUMB)
-                $this->image_lib->clear();
-                $config['image_library'] = 'GD2';
-                $config['source_image'] = UPLOAD_DIR.$filename;
-                $config['create_thumb'] = TRUE;
-                $config['maintain_ratio'] = TRUE;
-                $config['width'] = IMAGE_THUMB_WIDTH;
-                $config['height'] = IMAGE_THUMB_HEIGHT;
-                $this->image_lib->initialize($config);
-                if( !$this->image_lib->resize() ) die($this->image_lib->display_errors());
-
-                $partfile = part_filename($filename);
-                $return['result']['image'.($n+1).'_full'] = $filename;
-                $return['result']['image'.($n+1).'_thumb'] = $partfile['basename']."_thumb.".$partfile['ext'];
-            }
-        }
-        return $return;
     }
 
 }

@@ -29,46 +29,45 @@ var ClassPopup = function(setting){
             ajaxUrl  : '',
             html     : ''
         };
-        if( typeof _setting=="object" ) SETTING = $.extend({}, SETTING, {}, _setting);
+        var setting = SETTING;
+
+        if( typeof _setting=="object" ) setting = $.extend({}, SETTING, {}, _setting);
 
         param = $.extend({}, param, {}, _param);
-        _divPopup = $(SETTING.selector);
+        _divPopup = $(setting.selector);
 
-        if( SETTING.maskBG_selector!=null ) _maskBG.show();
-        if( typeof SETTING.onLoad=="function" ) SETTING.onLoad();
+        if( setting.maskBG_selector!=null ) _maskBG.show();
+        if( typeof setting.onLoad=="function" ) setting.onLoad();
 
-        var content = _divPopup.find(SETTING.selector_content);
+        var content = _divPopup.find(setting.selector_content);
         var firstLoad = true;
-        var contentDefault="";
 
-        if( !$.data(_divPopup[0], 'jquery_popup') ){
-            contentDefault = content.html()
-            $.data(_divPopup[0], 'jquery_popup', {contentDefault : contentDefault});
+        if( !$.data(_divPopup[0], 'jquery_popup') ) {
+            $.data(_divPopup[0], 'jquery_popup', true);
         }else{
             firstLoad = false;
-            contentDefault = $.data(_divPopup[0], 'jquery_popup').contentDefault;
         }
 
         _divPopup.show();
 
-        if( SETTING.reload || firstLoad ) {
-            if( param.ajaxUrl!='' ) content.html(contentDefault);
+        if( setting.reload || firstLoad ) {
+            if( param.ajaxUrl!='' ) content.html(setting.contentDefault);
             else{
                 if( param.html!='') content.html(param.html);
             }
             _This.center();
         }
 
-        if( !SETTING.bloqEsc ){
-            $(document.body).keypress(function(e){
-                if( e.keyCode==27 ) _This.close();
+        if( !setting.bloqEsc ){
+            $(document.body).keyup(function(e){
+                if( e.keyCode==27 ) _This.close(setting);
             });
         }
         $(window).resize(function() {
             _This.center();
         });
 
-        if( param.ajaxUrl!='' && (SETTING.reload || firstLoad) ) {
+        if( param.ajaxUrl!='' && (setting.reload || firstLoad) ) {
             $.get(param.ajaxUrl, '', function(data){
                 content.html(data);
             });
@@ -76,16 +75,19 @@ var ClassPopup = function(setting){
         _This.isLoad = true;
     };
 
-    this.close = function(){
+    this.close = function(_setting){
+        var setting = SETTING;
+        if( typeof _setting=="object" ) setting = $.extend({}, SETTING, {}, _setting);
+
         var func = function(){
-            if( typeof SETTING.onClose=="function" ) SETTING.onClose();
+            if( typeof setting.onClose=="function" ) setting.onClose();
             $(document.body).unbind('keypress');
             $(window).unbind('resize');
             _maskBG.hide();
             _This.isLoad = false;
         };
 
-        if( SETTING.efectClose ) _divPopup.fadeOut(300, func);
+        if( setting.efectClose ) _divPopup.fadeOut(300, func);
         else func();
     };
 
@@ -94,6 +96,10 @@ var ClassPopup = function(setting){
             'left' : (($(window).width()/2)-(_divPopup.width()/2))+"px",
             'top'  : (($(window).height()/2)-(_divPopup.height()/2))+"px"
         });
+    };
+
+    this.reset = function(){
+        $.data($(SETTING.selector)[0], 'jquery_popup', false);
     };
 
 
@@ -108,7 +114,8 @@ var ClassPopup = function(setting){
         maskBG_selector  : null,    // Mascara de fondo
         maskBG_opacity   : '0.5',
         onLoad           : null,
-        onClose          : null
+        onClose          : null,
+        defaultContent   : ''
     };
     var _This=this;
     var _divPopup = false;

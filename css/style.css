@@ -38,6 +38,12 @@ h2{
     font-weight: bold;
     color: #F79423;
 }
+h3{
+    font-size: 100%;
+    font-weight: bold;
+    color:#F79424;
+    margin:10px 0 10px 0;
+}
 
 .required{
     font-size: 100%;
@@ -254,7 +260,7 @@ fieldset.fieldset-form{
         position: relative;
         margin-left: 20px;
         margin-top: 5px;
-        overflow: hidden;
+        /*overflow: hidden;*/
     }
     .top-header .container-links{
         float: right;
@@ -364,6 +370,10 @@ ul.menu{
     padding-top: 90px;
     font-size: 90%;
 }
+    .footer img{
+        position: relative;
+        top:6px;
+    }
 
 /*------------------------------------------------------------------------------
  - ESTILOS PARA BANNER
@@ -529,6 +539,12 @@ table.table-calendar{
     margin-right: 10px;
     margin-bottom: 5px;
 }
+    table.table-calendar .mark{
+        background-color: red;
+        color:#fff !important;
+        font-size: 100%;
+        padding:0 2px 0 2px;
+    }
 
 /*------------------------------------------------------------------------------
  - ESTILOS PARA EL CONTAINER "CALENDARIO"

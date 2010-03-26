@@ -1,7 +1,6 @@
 /* 
  * Clase RememberPass
  *
- * Llamada por las vistas: front_rememberpass_view, front_passwordreset_view
  * Su funcion: envia una nueva contraseña al email del usuario
  *
  */
@@ -100,13 +99,5 @@ var RememberPass = new (function(){
     var f=false;
     var working=false;
 
-    /* PRIVATE METHODS
-     **************************************************************************/
-    var show_error = function(el, msg){
-        $.validator.show(el,{
-            message : msg
-        });
-        el.focus();
-    };
 
 })();
