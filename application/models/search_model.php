@@ -21,7 +21,8 @@ class search_model extends Model {
         $sql.= "(SELECT lc.name FROM list_city lc JOIN lugares l ON lc.city_id = l.city_id WHERE l.lugar_id = ".TBL_RECITALES.".lugar_id) as city,";
         $sql.= "(SELECT name FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_name,";
         $sql.= "(SELECT address FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_address ";
-        $sql.= "FROM ".TBL_RECITALES.") a WHERE ";
+        $sql.= "FROM ".TBL_RECITALES.") a ";
+        $sql.= "WHERE str_to_date(`date`, '%d,%m,%Y') >= current_date() AND ";
 
         $arr_where = array();
         if( !empty($where['genero']) ) $arr_where[] = "genero_id = ".$where['genero'];

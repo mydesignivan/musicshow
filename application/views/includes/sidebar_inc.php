@@ -11,5 +11,5 @@
             $arr_seg = $this->uri->uri_to_assoc(3, array('keyword'));
             ?>
             <input type="text" class="input-search" id="txtSearch" onkeypress="if(getKeyCode(event)==13) search();" value="<?=$arr_seg['keyword'];?>" />
-            <button class="button-small" onclick="search();">Buscar</button>
+            <button class="button-small button-search" onclick="search();">Buscar</button>
         </div>

@@ -25,12 +25,6 @@
         <div class="span-16 column-left">
             <?php require($tlp_section);?>
         </div>
-
-        <div class="span-6 last column-right">
-            <div class="sidebar">
-                <?php require('includes/banner_vertical_inc.php');?>
-            </div>
-        </div>
     </div>
     <!-- ================  END MAIN CONTAINER  ================ -->
 

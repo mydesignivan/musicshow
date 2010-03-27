@@ -1,6 +1,6 @@
 <h1>Fechas</h1>
-<?php if( $listResult->num_rows>0 ){?>
 
+<?php if( $listResult->num_rows>0 ){?>
 <div class="calendar-container">
     <div class="calendar-arrow"><a id="cal-arrowl" href="javascript:void(Dates.previous());" class="arrow hide"><img src="images/icon_previous.png" alt="Anterior" /></a></div>
     <div class="calendar-content">
@@ -11,29 +11,35 @@
         <div id="cal-slide" class="calendar-cont-months">
         <?php
         $col=$row=$n=0;
-        $data = array();
+        $data = $arrMonth = array();
+
         foreach( $listResult->result_array() as $rowData ){
+            $month = substr($rowData['date'], 3, 2);
+            $day = (int)substr($rowData['date'], 0, 2);
+
+            $arrMonth[$month][$day] = "javascript:void(Dates.show_result('".$rowData['date']."'));";
+        }
+        
+        foreach( $arrMonth as $month=>$day ){
             $n++;
             $row++;
             $col++;
+
             if( $row==1 ) echo '<div class="calendar-months">';
-            if( $col==1 ) echo '<div class="float-left">';
+            if( $col==1 ) echo '<div class="calendar-row">';
 
-            $month = substr($rowData['date'], 3, 2);
-            $day = (int)substr($rowData['date'], 0, 2);
-            $data = array($day => "javascript:void(Dates.show_result('".$rowData['date']."'));");
-  
-            echo $this->calendar->generate(date('Y'), $month, $data);
+            echo $this->calendar->generate(date('Y'), $month, $day);
 
-            if( $col==2 || $n==$listResult->num_rows ) {
+            if( $col==2 || $n==count($arrMonth) ) {
                 echo '</div>';
                 $col=0;
             }
-            if( $row==4 || $n==$listResult->num_rows ){
+            if( $row==4 || $n==count($arrMonth) ){
                 echo '</div>';
                 $row=0;
             }
-        }?>
+        }
+?>
         </div>
     </div>
     <div class="calendar-arrow"><a id="cal-arrowr" href="javascript:void(Dates.next());" class="arrow <?php if( $n<=4 ) echo "hide";?>"><img src="images/icon_next.png" alt="Siguiente" /></a></div>

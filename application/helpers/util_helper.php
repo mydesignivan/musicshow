@@ -1,9 +1,10 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-function print_array($arr){
+function print_array($arr, $die=FALSE){
     echo "<pre>";
     print_r($arr);
     echo "</pre>";
+    if( $die ) die();
 }
 
 function file_search_special($dir, $filename_search){

@@ -14,7 +14,6 @@
         <h1><?=$title;?></h1>
 
         <?php if( $show_form ){?>
-        <!--<form id="form1" action="<?=$action;?>" method="post" class="container-form" enctype="application/x-www-form-urlencoded">-->
         <form id="form1" action="<?=$action;?>" method="post" class="container-form" enctype="multipart/form-data">
             <?php require('application/views/includes/popup_inc.php');?>
 
@@ -27,17 +26,28 @@
                 <?=form_dropdown('cboGenero', $comboGeneros,  $genero_id, 'class="select-form validate" id="cboGenero"');?>
             </p>
 
-            <fieldset class="fieldset-form">
+            <fieldset class="fieldset-form-medium">
                 <legend><span class="required">*</span>Lugar</legend>
                 <button type="button" class="button-large" onclick="Recitales.sel_lugar.open(false);">Seleccionar</button><br />
-                <p class="prepend-top-medium">
+
+                <div id="msg-validator-lugar" class="prepend-top"></div>
+
+                <div class="span-7 last prepend-top-medium">
                     <label class="float-left label-form">Nombre</label>
                     <input type="text" id="txtPlace" class="float-right input-medium" onkeypress="return false;" value="<?=$info['lugar_name'];?>" />
-                </p>
-                <p class="clear">
+                </div>
+                <div class="span-7 last clear">
                     <label class="float-left label-form">Domicilio</label>
                     <input type="text" id="txtAddress" class="float-right input-medium" onkeypress="return false;" value="<?=$info['lugar_address'];?>" />
-                </p>
+                </div>
+                <div class="span-7 last clear">
+                    <label class="float-left label-form">Provincia</label>
+                    <input type="text" id="txtState" class="float-right input-medium" onkeypress="return false;" value="<?=$info['lugar_state'];?>" />
+                </div>
+                <div class="span-7 last clear">
+                    <label class="float-left label-form">Ciudad</label>
+                    <input type="text" id="txtCity" class="float-right input-medium" onkeypress="return false;" value="<?=$info['lugar_city'];?>" />
+                </div>
             </fieldset>
 
             <p>
@@ -45,15 +55,20 @@
                 <input type="text" id="txtDate" name="txtDate" class="input-date" value="<?=$info['date'];?>" />
             </p>
 
-            <fieldset class="fieldset-form">
+            <fieldset class="fieldset-form-large">
                 <legend><span class="required">*</span>Lugar de ventas de entradas</legend>
                 <button type="button" class="button-large" onclick="Recitales.sel_lugar.open(true);">Seleccionar</button>
+
+                <div id="msg-validator-lugarvta" class="prepend-top"></div>
+
                 <table id="tblLugaresVta" class="table-lugar prepend-top-small <?php if( !$mode_edit ) echo 'hide';?>" cellpadding="0" cellspacing="0">
                     <thead>
                         <tr>
                             <td class="cell-1">Lugar</td>
                             <td class="cell-2">Domicilio</td>
-                            <td class="cell-3">Acci&oacute;n</td>
+                            <td class="cell-3">Provincia</td>
+                            <td class="cell-4">Ciudad</td>
+                            <td class="cell-5">Acci&oacute;n</td>
                         </tr>
                     </thead>
                     <tbody>
@@ -63,7 +78,9 @@
                             <tr>
                                 <td class="cell-1"><?=$row2['lugar_name'];?></td>
                                 <td class="cell-2"><?=$row2['lugar_address'];?></td>
-                                <td class="cell-3">
+                                <td class="cell-3"><?=$row2['lugar_state'];?></td>
+                                <td class="cell-4"><?=$row2['lugar_city'];?></td>
+                                <td class="cell-5">
                                     <a href="javascript:void(0)" onclick="Recitales.action.lugar_remove(this, <?=$row2['id'];?>)" class="link1">Quitar</a>
                                     <input type="hidden" name="lugarvta_id[]" value="<?=$row2['lugar_id'];?>" />
                                 </td>
@@ -72,8 +89,6 @@
                     }?>
                     </tbody>
                 </table>
-
-                <div id="msg-validator-lugar" class="prepend-top"></div>
             </fieldset>
 
             <div id="msg-validator-images" class="append-bottom"></div>
@@ -95,16 +110,16 @@
                     $image_thumb = $info[$prefix.'_thumb'];
                 ?>
 
-                <div class="span-16 append-bottom-small">
+                <div class="span-16 last append-bottom-small">
                     <div class="span-2"><label class="label-form">Imagen <?=$n?></label></div>
                     <?php if( $image_full!='' ){?>
                         <div class="float-left jq-preview"><a href="<?=UPLOAD_DIR.$image_full;?>" rel="group" class="jq-fancybox"><img src="<?=UPLOAD_DIR.$image_thumb;?>" alt="<?=$image_thumb;?>" /></a></div>
                         <div class="float-left margin-left-small">
-                            <input type="file" class="input-form" name="fileUpload[]" onchange="Recitales.events.inputfile_change(this, '<?=$prefix;?>');" />
-                            <button type="button" class="button-large margin-left-small" onclick="Recitales.action.del_image(this, '<?=$prefix;?>');">Eliminar</button>
+                            <input type="file" class="input-form float-left" name="fileUpload[]" size="15" onchange="Recitales.events.inputfile_change(this, '<?=$prefix;?>');" />
+                            <button type="button" class="button-large float-right" onclick="Recitales.action.del_image(this, '<?=$prefix;?>');">Eliminar</button>
                         </div>
                     <?php }else{?>
-                            <input type="file" class="input-form" name="fileUpload[]" />
+                            <input type="file" class="input-form" size="15" name="fileUpload[]" />
                     <?php }?>
                 </div>
                 <?php }?>

@@ -168,6 +168,7 @@ define('TITLE_REGISTRO', '');
 define('TITLE_MICUENTA', '');
 define('TITLE_RECITALES', '');
 define('TITLE_RECORDARCONTRA', '');
+define('TITLE_VERMAS', '');
 
 /*
 |--------------------------------------------------------------------------

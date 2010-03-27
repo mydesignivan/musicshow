@@ -196,7 +196,7 @@ var Recitales = new (function(){
                 if( table.find('tbody tr').length==0 ){
                     table.fadeOut('slow');
                 }
-                lugarvta_id_del.push(id);
+                if( id ) lugarvta_id_del.push(id);
             }
         },
         search : function(){
@@ -242,10 +242,15 @@ var Recitales = new (function(){
             var cell = $(el).parent().parent().find('td');
             var lugar = cell.eq(0).text();
             var address = cell.eq(1).text();
+            var el1 = $('#cboStates')[0], el2 = $('#cboCity')[0];
+            var state = el1.options[el1.selectedIndex].text;
+            var city = el2.options[el2.selectedIndex].text;
 
             if( !this.multiple ){
                 $('#txtPlace').val(lugar);
                 $('#txtAddress').val(address);
+                $('#txtState').val(state);
+                $('#txtCity').val(city);
                 f.lugar_id.value = lugar_id;
                 if( $('#txtPlace').parent().parent().find('.jquery-validator').length>0 ){
                     $.validator.hide('#txtAddress');
@@ -266,7 +271,9 @@ var Recitales = new (function(){
                 var html = '<tr>';
                     html+= '<td class="cell-1">'+ lugar +'</td>';
                     html+= '<td class="cell-2">'+ address +'</td>';
-                    html+= '<td class="cell-3">';
+                    html+= '<td class="cell-3">'+ state +'</td>';
+                    html+= '<td class="cell-4">'+ city +'</td>';
+                    html+= '<td class="cell-5">';
                     html+= '<a href="javascript:void(0)" onclick="Recitales.action.lugar_remove(this)" class="link1">Quitar</a>';
                     html+= '<input type="hidden" name="lugarvta_id[]" value="'+lugar_id+'" />';
                     html+= '</tr>';
@@ -333,13 +340,13 @@ var Recitales = new (function(){
 
     var validLugar = function(){
         if( f.lugar_id.value.length==0 ) {
-            show_error('#txtAddress', 'Debe seleccionar un lugar.');
-            return false;
-        }else $.validator.hide('#txtAddress');
-        if( $("[name='lugarvta_id[]']").length==0 ){
-            show_error('#msg-validator-lugar', 'Debe seleccionar un lugar de venta.', '#msg-validator-lugar');
+            show_error('#msg-validator-lugar', 'Debe seleccionar un lugar.', '#msg-validator-lugar');
             return false;
         }else $.validator.hide('#msg-validator-lugar');
+        if( $("[name='lugarvta_id[]']").length==0 ){
+            show_error('#msg-validator-lugarvta', 'Debe seleccionar un lugar de venta.', '#msg-validator-lugarvta');
+            return false;
+        }else $.validator.hide('#msg-validator-lugarvta');
 
         return true;
     };

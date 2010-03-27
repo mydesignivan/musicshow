@@ -9,14 +9,16 @@
                     $txtSearch = $this->uri->segment(5);
                 }
             ?>
-            <label class="label-form">Buscar por:&nbsp;</label>
-            <select id="cboSearchBy">
-                <option value="banda" <?php if( $cboSearchBy=="banda" ) echo 'selected="selected"';?>>Banda</option>
-                <option value="lugar_name" <?php if( $cboSearchBy=="lugar_name" ) echo 'selected="selected"';?>>Lugar</option>
-                <option value="date" <?php if( $cboSearchBy=="date" ) echo 'selected="selected"';?>>Fecha</option>
-            </select>
-            <input type="text" class="input-medium" id="txtSearch" value="<?=$txtSearch;?>" onkeypress="if( getKeyCode(event)==13 ) Recitales.action.search();" />
-            <button type="button" class="button-medium" onclick="Recitales.action.search();">Buscar</button>
+            <label class="label-form float-left">Buscar por:&nbsp;</label>
+            <div class="float-left">
+                <select id="cboSearchBy">
+                    <option value="banda" <?php if( $cboSearchBy=="banda" ) echo 'selected="selected"';?>>Banda</option>
+                    <option value="lugar_name" <?php if( $cboSearchBy=="lugar_name" ) echo 'selected="selected"';?>>Lugar</option>
+                    <option value="date" <?php if( $cboSearchBy=="date" ) echo 'selected="selected"';?>>Fecha</option>
+                </select>
+                <input type="text" class="input-medium" id="txtSearch" value="<?=$txtSearch;?>" onkeypress="if( getKeyCode(event)==13 ) Recitales.action.search();" />&nbsp;&nbsp;&nbsp;
+            </div>
+            <button type="button" class="button-medium float-left" onclick="Recitales.action.search();">Buscar</button>
         </div>
         <div class="float-right">
             <button type="button" class="button-large" onclick="Recitales.action.del()">Eliminar</button>

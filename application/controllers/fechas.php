@@ -50,21 +50,24 @@ class Fechas extends Controller {
      **************************************************************************/
     public function index(){
         $where = $orderby = array();
-        $where['date'] = "str_to_date(`date`, '%d,%m,%Y') >= str_to_date('".date('d,m,Y')."', '%d,%m,%Y') and str_to_date(`date`,'%d,%m,%Y') <= str_to_date('31,12,2010', '%d,%m,%Y')";
+        $where['date'] = "str_to_date(`date`, '%d,%m,%Y') >= str_to_date('".date('d,m,Y')."', '%d,%m,%Y') and str_to_date(`date`,'%d,%m,%Y') <= str_to_date('31,12,".date('Y')."', '%d,%m,%Y')";
         $orderby = "CAST(str_to_date(`date`, '%d,%m,%Y') as datetime)";
 
         $listResult = $this->search_model->search($where, $orderby);
 
-        $row = $listResult['result']->row_array();
+        $data = array();
+        $data['listResult'] = $listResult['result'];
 
-        $where['date'] = "`date`='".$row['date']."'";
-        $listResultSearch = $this->search_model->search($where);
+        if( $listResult['result']->num_rows>0 ){
+            $row = $listResult['result']->row_array();
 
-        $this->_data = $this->dataview->set_data(array(
-            'listResult' => $listResult['result'],
-            'listResultSearch' => $listResultSearch['result']
-        ));
+            $where['date'] = "`date`='".$row['date']."'";
+            $listResultSearch = $this->search_model->search($where);
 
+            $data['listResultSearch'] = $listResultSearch['result'];
+        }
+        
+        $this->_data = $this->dataview->set_data($data);
         $this->load->view('template_frontpage_view', $this->_data);
     }
     

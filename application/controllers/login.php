@@ -13,11 +13,12 @@ class Login extends Controller{
      **************************************************************************/
     public function index(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
-            $statusLogin = $this->simplelogin->login($_POST["txtLoginUser"], $_POST["txtLoginPass"]);
-            
+            //print_array($_POST);
 
-            if( $statusLogin['error'] ){
-                $this->session->set_flashdata('statusLogin', $statusLogin['message']);
+            $statusLogin = $this->simplelogin->login($_POST["txtLoginUser"], $_POST["txtLoginPass"]);
+
+            if( $statusLogin['status']=="error" ){
+                $this->session->set_flashdata('error_login', $statusLogin['error']);
                 redirect('/index/');
             }else{
                 if( $this->session->userdata('level')==0 ){

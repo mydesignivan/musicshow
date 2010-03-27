@@ -88,10 +88,8 @@ a.link2{
         text-decoration: none;
     }
 a.link-olvidocontra{
-    position: relative;
     font-size: 90%;
     font-style: italic;
-    top: -13px;
 }
 a.link-title{
     font-size: 90%;
@@ -150,6 +148,9 @@ input.input-lugar{
 }
 input.input-search{
     width: 150px;
+}
+input.input-medium{
+    width:170px;
 }
 textarea.textarea-contact{
     width: 450px;
@@ -233,13 +234,16 @@ label.label-legend{
 fieldset{
     padding: 10px;
     font-size: 90%;
+    border:1px #E7B969 solid;
 }
 fieldset legend{
     font-size: 100%;
 }
-fieldset.fieldset-form{
+fieldset.fieldset-form-medium{
     width: 285px;
-    border:1px #E7B969 solid;
+}
+fieldset.fieldset-form-large{
+    width: 600px;
 }
 
 
@@ -261,11 +265,6 @@ fieldset.fieldset-form{
         margin-left: 20px;
         margin-top: 5px;
         /*overflow: hidden;*/
-    }
-    .top-header .container-links{
-        float: right;
-        width: 400px;
-        text-align: right;
     }
     #message-login{
         position:relative;
@@ -441,7 +440,7 @@ ul.list-generos{
     }
         ul.list-generos li a:hover{
             text-decoration: none;
-            color: #00
+            color: #000;
         }
     ul.list-generos li span.item{
         float: left;
@@ -519,11 +518,22 @@ table.table-lugar{
         border-right: 1px dashed #ccc;
     }
     table.table-lugar .cell-2{
-        width:100px;
+        width:150px;
         border-right: 1px dashed #ccc;
+        vertical-align: top;
     }
     table.table-lugar .cell-3{
-        width:40px;
+        width:120px;
+        border-right: 1px dashed #ccc;
+        vertical-align: top;
+    }
+    table.table-lugar .cell-4{
+        width:120px;
+        border-right: 1px dashed #ccc;
+        vertical-align: top;
+    }
+    table.table-lugar .cell-5{
+        width:50px;
         text-align: center;
     }
 
@@ -537,7 +547,7 @@ table.table-calendar{
     background-color: #ccc !important;
     border:2px solid #000;
     margin-right: 10px;
-    margin-bottom: 5px;
+    margin-bottom: 0;
 }
     table.table-calendar .mark{
         background-color: red;
@@ -550,15 +560,18 @@ table.table-calendar{
  - ESTILOS PARA EL CONTAINER "CALENDARIO"
  -----------------------------------------------------------------------------*/
 .calendar-container{
+    overflow: hidden;
     width: 580px;
-    height: 386px;
+    /*height: 386px;*/
+    height:auto;
     margin: 0 auto;
     /*border:1px solid red;*/
 }
     .calendar-container .calendar-arrow{
         float:left;
         width:50px;
-        height: 386px;
+        /*height: 386px;*/
+        height:auto;
         /*background-color: #ccc;*/
     }
         .calendar-container .calendar-arrow .arrow{
@@ -569,7 +582,8 @@ table.table-calendar{
         position:relative;
         float:left;
         width: 448px;
-        height: 386px;
+        /*height: 386px;*/
+        height:auto;
         padding-left: 10px;
         padding-right: 10px;
         overflow: hidden;
@@ -580,13 +594,15 @@ table.table-calendar{
             position: relative;
             left:0;top:0;
             width:2000px;
-            height: 386px;
+            /*height: 386px;*/
+            height:auto;
             /*border:1px solid red;*/
         }
             .calendar-container .calendar-content .calendar-cont-months .calendar-months{
                 float:left;
                 width: 460px;
-                height: 386px;
+                /*height: 386px;*/
+                height:auto;
                 /*border:1px solid green;*/
             }
         .calendar-container .calendar-content .mask{
@@ -603,5 +619,25 @@ table.table-calendar{
             height: 100%;
             z-index: 1010;
         }
+        .calendar-container .calendar-content .calendar-row{
+            float:left;
+            margin-bottom: 10px;
+            /*background-color: #ccc;*/
+        }
 
-
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA LA GELERIA DE IMAGENES
+ -----------------------------------------------------------------------------*/
+.gallery{
+    float: left;
+    clear:left;
+    width: 543px;
+    padding:5px 0 5px 5px;
+}
+    .gallery .gallery-thumb{
+        display: block;
+        float: left;
+        padding: 3px;
+        margin: 0 5px 5px 0;
+        border:1px solid #F7944C;
+    }

@@ -35,16 +35,16 @@ class Simplelogin{
         //Check against user table
         $query = $this->CI->db->get_where($this->user_table, array('username'=>$user));
 
-        if ($query->num_rows > 0) {
+        if( $query->num_rows > 0 ) {
             $row = $query->row_array();
             //Check against password
 
             if( $password != $this->CI->encpss->decode($row['password']) ) {
-                return array('error'=>true, 'message'=>'loginfaild');
+                return array('status'=>'error', 'error'=>'loginfaild');
             }
 
             if( $row['level']==0 && $row['active']==0 ){
-                return array('error'=>true, 'message'=>'userinactive');
+                return array('status'=>'error', 'error'=>'userinactive');
             }
 
             //Destroy old session
@@ -63,10 +63,10 @@ class Simplelogin{
             $this->CI->session->set_userdata(array('logged_in' => true));
 
             //Login was successful
-            return array('error'=>false);
+            return array('status'=>'ok');
         } else {
             //No database result found
-            return array('error'=>true, 'message'=>'loginfaild');
+            return array('status'=>'error', 'error'=>'loginfaild');
         }
     }
 

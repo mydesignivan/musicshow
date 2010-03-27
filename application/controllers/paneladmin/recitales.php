@@ -30,7 +30,7 @@ class Recitales extends Controller{
     }
 
     public function view(){
-        $info = $this->recitales_model->get_view_recital($this->uri->segment(4));
+        $info = $this->recitales_model->get_recital($this->uri->segment(4));
 
         $this->_data = $this->dataview->set_data(array(
             'tlp_section'   => 'paneladmin/recitales_view_view.php',

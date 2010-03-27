@@ -8,17 +8,17 @@
                     <input type="text" name="txtLoginUser" class="input-login" value="Usuario" onfocus="clear_input(event)" onblur="set_input(event, 'Usuario')" />
                     <input type="text" name="txtLoginPass" class="input-login" value="Contrase&ntilde;a" onfocus="clear_input(event, 1)" onblur="set_input(event, 'Contrase&ntilde;a', 1)" />
                     <button type="submit" id="btnLogin" class="button-medium float-left">Entrar</button>
+                    &nbsp;&nbsp;<a href="<?=site_url('/recordarcontrasenia/');?>" class="link-olvidocontra">¿Olvidaste tu Contrase&ntilde;a?</a>
                     <div id="message-login">El usuario y/o password son incorrectos</div>
                 </div>
-                <div class="container-links">
-                    <a href="<?=site_url('/recordarcontrasenia/');?>" class="link-olvidocontra">¿Olvidaste tu Contrase&ntilde;a?</a>
+                <div class="float-right">
                     <a href="<?=site_url('/registro/');?>"><img src="images/btn_registrarse.png" alt="Registrate Gratis!" /></a>
                 </div>
 
-                <?php if( $this->session->flashdata('statusLogin') ) {?>
+                <?php if( $this->session->flashdata('error_login') ) {?>
                     <script type="text/javascript">
                     <!--
-                        Login.show_error("<?=$this->session->flashdata('statusLogin');?>");
+                        Login.show_error("<?=$this->session->flashdata('error_login');?>");
                     -->
                     </script>
                 <?php }?>

@@ -9,19 +9,20 @@
                     $txtSearch = $this->uri->segment(5);
                 }
             ?>
-            <label class="label-form">Buscar por:&nbsp;</label>
-            <select id="cboSearchBy" onchange="Account.events.change_searchby(this.value);">
-                <option value="username" <?php if( $cboSearchBy=="username" ) echo 'selected="selected"';?>>Nombre Usuario</option>
-                <option value="name" <?php if( $cboSearchBy=="name" ) echo 'selected="selected"';?>>Nombre y Apellido</option>
-                <option value="active" <?php if( $cboSearchBy=="active" ) echo 'selected="selected"';?>>Estado</option>
-            </select>
+            <label class="label-form float-left">Buscar por:&nbsp;</label>
+            <div class="float-left">
+                <select id="cboSearchBy" onchange="Account.events.change_searchby(this.value);">
+                    <option value="username" <?php if( $cboSearchBy=="username" ) echo 'selected="selected"';?>>Nombre Usuario</option>
+                    <option value="name" <?php if( $cboSearchBy=="name" ) echo 'selected="selected"';?>>Nombre y Apellido</option>
+                    <option value="active" <?php if( $cboSearchBy=="active" ) echo 'selected="selected"';?>>Estado</option>
+                </select>
 
-            <input type="text" class="input-medium <?php if( $cboSearchBy=="active" ) echo "hide";?>" id="txtSearch" value="<?=$txtSearch;?>" onkeypress="if( getKeyCode(event)==13 ) Account.action.search();" />
-            <select id="cboUserActive" class="<?php if( $cboSearchBy!="active" ) echo "hide";?>">
-                <option value="1" <?php if( $txtSearch==1 ) echo 'selected="selected"';?>>Activo</option>
-                <option value="0" <?php if( $txtSearch==0 ) echo 'selected="selected"';?>>Inactivo</option>
-            </select>
-
+                <input type="text" class="input-medium <?php if( $cboSearchBy=="active" ) echo "hide";?>" id="txtSearch" value="<?=$txtSearch;?>" onkeypress="if( getKeyCode(event)==13 ) Account.action.search();" />
+                <select id="cboUserActive" class="<?php if( $cboSearchBy!="active" ) echo "hide";?>">
+                    <option value="1" <?php if( $txtSearch==1 ) echo 'selected="selected"';?>>Activo</option>
+                    <option value="0" <?php if( $txtSearch==0 ) echo 'selected="selected"';?>>Inactivo</option>
+                </select>&nbsp;&nbsp;
+            </div>
             <button type="button" class="button-medium" onclick="Account.action.search();">Buscar</button>
         </div>
         <div class="float-right">

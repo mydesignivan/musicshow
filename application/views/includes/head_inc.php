@@ -1,3 +1,9 @@
+<?php
+    $execscript=true;
+    $optimizerjs=".min";
+    $optimizercss=".min";
+?>
+
 <base href="<?=base_url();?>" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="images/favicon.ico" rel="stylesheet icon" type="image/ico" />
@@ -8,12 +14,12 @@
 <!--[if lt IE 8]><link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"/><![endif]-->
 <!-------- end block -------->
 
-<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/style<?=$optimizercss;?>.css" rel="stylesheet" type="text/css" />
 
 <!--[if IE 6]> 
 <link rel="stylesheet" href="css/styleIE6.css" type="text/css" />
 <![endif]-->
-<!--[if IE7]>
+<!--[if IE 7]>
 <link rel="stylesheet" href="css/styleIE7.css" type="text/css" />
 <![endif]-->
 
@@ -56,9 +62,3 @@
 <!--[if IE 6]>
 <script type="text/javascript" src="js/DD_belatedPNG.js"></script>
 <![endif]-->
-
-<?php
-    $execscript=true;
-    //$optimizerjs=".min";
-    $optimizerjs="";
-?>

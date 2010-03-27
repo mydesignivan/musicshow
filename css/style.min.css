@@ -1,0 +1,116 @@
+body{font:100% Arial,Helvetica,sans-serif;background:url(../images/pared.jpg) top left repeat-x #F7E8CE;color:#150002}
+.float-left{float:left!important}
+.float-right{float:right!important}
+.padding-null{padding:0!important}
+.margin-null{margin:0!important}
+.tag-center{margin:0 auto!important}
+.text-center{text-align:center!important}
+.margin-left-small{margin-left:15px!important}
+.prepend-top-small{margin-top:5px!important}
+.prepend-top-medium{margin-top:20px!important}
+.append-bottom-small{margin-bottom:5px!important}
+.append-bottom-medium{margin-bottom:10px!important}
+.border{border:1px solid red!important}
+ul{list-style-type:none;margin:0;padding:0}
+p{margin-bottom:0}
+.text-small{font-size:80%}
+h1{font-size:150%}
+h2{font-size:150%;font-weight:700;color:#F79423}
+h3{font-size:100%;font-weight:700;color:#F79424;margin:10px 0}
+.required{font-size:100%;font-weight:700;color:red;margin-right:5px}
+#imgCaptcha{margin-right:10px;border:1px solid #ccc}
+.notice{clear:left;margin-top:100px;text-align:center}
+a{font-size:80%;color:#4C4C4C!important;text-decoration:none;font-family:Arial,Helvetica,sans-serif}
+a:hover{text-decoration:underline}
+a.link1{color:#D47F03;font-weight:700}
+a.link1:hover{color:#4C4C4C}
+a.link2{color:#fff;font-weight:700;font-size:90%}
+a.link2:hover{color:#000;text-decoration:none}
+a.link-olvidocontra{font-size:90%;font-style:italic}
+a.link-title{font-size:90%;color:#150002!important;cursor:pointer}
+input[type=text],input[type=password],textarea{border:1px #E7B969 solid;background-color:#F7E9CF;text-align:left;font-family:Arial, Helvetica, sans-serif;font-size:80%;margin-top:0!important;letter-spacing:1px;padding:3px}
+input.input-login{float:left;width:150px;margin-right:5px}
+input.input-form{font-size:90%;width:300px}
+input.input-phone{font-size:90%;width:225px}
+input.input-phonearea{font-size:90%;width:50px;text-align:center}
+input.input-captcha{width:150px;font-size:120%;text-align:center;letter-spacing:5px;margin-left:5px;margin-top:10px}
+input.input-date{width:90px;text-align:center}
+input.input-lugar{width:120px;background-color:#fff;border:1px solid #ccc}
+input.input-search{width:150px}
+input.input-medium{width:170px}
+textarea.textarea-contact{width:450px;height:180px}
+select{border:1px #E7B969 solid;background-color:#F7E9CF;text-align:left;font-family:Arial, Helvetica, sans-serif;font-size:90%;font-weight:400;margin-top:0!important;letter-spacing:1px;padding:2px 0}
+select.select-form{width:308px}
+select.select-lugar{float:right;width:200px}
+button{font-family:Arial, Helvetica, sans-serif;border:none;font-size:80%;font-weight:700;text-align:center;color:#000}
+button.button-small{background:url(../images/btn_small.png) top left no-repeat;width:46px;height:24px}
+button.button-small:hover{background:url(../images/btn_small_over.png) top left no-repeat}
+button.button-medium{background:url(../images/btn_medium.png) top left no-repeat;width:60px;height:24px}
+button.button-medium:hover{background:url(../images/btn_medium_over.png) top left no-repeat}
+button.button-large{background:url(../images/btn_large.png) top left no-repeat;width:96px;height:24px}
+button.button-large:hover{background:url(../images/btn_large_over.png) top left no-repeat}
+label.label-legend{font-style:italic;font-weight:700;font-size:80%;color:#000}
+fieldset{font-size:90%;border:1px #E7B969 solid;padding:10px}
+fieldset.fieldset-form-medium{width:285px}
+fieldset.fieldset-form-large{width:600px}
+.header{background:url(../images/header.jpg) no-repeat top left;width:950px;height:495px}
+.top-header{position:relative;margin-top:-15px}
+.top-header .login{float:left;position:relative;margin-left:20px;margin-top:5px}
+#message-login{position:relative;float:left;clear:left;left:0;top:-30px;background:#E6EFC2;color:#264409;border:2px solid #C6D880;display:none;font-size:90%;width:312px;height:inherit;text-align:center;padding:5px}
+.menu-container{margin-top:-177px;padding-left:10px}
+ul.menu{float:left;width:600px;height:inherit}
+ul.menu li{display:inline;float:left;width:123px;height:59px;margin-right:10px}
+ul.menu li a{text-decoration:none!important;display:block;width:70px;height:30px;font-family:Arial, Helvetica, sans-serif;font-size:80%;font-weight:700;color:#4C4C4C;padding:30px 0 0 55px}
+ul.menu li a.mnu_inicio{background:url(../images/mnu_inicio.png) no-repeat top left}
+ul.menu li a.mnu_fechas{background:url(../images/mnu_fechas.png) no-repeat top left}
+ul.menu li a.mnu_bandas{background:url(../images/mnu_bandas.png) no-repeat top left}
+ul.menu li a.mnu_recitales{background:url(../images/mnu_recitales.png) no-repeat top left}
+ul.menu li a.mnu_contacto{background:url(../images/mnu_contacto.png) no-repeat top left}
+.main-container{background-color:#fff;padding-bottom:50px}
+.main-container .column-left{min-height:100px;padding:0 10px 10px 35px}
+.main-container .column-right{float:right;min-height:100px;padding-right:10px}
+.main-container .column-right .sidebar{float:left;width:220px;height:inherit;background-color:#F9F5F4;padding:0 0 20px 8px}
+.footer{background:url(../images/footer.png) top left no-repeat;background-color:#fff;width:950px;height:50px;text-align:center;padding-top:90px;font-size:90%}
+.footer img{position:relative;top:6px}
+.banner-horizontal{margin-top:-114px}
+.banner-vertical{float:left;clear:left;margin:10px 0 0 5px}
+.anunciante{float:left;clear:left;width:638px;height:inherit;margin-bottom:20px;padding-bottom:20px;border-bottom:1px dashed #150002}
+.anunciante .col-1{float:left;width:120px;text-align:center;padding-top:4px}
+.anunciante .col-2{float:left;width:510px;font-size:90%}
+h2.title-form{font-size:100%;width:600px;margin-top:15px;border-bottom:1px solid #000}
+ul.list-generos{display:list-item;margin-top:15px;width:220px;font-weight:700;font-size:110%}
+ul.list-generos li a{cursor:pointer}
+ul.list-generos li a:hover{text-decoration:none;color:#000}
+ul.list-generos li span.item{float:left;width:183px;padding-bottom:6px;border-bottom:1px dashed #150002;margin:0 0 6px 8px}
+ul.list-generos li img.item-img{float:left;clear:left;margin-top:3px}
+.list-lugar{float:left;clear:left;width:358px;height:120px;margin-top:5px;border:1px #E7B969 solid;background-color:#F7E9CF;overflow:auto}
+table thead{background-color:#E8BB6A}
+table thead tr td{font-weight:700;padding-left:0}
+table tbody{background-color:#F6E9D5;font-weight:400}
+table tbody tr td{padding:5px 0}
+table tbody .row-par{background-color:#F6F3EE}
+table tbody .row-hover:hover{background-color:#E3C8B9}
+table.table-list{width:100%;margin-top:20px}
+table.table-list .cell-1{width:15px}
+table.table-list .cell-2{width:200px}
+table.table-list .cell-3{width:290px}
+table.table-lugar{width:100%;margin-bottom:0}
+table.table-lugar .cell-1{width:100px;border-right:1px dashed #ccc}
+table.table-lugar .cell-2{width:150px;border-right:1px dashed #ccc;vertical-align:top}
+table.table-lugar .cell-5{width:50px;text-align:center}
+table.table-calendar{float:left;font-size:80%;width:220px;background-color:#ccc!important;border:2px solid #000;margin-right:10px;margin-bottom:0}
+table.table-calendar .mark{background-color:red;color:#fff!important;font-size:100%;padding:0 2px}
+.calendar-container{overflow:hidden;width:580px;height:auto;margin:0 auto}
+.calendar-container .calendar-arrow{float:left;width:50px;height:auto}
+.calendar-container .calendar-arrow .arrow{position:relative;top:170px}
+.calendar-container .calendar-content{position:relative;float:left;width:448px;height:auto;padding-left:10px;padding-right:10px;overflow:hidden;text-align:center}
+.calendar-container .calendar-content .calendar-cont-months{position:relative;left:0;top:0;width:2000px;height:auto}
+.calendar-container .calendar-content .calendar-cont-months .calendar-months{float:left;width:460px;height:auto}
+.calendar-container .calendar-content .mask{position:absolute;width:100%;height:100%;background-color:#fff;z-index:1000}
+.calendar-container .calendar-content .ajaxloader{background:url(../images/ajax-loader2.gif) no-repeat center;position:absolute;width:100%;height:100%;z-index:1010}
+.calendar-container .calendar-content .calendar-row{float:left;margin-bottom:10px}
+.gallery{float:left;clear:left;width:543px;padding:5px 0 5px 5px}
+.gallery .gallery-thumb{display:block;float:left;border:1px solid #F7944C;margin:0 5px 5px 0;padding:3px}
+.text-medium,label.label-form,table{font-size:90%}
+.text-large,fieldset legend{font-size:100%}
+table.table-lugar .cell-3,table.table-lugar .cell-4{width:120px;border-right:1px dashed #ccc;vertical-align:top}

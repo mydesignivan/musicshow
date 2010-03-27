@@ -173,36 +173,9 @@ class recitales_model extends Model {
         $sql = TBL_RECITALES.'.*,';
         $sql.= "REPLACE(".TBL_RECITALES.".`date`, CHAR(44), '/') as `date`,";
         $sql.= TBL_LUGARES .'.name as lugar_name,';
-        $sql.= TBL_LUGARES .'.address as lugar_address';
-
-        // Extrae datos del Recital
-        $this->db->select($sql, false);
-        $this->db->from(TBL_RECITALES);
-        $this->db->join(TBL_LUGARES, TBL_RECITALES.'.lugar_id = '.TBL_LUGARES.'.lugar_id');
-        $this->db->where('recital_id', $recital_id);
-
-        $info = $query = $this->db->get()->row_array();
-
-        // Extrae datos de los lugares de ventas
-        $sql = TBL_LUGARES.'.lugar_id,';
-        $sql.= TBL_LUGARES.'.name as lugar_name,';
-        $sql.= TBL_LUGARES.'.address as lugar_address,';
-        $sql.= TBL_RECITALES_TO_LUGARVTA.'.id';
-        $this->db->select($sql, false);
-        $this->db->from(TBL_LUGARES);
-        $this->db->join(TBL_RECITALES_TO_LUGARVTA, TBL_LUGARES.'.lugar_id = '.TBL_RECITALES_TO_LUGARVTA.'.lugar_id');
-        $this->db->where(TBL_RECITALES_TO_LUGARVTA.'.recital_id', $recital_id);
-
-        $info['lugarvta'] = $this->db->get();
-
-        return $info;
-    }
-
-    public function get_view_recital($recital_id) {
-        $sql = TBL_RECITALES.'.*,';
-        $sql.= "REPLACE(".TBL_RECITALES.".`date`, CHAR(44), '/') as `date`,";
-        $sql.= TBL_LUGARES .'.name as lugar_name,';
         $sql.= TBL_LUGARES .'.address as lugar_address,';
+        $sql.= TBL_STATES .'.name as lugar_state,';
+        $sql.= TBL_CITY .'.name as lugar_city,';
         $sql.= "(SELECT name FROM ".TBL_GENEROS." WHERE genero_id = ".TBL_RECITALES.".genero_id) as genero_name,";
         $sql.= "(SELECT username FROM ".TBL_USERS." WHERE user_id = ".TBL_RECITALES.".user_id) as username";
 
@@ -210,6 +183,8 @@ class recitales_model extends Model {
         $this->db->select($sql, false);
         $this->db->from(TBL_RECITALES);
         $this->db->join(TBL_LUGARES, TBL_RECITALES.'.lugar_id = '.TBL_LUGARES.'.lugar_id');
+        $this->db->join(TBL_CITY, TBL_LUGARES.'.city_id = '.TBL_CITY.'.city_id');
+        $this->db->join(TBL_STATES, TBL_CITY.'.state_id = '.TBL_STATES.'.state_id');
         $this->db->where('recital_id', $recital_id);
 
         $info = $query = $this->db->get()->row_array();
@@ -218,10 +193,14 @@ class recitales_model extends Model {
         $sql = TBL_LUGARES.'.lugar_id,';
         $sql.= TBL_LUGARES.'.name as lugar_name,';
         $sql.= TBL_LUGARES.'.address as lugar_address,';
+        $sql.= TBL_STATES .'.name as lugar_state,';
+        $sql.= TBL_CITY .'.name as lugar_city,';
         $sql.= TBL_RECITALES_TO_LUGARVTA.'.id';
         $this->db->select($sql, false);
         $this->db->from(TBL_LUGARES);
         $this->db->join(TBL_RECITALES_TO_LUGARVTA, TBL_LUGARES.'.lugar_id = '.TBL_RECITALES_TO_LUGARVTA.'.lugar_id');
+        $this->db->join(TBL_CITY, TBL_LUGARES.'.city_id = '.TBL_CITY.'.city_id');
+        $this->db->join(TBL_STATES, TBL_CITY.'.state_id = '.TBL_STATES.'.state_id');
         $this->db->where(TBL_RECITALES_TO_LUGARVTA.'.recital_id', $recital_id);
 
         $info['lugarvta'] = $this->db->get();

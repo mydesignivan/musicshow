@@ -29,7 +29,8 @@ class Search extends Controller {
         $arr_seg = $this->uri->uri_to_assoc(3, array('genero', 'keyword', 'date'));
         $offset = (!isset($arr_seg['page']) || $arr_seg['page']=='') ? 0 : $arr_seg['page'];
         $base_url = site_url('/search/index/');
-        $listResultSearch = $this->search_model->search($arr_seg, null, $this->count_per_page, $offset);
+        $order_by = "CAST(str_to_date(`date`, '%d,%m,%Y') AS datetime) asc";
+        $listResultSearch = $this->search_model->search($arr_seg, $order_by, $this->count_per_page, $offset);
 
         $config['base_url'] = $this->get_basename();
         $config['total_rows'] = $listResultSearch['count_rows'];

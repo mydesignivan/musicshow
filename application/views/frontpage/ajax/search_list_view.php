@@ -11,7 +11,7 @@
                 </p>
                 <div>
                     <div class="float-left"><label>Genero:&nbsp;</label><span><?=$row['genero'];?></span></div>
-                    <div class="float-right"><button type="button" class="button-large">Ver m&aacute;s</button></div>
+                    <div class="float-right"><button type="button" class="button-large" onclick="location.href='<?=site_url('/vermas/index/'.$row['recital_id']);?>'">Ver m&aacute;s</button></div>
                 </div>
             </div>
         </div>
