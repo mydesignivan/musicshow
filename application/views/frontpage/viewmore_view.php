@@ -45,6 +45,7 @@
         <?php }}?>
     </fieldset>
 
+<?php if( $info['lugarvta']->num_rows>0 ) {?>
     <fieldset class="fieldset-form-large float-left">
         <legend>Lugar de ventas de entradas</legend>
         <table id="tblLugaresVta" class="table-lugar" cellpadding="0" cellspacing="0">
@@ -71,7 +72,8 @@
             </tbody>
         </table>
     </fieldset>
-
+<?php }?>
+    
     <div class="clear">
         <?php if( !empty($info['price']) ){?>
         <p class="float-left">

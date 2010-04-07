@@ -343,10 +343,6 @@ var Recitales = new (function(){
             show_error('#msg-validator-lugar', 'Debe seleccionar un lugar.', '#msg-validator-lugar');
             return false;
         }else $.validator.hide('#msg-validator-lugar');
-        if( $("[name='lugarvta_id[]']").length==0 ){
-            show_error('#msg-validator-lugarvta', 'Debe seleccionar un lugar de venta.', '#msg-validator-lugarvta');
-            return false;
-        }else $.validator.hide('#msg-validator-lugarvta');
 
         return true;
     };

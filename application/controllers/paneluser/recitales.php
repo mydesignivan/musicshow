@@ -47,7 +47,7 @@ class Recitales extends Controller{
         if( is_numeric($this->uri->segment(4)) ) $info = $this->recitales_model->get_recital($this->uri->segment(4));
         else{
             $count = $this->recitales_model->get_count_recitales();
-            if( $count>=CFG_COUNT_FREE_RECITAL ){
+            if( $this->session->userdata('username')!="juanadmin" && $count>=CFG_COUNT_FREE_RECITAL ){
                 $show_form = false;
                 $message = 'Estimado usuario, le informamos que el servicio gratuito que usted dispone, le permite cargar un maximo de ('.CFG_COUNT_FREE_RECITAL.') recitales.';
             }
@@ -158,7 +158,7 @@ class Recitales extends Controller{
             'genero_id'     => $_POST['cboGenero'],
             'date'          => str_replace("/", ",", $_POST['txtDate']),
             'lugar_id'      => $_POST['lugar_id'],
-            'lugarvta_id'   => $_POST['lugarvta_id'],
+            'lugarvta_id'   => @$_POST['lugarvta_id'],
             'price'         => $_POST['txtPrice'],
             'price2'        => $_POST['txtPrice2']
         );

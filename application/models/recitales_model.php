@@ -20,14 +20,16 @@ class recitales_model extends Model {
         
         $recital_id = $this->db->insert_id();
 
-        foreach( $lugarvta_id as $id ){
-            $data = array(
-                'recital_id' => $recital_id,
-                'lugar_id'   => $id,
-                'user_id'    => $this->session->userdata('user_id')
-            );
-            if( !$this->db->insert(TBL_RECITALES_TO_LUGARVTA, $data) ) {
-                show_error(sprintf(ERR_DB_INSERT, TBL_RECITALES_TO_LUGARVTA));
+        if( is_array($lugarvta_id) ){
+            foreach( $lugarvta_id as $id ){
+                $data = array(
+                    'recital_id' => $recital_id,
+                    'lugar_id'   => $id,
+                    'user_id'    => $this->session->userdata('user_id')
+                );
+                if( !$this->db->insert(TBL_RECITALES_TO_LUGARVTA, $data) ) {
+                    show_error(sprintf(ERR_DB_INSERT, TBL_RECITALES_TO_LUGARVTA));
+                }
             }
         }
 
@@ -39,12 +41,6 @@ class recitales_model extends Model {
         $lugarvta_id = $data['lugarvta_id'];
         $json = json_decode($data['json']);
 
-        /*echo "<pre>";
-        print_r($json);
-        echo "</pre>";*/
-
-        //die();
-
         unset($data['lugarvta_id']);
         unset($data['json']);
 
@@ -55,15 +51,17 @@ class recitales_model extends Model {
 
         $result_table = $this->db->get_where(TBL_RECITALES_TO_LUGARVTA, array('recital_id'=>$recital_id))->result_array();
 
-        foreach( $lugarvta_id as $id ){
-            if( !arr_search($result_table, "lugar_id==".$id) ){
-                $data2 = array(
-                    'recital_id' => $recital_id,
-                    'lugar_id'   => $id,
-                    'user_id'    => $this->session->userdata('user_id')
-                );
-                if( !$this->db->insert(TBL_RECITALES_TO_LUGARVTA, $data2) ) {
-                    show_error(sprintf(ERR_DB_INSERT, TBL_RECITALES_TO_LUGARVTA));
+        if( is_array($lugarvta_id) ){
+            foreach( $lugarvta_id as $id ){
+                if( !arr_search($result_table, "lugar_id==".$id) ){
+                    $data2 = array(
+                        'recital_id' => $recital_id,
+                        'lugar_id'   => $id,
+                        'user_id'    => $this->session->userdata('user_id')
+                    );
+                    if( !$this->db->insert(TBL_RECITALES_TO_LUGARVTA, $data2) ) {
+                        show_error(sprintf(ERR_DB_INSERT, TBL_RECITALES_TO_LUGARVTA));
+                    }
                 }
             }
         }

@@ -7,4 +7,14 @@
             <a href="http://www.facebook.com/pages/MusicShows/349287844386?v=wall" target="_blank"><img src="images/icon_facebook.png" alt="" /></a>
             <a href="http://twitter.com/Music_Shows" target="_blank"><img src="images/icon_twitter.png" alt="" /></a>
         </p>
-</div>
+    </div>
+    <script type="text/javascript">
+        var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+        document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+        try {
+            var pageTracker = _gat._getTracker("UA-15606542-1");
+            pageTracker._trackPageview();
+        } catch(err) {}
+    </script>

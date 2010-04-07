@@ -56,10 +56,8 @@
             </p>
 
             <fieldset class="fieldset-form-large">
-                <legend><span class="required">*</span>Lugar de ventas de entradas</legend>
+                <legend>Lugar de ventas de entradas</legend>
                 <button type="button" class="button-large" onclick="Recitales.sel_lugar.open(true);">Seleccionar</button>
-
-                <div id="msg-validator-lugarvta" class="prepend-top"></div>
 
                 <table id="tblLugaresVta" class="table-lugar prepend-top-small <?php if( !$mode_edit ) echo 'hide';?>" cellpadding="0" cellspacing="0">
                     <thead>
