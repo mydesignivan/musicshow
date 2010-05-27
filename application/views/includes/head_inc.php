@@ -1,9 +1,3 @@
-<?php
-    $execscript=true;
-    $optimizerjs=".min";
-    $optimizercss=".min";
-?>
-
 <base href="<?=base_url();?>" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="images/favicon.ico" rel="stylesheet icon" type="image/ico" />
@@ -14,8 +8,7 @@
 <!--[if lt IE 8]><link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"/><![endif]-->
 <!-------- end block -------->
 
-<link href="css/style<?=$optimizercss;?>.css" rel="stylesheet" type="text/css" />
-
+<link href="css/style<?=$this->config->item('sufix_pack_css');?>.css" rel="stylesheet" type="text/css" />
 <!--[if IE 6]> 
 <link rel="stylesheet" href="css/styleIE6.css" type="text/css" />
 <![endif]-->
@@ -25,7 +18,8 @@
 
 
 <!--========== LIBRARIES ============-->
-<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script>
+<!--<script type="text/javascript" src="js/jquery.js"></script> -->
+<script type="text/javascript" src="js/jquery-1.3.2.min.js"></script> 
 <script type="text/javascript" src="js/helpers.min.js"></script>
 <script type="text/javascript" src="js/class.login.min.js"></script>
 <script type="text/javascript" src="js/comun.js"></script>

@@ -126,8 +126,7 @@ class recitales_model extends Model {
 
         $this->db->select($sql, false);
         $this->db->where('user_id', $this->session->userdata('user_id'));
-        $this->db->order_by('recital_id', 'desc');
-        $this->db->order_by('banda', 'asc');
+        $this->db->order_by("str_to_date(`date`, '%d,%m,%Y')", 'desc');
         $query = $this->db->get(TBL_RECITALES);
 
         return $query;

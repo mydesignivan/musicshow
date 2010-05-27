@@ -46,7 +46,10 @@ class lists_model extends Model {
     }
 
     public function get_generos($first_option=null, $genero_id=null){
-        $this->db->select('name, genero_id');
+        $sql = "name, genero_id,";
+        $sql.= "(SELECT count(*) FROM ".TBL_RECITALES." WHERE genero_id=".TBL_GENEROS.".genero_id AND str_to_date(`date`, '%d,%m,%Y') >= current_date()) as count_recitales";
+
+        $this->db->select($sql, false);
         if( $genero_id!=null ) $this->db->where('genero_id', $genero_id);
         $this->db->order_by('name', 'asc');
         $array = $this->db->get(TBL_GENEROS)->result_array();

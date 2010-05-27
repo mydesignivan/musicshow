@@ -54,7 +54,7 @@ class Recitales extends Controller{
         }
 
         $this->_data = $this->dataview->set_data(array(
-            'tlp_script'   => array('validator', 'popup', 'fancybox', 'recitales_form'),
+            'tlp_script'   => array('validator', 'popup', 'fancybox', 'json', 'tooltip', 'recitales_form'),
             'tlp_section'  => 'paneluser/recitales_form_view.php',
             'comboGeneros' =>  $this->lists_model->get_generos(array("0"=>"Seleccione un Genero")),
             'info'         =>  $info,

@@ -32,7 +32,7 @@ class search_model extends Model {
         $sql.= implode(" AND ", $arr_where);
         $sql.= " ORDER BY ";
 
-        if( $orderby==null ) $sql.= "recital_id desc ";
+        if( $orderby==null ) $sql.= "str_to_date(`date`, '%d,%m,%Y') desc";
         else $sql.= $orderby;
 
         //die($sql);
@@ -43,8 +43,13 @@ class search_model extends Model {
             $query = $this->db->query($sql);
             $return['count_rows'] = $query->num_rows;
 
-            $sql.= " LIMIT $limit";
-            if( $offset!=0 ) $sql.=",$offset";
+            if( $offset==0 ) {
+                $sql.= " LIMIT $limit";
+            }else{
+                $sql.= " LIMIT $offset,$limit";
+            }
+
+            //echo $sql."<br>";
         }
 
 

@@ -26,13 +26,14 @@ class Search extends Controller {
     /* PUBLIC FUNCTION
      **************************************************************************/
     public function index(){
-        $arr_seg = $this->uri->uri_to_assoc(3, array('genero', 'keyword', 'date'));
-        $offset = (!isset($arr_seg['page']) || $arr_seg['page']=='') ? 0 : $arr_seg['page'];
+        $arr_seg = $this->uri->uri_to_assoc(3, array('genero', 'keyword', 'date', 'page'));
+        $offset = empty($arr_seg['page']) ? 0 : $arr_seg['page'];
+
         $base_url = site_url('/search/index/');
         $order_by = "CAST(str_to_date(`date`, '%d,%m,%Y') AS datetime) asc";
         $listResultSearch = $this->search_model->search($arr_seg, $order_by, $this->count_per_page, $offset);
 
-        $config['base_url'] = $this->get_basename();
+        $config['base_url'] = $this->_get_basename();
         $config['total_rows'] = $listResultSearch['count_rows'];
         $config['per_page'] = $this->count_per_page;
         $config['uri_segment'] = $this->uri->total_segments();
@@ -45,15 +46,20 @@ class Search extends Controller {
         $this->load->view('template_frontpage_view', $this->_data);
     }
 
-    private function get_basename(){
+    /* PRIVATE FUNCTION
+     **************************************************************************/
+    private function _get_basename(){
         $arr = $this->uri->segment_array();
-        if( $arr[count($arr)-2]=="page" && is_numeric($arr[count($arr)-1]) ){
-            $str = str_replace(".html", "", implode("/", array_splice($arr, 0, count($arr)-2)));
-            return site_url($str);
+        
+        if( $arr[count($arr)-1]=="page" ){
+            $str = implode("/", array_splice($arr, 0, count($arr)-1));
+        }elseif( $arr[count($arr)]=="page" ){
+            $str = implode("/", array_splice($arr, 0, count($arr)));
         }else{
-            $str = str_replace(".html", "", implode("/", $arr));
-            return site_url($str);
+            $str = implode("/", $arr)."/page";
         }
+
+        return site_url($str);
     }
 
 }

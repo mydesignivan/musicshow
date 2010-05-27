@@ -59,6 +59,8 @@
                 <legend>Lugar de ventas de entradas</legend>
                 <button type="button" class="button-large" onclick="Recitales.sel_lugar.open(true);">Seleccionar</button>
 
+                <div id="msg-validator-lugarvta" class="prepend-top"></div>
+
                 <table id="tblLugaresVta" class="table-lugar prepend-top-small <?php if( !$mode_edit ) echo 'hide';?>" cellpadding="0" cellspacing="0">
                     <thead>
                         <tr>
@@ -143,6 +145,7 @@
             <input type="hidden" name="lugar_id" value="<?=$info['lugar_id'];?>" />
             <input type="hidden" name="json" />
         </form>
+            <div id="tooltip-msg">Si tu ciudad o pueblo no se encuentra, Contactate</div>
 
         <script type="text/javascript">
         <!--

@@ -159,7 +159,7 @@ define('EMAIL_CONTACT_MESSAGE', $msg);
 | TITULOS DE CADA SECCION
 |--------------------------------------------------------------------------
 */
-define('TITLE_GLOBAL', 'MusicShows'); // Titulo para todas las secciones
+define('TITLE_GLOBAL', 'MusicShows.com.ar - Fechas de Recitales y Conciertos'); // Titulo para todas las secciones
 define('TITLE_INDEX', '');
 define('TITLE_FECHAS', '');
 define('TITLE_BANDAS', '');
@@ -175,15 +175,15 @@ define('TITLE_VERMAS', '');
 | META - Palabras Claves y Descripcion de la web
 |--------------------------------------------------------------------------
 */
-define('META_KEYWORDS', '');
-define('META_DESCRIPTION', '');
+define('META_KEYWORDS', 'recitales, musica, bandas, fechas de recitales, fechas de bandas, agenda de recitales, bandas de rock, shows, grupos de rock, pop, punk, reggae');
+define('META_DESCRIPTION', 'MusicShows.com.ar es el sitio donde los usuarios pueden registrarse y cargar sus recitales gratuitamente. Sirve para buscar los recitales que mas te gustan en todo el pais.');
 
 /*
 |--------------------------------------------------------------------------
 | CONFIG
 |--------------------------------------------------------------------------
 */
-define('CFG_COUNT_FREE_RECITAL', 50);   // Cantidad de recitales que puede publicar gratis
+define('CFG_COUNT_FREE_RECITAL', 5);   // Cantidad de recitales que puede publicar gratis
 
 
 /* End of file constants.php */

@@ -42,7 +42,7 @@ var Recitales = new (function(){
             if( !error && validDate() && validLugar() && validImages() ){
                 ajaxloader.show('Enviando Formulario');
 
-                $.ajax({
+                /*$.ajax({
                     type : 'post',
                     url  : baseURI+'paneluser/recitales/ajax_check/',
                     data : {
@@ -53,9 +53,9 @@ var Recitales = new (function(){
                         if( data=="exists" ){
                             ajaxloader.hidden();
                             show_error(f.txtBanda, 'La banda ingresada ya existe.');
-                        }else if( data=="ok" ){
+                        }else if( data=="ok" ){*/
                             if( mode_edit ){
-                                f.json.value = json_encode({
+                                f.json.value = JSON.encode({
                                     'lugarvta_id_del' : lugarvta_id_del,
                                     'images_del' : {
                                         'prefix'      :  images_prefix_del,
@@ -65,7 +65,7 @@ var Recitales = new (function(){
                                 });
                             }
                             f.submit();
-                        }else{
+                        /*}else{
                             ajaxloader.hidden();
                             alert("ERROR:\n"+data);
                         }
@@ -74,7 +74,7 @@ var Recitales = new (function(){
                         ajaxloader.hidden();
                         alert("ERROR: \n"+http.responseText);
                     }
-                });
+                });*/
             }else{
                 ajaxloader.hidden();
             }
@@ -293,7 +293,9 @@ var Recitales = new (function(){
         $('#row-table-lugar, #row-city, #row-locality').hide();
         if( el.value!=0 ){
             load_combo('paneluser/recitales/ajax_show_city',el, 'cboCity', function(){
-                $('#row-city').fadeIn('slow');
+                $('#row-city').fadeIn('slow', function(){
+                    $('#tooltip-city').tooltip('#tooltip-msg');
+                });
                 popup.center();
             });
         }
@@ -307,6 +309,7 @@ var Recitales = new (function(){
                                      .fadeIn('slow');
                 el.disabled=false;
                 popup.center();
+                $('#tooltip-msg').hide();
             });
         }
     };
@@ -343,6 +346,10 @@ var Recitales = new (function(){
             show_error('#msg-validator-lugar', 'Debe seleccionar un lugar.', '#msg-validator-lugar');
             return false;
         }else $.validator.hide('#msg-validator-lugar');
+        /*if( $("[name='lugarvta_id[]']").length==0 ){
+            show_error('#msg-validator-lugarvta', 'Debe seleccionar un lugar de venta.', '#msg-validator-lugarvta');
+            return false;
+        }else $.validator.hide('#msg-validator-lugarvta');*/
 
         return true;
     };

@@ -24,7 +24,8 @@ class Index extends Controller {
      **************************************************************************/
     public function index(){
         $this->_data = $this->dataview->set_data(array(
-            'info' => $this->destacados_model->get_content()
+            'info' => $this->destacados_model->get_content(),
+            'tlp_script' => 'imagegallery'
         ));
         $this->load->view('template_frontpage_view', $this->_data);
     }
