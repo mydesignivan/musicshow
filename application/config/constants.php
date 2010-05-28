@@ -183,7 +183,7 @@ define('META_DESCRIPTION', 'MusicShows.com.ar es el sitio donde los usuarios pue
 | CONFIG
 |--------------------------------------------------------------------------
 */
-define('CFG_COUNT_FREE_RECITAL', 5);   // Cantidad de recitales que puede publicar gratis
+define('CFG_COUNT_FREE_RECITAL', 50);   // Cantidad de recitales que puede publicar gratis
 
 
 /* End of file constants.php */

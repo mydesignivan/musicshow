@@ -676,7 +676,11 @@ class CI_DB_driver {
 	{
 		if (is_string($str))
 		{
-			$str = "'".$this->escape_str($str)."'";
+                    if( strtolower($str)=="now()" || strtolower($str)=="current_date()" ){
+			$str = $this->escape_str($str);
+                    }else{
+			$str = "'".$this->escape_str($str)."'";                        
+                    }
 		}
 		elseif (is_bool($str))
 		{

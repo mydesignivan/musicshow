@@ -25,3 +25,12 @@ function show_error(el, msg, container){
     try{el.focus();}
     catch(e){}
 }
+
+function Filter(val, search_by, genero, state){
+    if( val!=0 ) {
+        var url =  baseURI+"search/index/genero/"+genero;
+        if( search_by=="city" && state!='' ) url+="/state/"+state;
+        url+= "/"+search_by+"/"+val;
+        location.href = url+"/page";
+    }
+}

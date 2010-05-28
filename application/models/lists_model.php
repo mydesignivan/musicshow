@@ -57,5 +57,33 @@ class lists_model extends Model {
         return $array;
     }
 
+    public function get_filter_states($first_option, $genero){
+        $this->db->select("DISTINCT ".TBL_STATES.'.name, '.TBL_STATES.".state_id", false);
+        $this->db->from(TBL_STATES);
+        $this->db->join(TBL_CITY, TBL_STATES.'.state_id = '.TBL_CITY.'.state_id');
+        $this->db->join(TBL_LUGARES, TBL_CITY.'.city_id = '.TBL_LUGARES.'.city_id');
+        $this->db->join(TBL_RECITALES, TBL_LUGARES.'.lugar_id = '.TBL_RECITALES.'.lugar_id');
+        $this->db->where("str_to_date(".TBL_RECITALES.".`date`, '%d,%m,%Y') >=", "current_date()");
+        $this->db->where(TBL_RECITALES.".genero_id", $genero);
+        $array = $this->db->get()->result_array();
+        if( is_array($first_option) ) $array = array_merge($first_option, $array);
+        return $array;
+    }
+
+    public function get_filter_city($param, $genero, $state_id=null){
+        $this->db->select("DISTINCT ".TBL_CITY.'.name, '.TBL_CITY.".city_id", false);
+        $this->db->from(TBL_CITY);
+        $this->db->join(TBL_LUGARES, TBL_CITY.'.city_id = '.TBL_LUGARES.'.city_id');
+        $this->db->join(TBL_RECITALES, TBL_LUGARES.'.lugar_id = '.TBL_RECITALES.'.lugar_id');
+        $this->db->where("str_to_date(".TBL_RECITALES.".`date`, '%d,%m,%Y') >=", "current_date()");
+        $this->db->where(TBL_RECITALES.".genero_id", $genero);
+        if( !is_null($state_id) ) $this->db->where(TBL_CITY.".state_id = ".$state_id);
+        $this->db->order_by('name', 'asc');
+        $array = $this->db->get()->result_array();
+        if( is_array($param) ) $array = array_merge($param, $array);
+
+        return $array;
+    }
+
 }
 ?>

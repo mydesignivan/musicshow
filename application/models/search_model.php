@@ -19,6 +19,8 @@ class search_model extends Model {
         $sql.= '`image1_thumb`,';
         $sql.= '`image1_full`,';
         $sql.= "(SELECT lc.name FROM list_city lc JOIN lugares l ON lc.city_id = l.city_id WHERE l.lugar_id = ".TBL_RECITALES.".lugar_id) as city,";
+        $sql.= "(SELECT lc.city_id FROM list_city lc JOIN lugares l ON lc.city_id = l.city_id WHERE l.lugar_id = ".TBL_RECITALES.".lugar_id) as city_id,";
+        $sql.= "(SELECT lc.state_id FROM list_city lc JOIN lugares l ON lc.city_id = l.city_id WHERE l.lugar_id = ".TBL_RECITALES.".lugar_id) as state_id,";
         $sql.= "(SELECT name FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_name,";
         $sql.= "(SELECT address FROM ".TBL_LUGARES.' WHERE lugar_id='.TBL_RECITALES.".lugar_id) as lugar_address ";
         $sql.= "FROM ".TBL_RECITALES.") a ";
@@ -28,6 +30,8 @@ class search_model extends Model {
         if( !empty($where['genero']) ) $arr_where[] = "genero_id = ".$where['genero'];
         if( !empty($where['keyword']) ) $arr_where[] = "banda LIKE '%".$where['keyword']."%' OR lugar_name LIKE '%".$where['keyword']."%' OR lugar_address LIKE '%".$where['keyword']."%' OR city LIKE '%".$where['keyword']."%'";
         if( !empty($where['date']) ) $arr_where[] = $where['date'];
+        if( !empty($where['state']) ) $arr_where[] = "state_id = ".$where['state'];
+        if( !empty($where['city']) ) $arr_where[] = "city_id = ".$where['city'];
         
         $sql.= implode(" AND ", $arr_where);
         $sql.= " ORDER BY ";
