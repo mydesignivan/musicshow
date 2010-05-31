@@ -1,4 +1,9 @@
-<h1>Ver Mas</h1>
+<div class="span-14">
+    <h1 class="float-left">Ver Mas</h1>
+
+    <a href="http://www.addthis.com/bookmark.php?v=20" class="float-right" onmouseover="return addthis_open(this, '', '[URL]', '[TITLE]')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="http://s7.addthis.com/static/btn/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
+    <script type="text/javascript" src="http://s7.addthis.com/js/200/addthis_widget.js"></script>
+</div>
 
 <div class="span-14">
     <h3 class="float-left"><?=$info['banda'];?></h3>

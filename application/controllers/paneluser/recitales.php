@@ -76,9 +76,11 @@ class Recitales extends Controller{
                 $data['date_added'] = date('Y-m-d h:i:s');
                 $data = array_merge($resultUpload['result'], $data);
 
-                $this->recitales_model->create($data);
-
+                if( $this->recitales_model->create($data) ){
+                    
+                }
                 redirect('/paneluser/recitales/');
+
             }
         }
     }
