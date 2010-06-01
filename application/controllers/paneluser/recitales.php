@@ -77,7 +77,14 @@ class Recitales extends Controller{
                 $data = array_merge($resultUpload['result'], $data);
 
                 if( $this->recitales_model->create($data) ){
+                    $this->load->helper('twitter_helper');
                     
+                    $msg = $_POST['txtDate'] . " - ";
+                    $msg.= $_POST['txtCity'] . " - ";
+                    $msg.= $_POST['txtBanda'] . " - ";
+                    $msg.= $_POST['txtBanda'] . " - ";
+
+                    postToTwitter(CFG_TWITTER_USER, CFG_TWITTER_PSS, $msg);
                 }
                 redirect('/paneluser/recitales/');
 

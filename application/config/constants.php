@@ -27,14 +27,14 @@ define('DIR_WRITE_MODE', 0777);
 |
 */
 
-define('FOPEN_READ', 							'rb');
-define('FOPEN_READ_WRITE',						'r+b');
-define('FOPEN_WRITE_CREATE_DESTRUCTIVE', 		'wb'); // truncates existing file data, use with care
+define('FOPEN_READ', 				'rb');
+define('FOPEN_READ_WRITE',			'r+b');
+define('FOPEN_WRITE_CREATE_DESTRUCTIVE', 	'wb'); // truncates existing file data, use with care
 define('FOPEN_READ_WRITE_CREATE_DESTRUCTIVE', 	'w+b'); // truncates existing file data, use with care
-define('FOPEN_WRITE_CREATE', 					'ab');
-define('FOPEN_READ_WRITE_CREATE', 				'a+b');
-define('FOPEN_WRITE_CREATE_STRICT', 			'xb');
-define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
+define('FOPEN_WRITE_CREATE', 			'ab');
+define('FOPEN_READ_WRITE_CREATE', 		'a+b');
+define('FOPEN_WRITE_CREATE_STRICT', 		'xb');
+define('FOPEN_READ_WRITE_CREATE_STRICT',	'x+b');
 
 /*
 |--------------------------------------------------------------------------
@@ -184,7 +184,8 @@ define('META_DESCRIPTION', 'MusicShows.com.ar es el sitio donde los usuarios pue
 |--------------------------------------------------------------------------
 */
 define('CFG_COUNT_FREE_RECITAL', 50);   // Cantidad de recitales que puede publicar gratis
-
+define('CFG_TWITTER_USER', 'mitwitdemo');
+define('CFG_TWITTER_PSS', 'abcd1234');
 
 /* End of file constants.php */
 /* Location: ./system/application/config/constants.php */

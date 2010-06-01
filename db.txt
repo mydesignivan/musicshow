@@ -1,0 +1,123 @@
+-- phpMyAdmin SQL Dump
+-- version 3.2.0.1
+-- http://www.phpmyadmin.net
+--
+-- Servidor: localhost
+-- Tiempo de generación: 25-03-2010 a las 18:05:31
+-- Versión del servidor: 5.1.37
+-- Versión de PHP: 5.3.0
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+--
+-- Base de datos: `musicshow`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `lugares`
+--
+
+CREATE TABLE IF NOT EXISTS `lugares` (
+  `lugar_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `city_id` int(11) NOT NULL,
+  `name` varchar(300) NOT NULL,
+  `address` varchar(500) NOT NULL,
+  PRIMARY KEY (`lugar_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=48 ;
+
+--
+-- Volcar la base de datos para la tabla `lugares`
+--
+
+INSERT INTO `lugares` (`lugar_id`, `user_id`, `city_id`, `name`, `address`) VALUES
+(32, 20, 5, 'lugar 1', 'adasd'),
+(33, 20, 5, 'lugar 2', 'sada'),
+(34, 20, 5, 'lugar 3', 'sfsf aser we r we rw er'),
+(35, 20, 5, 'lugar 4', 'dfsdfsf'),
+(36, 20, 5, 'lugar 5', 'erwerwer se rwe r'),
+(37, 20, 76, 'lugar vta 1', 'arewrwer'),
+(38, 20, 76, 'lugar vta 2', 'rfewr'),
+(39, 20, 76, 'lugar vta3', 'werwer'),
+(40, 20, 76, 'lugar vta4', 'sdfsdf'),
+(41, 20, 76, 'lugar vta 5', 'erwer'),
+(42, 20, 76, 'lugar vta 6', 'ewrwerwe'),
+(43, 22, 5, 'alugar 1', 'sadsfd'),
+(44, 22, 5, 'mi otro lugar', 'fsdf'),
+(45, 22, 5, 'lugar venta 1', 'asdasd'),
+(46, 22, 5, 'lugar venta 2', 'sdfsdf'),
+(47, 20, 5, 'asdasd', 'dfer');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `recitales`
+--
+
+CREATE TABLE IF NOT EXISTS `recitales` (
+  `recital_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `banda` varchar(100) NOT NULL,
+  `date` char(10) NOT NULL,
+  `genero_id` int(11) NOT NULL,
+  `price` char(20) NOT NULL,
+  `price2` char(20) NOT NULL,
+  `lugar_id` int(11) NOT NULL,
+  `image1_full` varchar(255) NOT NULL,
+  `image2_full` varchar(255) NOT NULL,
+  `image3_full` varchar(255) NOT NULL,
+  `image4_full` varchar(255) NOT NULL,
+  `image5_full` varchar(255) NOT NULL,
+  `image1_thumb` varchar(255) NOT NULL,
+  `image2_thumb` varchar(255) NOT NULL,
+  `image3_thumb` varchar(255) NOT NULL,
+  `image4_thumb` varchar(255) NOT NULL,
+  `image5_thumb` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `last_modified` datetime NOT NULL,
+  PRIMARY KEY (`recital_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=47 ;
+
+--
+-- Volcar la base de datos para la tabla `recitales`
+--
+
+INSERT INTO `recitales` (`recital_id`, `user_id`, `banda`, `date`, `genero_id`, `price`, `price2`, `lugar_id`, `image1_full`, `image2_full`, `image3_full`, `image4_full`, `image5_full`, `image1_thumb`, `image2_thumb`, `image3_thumb`, `image4_thumb`, `image5_thumb`, `date_added`, `last_modified`) VALUES
+(42, 20, 'banda enero', '12,01,2010', 4, '', '', 47, '20_12695277464bab74c28bf4b.jpg', '', '', '', '', '20_12695277464bab74c28bf4b_thumb.jpg', '', '', '', '', '2010-03-25 11:35:46', '0000-00-00 00:00:00'),
+(41, 20, 'banda 1', '25,03,2010', 3, '', '', 47, '20_12694484924baa3f2c69b59.jpg', '', '', '20_12694486554baa3fcf9f598.jpg', '20_12694486554baa3fcfd69ea.jpg', '20_12694484924baa3f2c69b59_thumb.jpg', '', '', '20_12694486554baa3fcf9f598_thumb.jpg', '20_12694486554baa3fcfd69ea_thumb.jpg', '2010-03-24 01:34:27', '2010-03-24 01:37:36'),
+(43, 20, 'banda 2', '02,02,2010', 3, '343', '545', 33, '20_12695277824bab74e678dd4.jpg', '', '', '', '', '20_12695277824bab74e678dd4_thumb.jpg', '', '', '', '', '2010-03-25 11:36:22', '0000-00-00 00:00:00'),
+(44, 20, 'banda mayo', '08,04,2010', 4, '565', '655', 33, '20_12695278584bab7532bf5ad.jpg', '', '', '', '', '20_12695278584bab7532bf5ad_thumb.jpg', '', '', '', '', '2010-03-25 11:37:38', '0000-00-00 00:00:00'),
+(45, 20, 'banda abril', '20,04,2010', 6, '56', '34', 34, '20_12695279104bab756687365.jpg', '', '', '', '', '20_12695279104bab756687365_thumb.jpg', '', '', '', '', '2010-03-25 11:38:30', '0000-00-00 00:00:00'),
+(46, 20, 'banda junio', '15,06,2010', 5, '', '', 36, '20_12695279634bab759be814f.jpg', '', '', '', '', '20_12695279634bab759be814f_thumb.jpg', '', '', '', '', '2010-03-25 11:39:24', '0000-00-00 00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `recitales_to_lugarvta`
+--
+
+CREATE TABLE IF NOT EXISTS `recitales_to_lugarvta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `recital_id` int(11) NOT NULL,
+  `lugar_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=55 ;
+
+--
+-- Volcar la base de datos para la tabla `recitales_to_lugarvta`
+--
+
+INSERT INTO `recitales_to_lugarvta` (`id`, `user_id`, `recital_id`, `lugar_id`) VALUES
+(37, 20, 33, 36),
+(48, 20, 41, 34),
+(49, 20, 42, 32),
+(47, 20, 41, 47),
+(50, 20, 42, 34),
+(51, 20, 43, 35),
+(52, 20, 44, 34),
+(53, 20, 45, 36),
+(54, 20, 46, 36);
+
