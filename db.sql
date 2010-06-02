@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 31-05-2010 a las 19:24:44
+-- Tiempo de generación: 02-06-2010 a las 02:05:16
 -- Versión del servidor: 5.1.37
 -- Versión de PHP: 5.3.0
 
@@ -5335,7 +5335,7 @@ CREATE TABLE IF NOT EXISTS `recitales` (
   `date_added` datetime NOT NULL,
   `last_modified` datetime NOT NULL,
   PRIMARY KEY (`recital_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=49 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=56 ;
 
 --
 -- Volcar la base de datos para la tabla `recitales`
@@ -5349,7 +5349,14 @@ INSERT INTO `recitales` (`recital_id`, `user_id`, `banda`, `date`, `genero_id`, 
 (45, 20, 'banda abril', '20,04,2010', 6, '56', '34', 34, '20_12695279104bab756687365.jpg', '', '', '', '', '20_12695279104bab756687365_thumb.jpg', '', '', '', '', '2010-03-25 11:38:30', '0000-00-00 00:00:00'),
 (46, 20, 'banda junio', '15,06,2010', 5, '', '', 36, '20_12695279634bab759be814f.jpg', '', '', '', '', '20_12695279634bab759be814f_thumb.jpg', '', '', '', '', '2010-03-25 11:39:24', '2010-03-26 09:18:42'),
 (47, 20, 'banda julio', '15,07,2010', 7, '', '', 33, '20_12696227824bace7fe78669.jpg', '', '', '', '', '20_12696227824bace7fe78669_thumb.jpg', '', '', '', '', '2010-03-26 01:59:42', '0000-00-00 00:00:00'),
-(48, 20, 'banda agosto', '11,08,2010', 6, '', '', 33, '20_12696229864bace8cab2db0.jpg', '', '', '', '', '20_12696229864bace8cab2db0_thumb.jpg', '', '', '', '', '2010-03-26 02:03:06', '0000-00-00 00:00:00');
+(48, 20, 'banda agosto', '11,08,2010', 6, '', '', 33, '20_12696229864bace8cab2db0.jpg', '', '', '', '', '20_12696229864bace8cab2db0_thumb.jpg', '', '', '', '', '2010-03-26 02:03:06', '0000-00-00 00:00:00'),
+(49, 20, 'banda prueba twitter2', '08,06,2010', 6, '', '', 32, '20_12753949884c04fbac93603.jpg', '', '', '', '', '20_12753949884c04fbac93603_thumb.jpg', '', '', '', '', '2010-06-01 09:23:08', '0000-00-00 00:00:00'),
+(50, 20, 'banda prueba twitter3', '10,06,2010', 5, '', '', 33, '20_12753954714c04fd8fa2546.jpg', '', '', '', '', '20_12753954714c04fd8fa2546_thumb.jpg', '', '', '', '', '2010-06-01 09:31:11', '0000-00-00 00:00:00'),
+(51, 20, 'banda prueba twitter4', '22,06,2010', 3, '', '', 32, '20_12753957974c04fed58f2d9.jpg', '', '', '', '', '20_12753957974c04fed58f2d9_thumb.jpg', '', '', '', '', '2010-06-01 09:36:37', '0000-00-00 00:00:00'),
+(52, 20, 'banda prueba twitter5', '09,06,2010', 6, '', '', 41, '20_12753959864c04ff925a15a.jpg', '', '', '', '', '20_12753959864c04ff925a15a_thumb.jpg', '', '', '', '', '2010-06-01 09:39:46', '0000-00-00 00:00:00'),
+(53, 20, 'asdas', '03,06,2010', 6, '', '', 32, '20_12753960384c04ffc67fe18.jpg', '', '', '', '', '20_12753960384c04ffc67fe18_thumb.jpg', '', '', '', '', '2010-06-01 09:40:38', '0000-00-00 00:00:00'),
+(54, 20, 'banda prueba twitter6', '17,06,2010', 4, '', '', 32, '20_12753961754c05004f8a6f9.jpg', '', '', '', '', '20_12753961754c05004f8a6f9_thumb.jpg', '', '', '', '', '2010-06-01 09:42:55', '0000-00-00 00:00:00'),
+(55, 20, 'banda prueba twitter7', '15,06,2010', 5, '', '', 33, '20_12753962824c0500ba889bc.jpg', '', '', '', '', '20_12753962824c0500ba889bc_thumb.jpg', '', '', '', '', '2010-06-01 09:44:42', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -5363,7 +5370,7 @@ CREATE TABLE IF NOT EXISTS `recitales_to_lugarvta` (
   `recital_id` int(11) NOT NULL,
   `lugar_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=57 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
 
 --
 -- Volcar la base de datos para la tabla `recitales_to_lugarvta`
@@ -5380,7 +5387,12 @@ INSERT INTO `recitales_to_lugarvta` (`id`, `user_id`, `recital_id`, `lugar_id`) 
 (53, 20, 45, 36),
 (54, 20, 46, 36),
 (55, 20, 47, 34),
-(56, 20, 48, 33);
+(56, 20, 48, 33),
+(57, 20, 49, 33),
+(58, 20, 50, 32),
+(59, 20, 52, 41),
+(60, 20, 53, 33),
+(61, 20, 55, 33);
 
 -- --------------------------------------------------------
 
