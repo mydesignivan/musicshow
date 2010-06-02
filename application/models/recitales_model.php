@@ -27,13 +27,14 @@ class recitales_model extends Model {
                     'lugar_id'   => $id,
                     'user_id'    => $this->session->userdata('user_id')
                 );
+
                 if( !$this->db->insert(TBL_RECITALES_TO_LUGARVTA, $data) ) {
                     show_error(sprintf(ERR_DB_INSERT, TBL_RECITALES_TO_LUGARVTA));
                 }
             }
         }
 
-        return true;
+        return $recital_id;
     }
 
     public function edit($data = array(), $recital_id=null) {

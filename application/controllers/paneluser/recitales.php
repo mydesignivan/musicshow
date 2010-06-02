@@ -76,13 +76,18 @@ class Recitales extends Controller{
                 $data['date_added'] = date('Y-m-d h:i:s');
                 $data = array_merge($resultUpload['result'], $data);
 
-                if( $this->recitales_model->create($data) ){
+                $recital_id = $this->recitales_model->create($data);
+
+                if( is_numeric($recital_id) ){
                     $this->load->helper('twitter_helper');
+
+                    $data = $this->recitales_model->get_recital($recital_id);
                     
                     $msg = $_POST['txtDate'] . " - ";
-                    $msg.= $_POST['txtCity'] . " - ";
+                    $msg.= $data['lugar_city'] . " - ";
                     $msg.= $_POST['txtBanda'] . " - ";
-                    $msg.= $_POST['txtBanda'] . " - ";
+                    $msg.= $data['genero_name'] . " - ";
+                    $msg.= site_url('/vermas/index/'.$recital_id);
 
                     postToTwitter(CFG_TWITTER_USER, CFG_TWITTER_PSS, $msg);
                 }

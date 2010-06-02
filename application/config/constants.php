@@ -184,8 +184,8 @@ define('META_DESCRIPTION', 'MusicShows.com.ar es el sitio donde los usuarios pue
 |--------------------------------------------------------------------------
 */
 define('CFG_COUNT_FREE_RECITAL', 50);   // Cantidad de recitales que puede publicar gratis
-define('CFG_TWITTER_USER', 'mitwitdemo');
-define('CFG_TWITTER_PSS', 'abcd1234');
+define('CFG_TWITTER_USER', 'Music_Shows');
+define('CFG_TWITTER_PSS', 'theclash1');
 
 /* End of file constants.php */
 /* Location: ./system/application/config/constants.php */
