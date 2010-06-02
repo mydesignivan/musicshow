@@ -55,6 +55,13 @@
                 <input type="text" id="txtDate" name="txtDate" class="input-date" value="<?=$info['date'];?>" />
             </p>
 
+            <p>
+                <span class="required">*</span><label class="label-form" for="txtDate">Hora</label><br />
+                <select id="cboHour">
+                    <option value=""></option>
+                </select>
+            </p>
+
             <fieldset class="fieldset-form-large">
                 <legend>Lugar de ventas de entradas</legend>
                 <button type="button" class="button-large" onclick="Recitales.sel_lugar.open(true);">Seleccionar</button>
