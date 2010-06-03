@@ -172,6 +172,10 @@ textarea.textarea-contact{
     width:450px;
     height:180px;
 }
+textarea.textarea-moreinfo{
+    width: 350px;
+    height: 80px;
+}
 
 /*------------------------------------------------------------------------------
  - ESTILOS PARA SELECT

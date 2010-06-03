@@ -167,15 +167,22 @@ class Recitales extends Controller{
     /* FUNCTIONS PRIVATE
      **************************************************************************/
     private function _request_fields(){
-        return array(
+        $ret = array(
             'banda'         => $_POST['txtBanda'],
             'genero_id'     => $_POST['cboGenero'],
             'date'          => str_replace("/", ",", $_POST['txtDate']),
             'lugar_id'      => $_POST['lugar_id'],
             'lugarvta_id'   => @$_POST['lugarvta_id'],
             'price'         => $_POST['txtPrice'],
-            'price2'        => $_POST['txtPrice2']
+            'price2'        => $_POST['txtPrice2'],
+            'moreinfo'      => $_POST['txtMoreInfo']
         );
+
+        if( $_POST['cboTimerHour']!="null" && $_POST['cboTimerMinute']!="null" ){
+            $ret['timer'] = $_POST['cboTimerHour'].":".$_POST['cboTimerMinute'];
+        }
+
+        return $ret;
     }
 
 }

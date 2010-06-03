@@ -106,4 +106,28 @@ function arr_search ( $array, $expression ) {
     return $result;
 }
 
+function get_text_month($month){
+    switch ((int)$month){
+        case 1: return "Enero";
+        case 2: return "Febrero";
+        case 3: return "Marzo";
+        case 4: return "Abril";
+        case 5: return "Mayo";
+        case 6: return "Junio";
+        case 7: return "Julio";
+        case 8: return "Agosto";
+        case 9: return "Septiembre";
+        case 10: return "Octubre";
+        case 11: return "Noviembre";
+        case 12: return "Diciembre";
+    }
+}
+
+function get_datetime($date, $timer){
+    list($d, $m, $y) = preg_split("/[\/]|[\,]/", $date);
+    $date = mktime(0, 0, 0, $m, $d, $y);
+    $ret = date('d', $date) ." de ". get_text_month(date('n', $date));
+    if( !is_null($timer) ) $ret.=", ".date('H:i', strtotime($timer))." hs";
+    return $ret;
+}
 ?>

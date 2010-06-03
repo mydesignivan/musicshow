@@ -187,6 +187,11 @@ class recitales_model extends Model {
 
         $info = $query = $this->db->get()->row_array();
 
+        if( !is_null($info['timer']) ){
+            $info['timer_hour'] = date('H', strtotime($info['timer']));
+            $info['timer_minute'] = date('i', strtotime($info['timer']));
+        }
+
         // Extrae datos de los lugares de ventas
         $sql = TBL_LUGARES.'.lugar_id,';
         $sql.= TBL_LUGARES.'.name as lugar_name,';

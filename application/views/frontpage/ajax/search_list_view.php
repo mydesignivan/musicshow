@@ -2,7 +2,7 @@
         <div class="anunciante">
             <div class="col-1"><img src="<?=UPLOAD_DIR.$row['image1_thumb'];?>" alt="<?=$row['image1_thumb'];?>" /></div>
             <div class="col-2">
-                <h2><?=str_replace(",", "/", $row['date'])." ".$row['banda'];?></h2>
+                <h2><?=get_datetime($row['date'], $row['timer']) ." - ". $row['banda'];?></h2>
                 <p>
                     <label>Ciudad:&nbsp;</label><span><?=$row['city'];?></span>
                 </p>

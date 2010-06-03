@@ -16,6 +16,7 @@ class search_model extends Model {
         $sql.= "(SELECT name FROM ".TBL_GENEROS." WHERE genero_id=".TBL_RECITALES.".genero_id) AS genero,";
         $sql.= 'banda,';
         $sql.= "`date`,";
+        $sql.= "`timer`,";
         $sql.= '`image1_thumb`,';
         $sql.= '`image1_full`,';
         $sql.= "(SELECT lc.name FROM list_city lc JOIN lugares l ON lc.city_id = l.city_id WHERE l.lugar_id = ".TBL_RECITALES.".lugar_id) as city,";

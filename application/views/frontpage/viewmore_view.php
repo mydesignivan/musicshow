@@ -7,7 +7,7 @@
 
 <div class="span-14">
     <h3 class="float-left"><?=$info['banda'];?></h3>
-    <h3 class="float-right"><?=$info['date'];?></h3>
+    <h3 class="float-right"><?=get_datetime($info['date'], $info['timer']);?></h3>
 
     <div class="clear">
         <br />
@@ -94,6 +94,13 @@
         </p>
         <?php }?>
     </div>
+    
+    <?php if( !empty($info['moreinfo']) ){?>
+    <div class="clear">
+        <label class="label-form">M&aacute;s info</label><br />
+        <span class="text-medium"><?=$info['moreinfo'];?></span>
+    </div>
+    <?php }?>
 </div>
 
 <script type="text/javascript">

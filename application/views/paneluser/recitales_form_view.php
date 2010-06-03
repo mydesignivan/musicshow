@@ -50,17 +50,33 @@
                 </div>
             </fieldset>
 
-            <p>
-                <span class="required">*</span><label class="label-form" for="txtDate">Fecha</label><br />
-                <input type="text" id="txtDate" name="txtDate" class="input-date" value="<?=$info['date'];?>" />
-            </p>
-
-            <p>
-                <span class="required">*</span><label class="label-form" for="txtDate">Hora</label><br />
-                <select id="cboHour">
-                    <option value=""></option>
-                </select>
-            </p>
+            <div class="span-14">
+                <div class="span-3">
+                    <span class="required">*</span><label class="label-form" for="txtDate">Fecha</label><br />
+                    <input type="text" id="txtDate" name="txtDate" class="input-date" value="<?=$info['date'];?>" />
+                </div>
+                <div class="span-3">
+                    <label class="label-form" for="txtDate">Hora</label><br />
+                    <select name="cboTimerHour" title="Hora">
+                        <option value="null">&nbsp;</option>
+                        <?php
+                        for( $n=0; $n<=23; $n++ ) {
+                            $num = $n<=9 ? "0".$n : $n;
+                            $selected = $num==@$info['timer_hour'] ? 'selected="selected"' : '';
+                            echo '<option value="'.$num.'" '.$selected.'>'.$num.'</option>';
+                        }?>
+                    </select>&nbsp;:
+                    <select name="cboTimerMinute" title="Minuto">
+                        <option value="null">&nbsp;</option>
+                        <?php
+                        for( $n=1; $n<=59; $n++ ) {
+                            $num = $n<=9 ? "0".$n : $n;
+                            $selected = $num==@$info['timer_minute'] ? 'selected="selected"' : '';
+                            echo '<option value="'.$num.'" '.$selected.'>'.$num.'</option>';
+                        }?>
+                    </select>
+                </div>
+            </div>
 
             <fieldset class="fieldset-form-large">
                 <legend>Lugar de ventas de entradas</legend>
@@ -132,6 +148,11 @@
                 <?php }?>
 
             <?php }?>
+
+            <p>
+                <label class="label-form">M&aacute;s info</label><br />
+                <textarea name="txtMoreInfo" class="textarea-moreinfo" rows="22" cols="5"><?=$info['moreinfo'];?></textarea>
+            </p>
 
             <p class="clear prepend-top"><br />
                 <label class="label-form" for="txtPrice">Precio de entradas anticipadas</label><br />
