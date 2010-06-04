@@ -25,9 +25,11 @@
     </div>
 
     <div class="cont-twitter">
-        <div class="icon"></div>
-        <span id="my_twitter_status" class="text"></span> &mdash;
-        <small><span id="my_twitter_status_time" class="clear"></span></small>
+        <a href="http://www.twitter.com/Music_Shows" class="icon" target="_blank">&nbsp;</a>
+        <div class="clear text">
+            <span id="my_twitter_status"></span> &mdash;
+            <small><span id="my_twitter_status_time"></span></small>
+        </div>
     </div>
     <script type="text/javascript" src="http://www.twitter.com/statuses/user_timeline/Music_Shows.json?callback=twitterCallback&count=1"></script>
 

@@ -127,7 +127,7 @@ function get_datetime($date, $timer){
     list($d, $m, $y) = preg_split("/[\/]|[\,]/", $date);
     $date = mktime(0, 0, 0, $m, $d, $y);
     $ret = date('d', $date) ." de ". get_text_month(date('n', $date));
-    if( !is_null($timer) ) $ret.=", ".date('H:i', strtotime($timer))." hs";
+    if( isset($timer) && !empty($timer) && !is_null($timer) ) $ret.=", ".date('H:i', strtotime($timer))." hs";
     return $ret;
 }
 ?>

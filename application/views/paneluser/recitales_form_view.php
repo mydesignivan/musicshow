@@ -69,7 +69,7 @@
                     <select name="cboTimerMinute" title="Minuto">
                         <option value="null">&nbsp;</option>
                         <?php
-                        for( $n=1; $n<=59; $n++ ) {
+                        for( $n=0; $n<=59; $n++ ) {
                             $num = $n<=9 ? "0".$n : $n;
                             $selected = $num==@$info['timer_minute'] ? 'selected="selected"' : '';
                             echo '<option value="'.$num.'" '.$selected.'>'.$num.'</option>';

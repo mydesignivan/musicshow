@@ -72,6 +72,8 @@ class Recitales extends Controller{
             if( $resultUpload['status']=="ok" ){
                 // Guardo los datos
                 $data = $this->_request_fields();
+                $timer = $data['timer'];
+
                 $data['user_id'] = $this->session->userdata('user_id');
                 $data['date_added'] = date('Y-m-d h:i:s');
                 $data = array_merge($resultUpload['result'], $data);
@@ -82,8 +84,8 @@ class Recitales extends Controller{
                     $this->load->helper('twitter_helper');
 
                     $data = $this->recitales_model->get_recital($recital_id);
-                    
-                    $msg = $_POST['txtDate'] . " - ";
+
+                    $msg = get_datetime($_POST['txtDate'], $timer) . " - ";
                     $msg.= $data['lugar_city'] . " - ";
                     $msg.= $_POST['txtBanda'] . " - ";
                     $msg.= $data['genero_name'] . " - ";
@@ -92,7 +94,6 @@ class Recitales extends Controller{
                     postToTwitter(CFG_TWITTER_USER, CFG_TWITTER_PSS, $msg);
                 }
                 redirect('/paneluser/recitales/');
-
             }
         }
     }

@@ -98,7 +98,7 @@
     <?php if( !empty($info['moreinfo']) ){?>
     <div class="clear">
         <label class="label-form">M&aacute;s info</label><br />
-        <span class="text-medium"><?=$info['moreinfo'];?></span>
+        <span class="text-medium"><?=nl2br($info['moreinfo']);?></span>
     </div>
     <?php }?>
 </div>

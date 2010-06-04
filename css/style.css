@@ -642,6 +642,7 @@ table.table-calendar{
     margin-left: 10px;
 }
     .cont-twitter .icon{
+        display: block;
         float:left;
         background: url(../images/icon_twitter2.png) no-repeat left top;
         width: 150px;
@@ -649,5 +650,7 @@ table.table-calendar{
         margin:-20px 0 0 -5px;
     }
     .cont-twitter .text{
+        float: left;
+        clear: left;
         font-size: 90%;
     }
