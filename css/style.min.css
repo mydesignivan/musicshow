@@ -125,4 +125,4 @@ table.table-calendar .mark{background-color:red;color:#fff!important;font-size:1
 .sliderImage .bottom{bottom:0;left:0}
 .cont-twitter{float:left;width:210px;height:300px;margin-left:10px}
 .cont-twitter .icon{display:block;float:left;background:url(../images/icon_twitter2.png) no-repeat left top;width:150px;height:150px;margin:-20px 0 0 -5px}
-.cont-twitter .text{float:left;clear:left;font-size:90%}
+.cont-twitter .text{float:left;width:210px;clear:left;font-size:90%;}

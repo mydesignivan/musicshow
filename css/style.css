@@ -139,6 +139,11 @@ input.input-form{
     font-size:90%;
     width:300px;
 }
+input.input-table{
+    font-size:90%;
+    width:90%;
+    background-color: #fff !important;
+}
 input.input-phone{
     font-size:90%;
     width:225px;
@@ -168,6 +173,14 @@ input.input-lugar{
 input.input-search{width:150px;}
 input.input-medium{width:170px;}
 
+textarea.textarea-form{
+    width: 320px;
+    height: 80px;
+}
+textarea.textarea-small{
+    width: 230px;
+    height: 50px;
+}
 textarea.textarea-contact{
     width:450px;
     height:180px;
@@ -479,6 +492,59 @@ table.table-list{
     table.table-list .cell-3{width:290px;}
 
 /*------------------------------------------------------------------------------
+ - ESTILOS PARA LAS TABLA BANDAS
+ -----------------------------------------------------------------------------*/
+table.table-bandas{
+    width:100%;
+    margin-top:20px;
+}
+    table.table-bandas .cell-1{width:15px;}
+    table.table-bandas .cell-2{width:200px;}
+    table.table-bandas .cell-3{width:150px;}
+    table.table-bandas .cell-4{width:100px;}
+    table.table-bandas .cell-5{width:100px;}
+
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA LAS TABLA INTEGRANTES
+ -----------------------------------------------------------------------------*/
+table.table-integrantes{
+    width:100%;
+    border:1px solid #E7B969;
+    margin-bottom: 10px;
+}
+    table.table-integrantes .cell-1{width:150px; padding-left: 5px;}
+    table.table-integrantes .cell-2{width:150px; padding-left: 5px;}
+    table.table-integrantes .cell-3{width:90px; text-align: center;}
+
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA LAS TABLA DISCOGRAFICA
+ -----------------------------------------------------------------------------*/
+table.table-discografica{
+    width:800px;
+    border:1px solid #E7B969;
+    margin-bottom: 10px;
+}
+    table.table-discografica .cell-1{width:150px; vertical-align: top;}
+    table.table-discografica .cell-2{width:150px; vertical-align: top;}
+    table.table-discografica .cell-3{width:200px; text-align: left; vertical-align: top;}
+    table.table-discografica thead .cell-3{text-align: center !important;}
+    table.table-discografica .cell-4{width:150px; text-align: center; vertical-align: top;}
+    table.table-discografica .cell-5{text-align: center; vertical-align: top;}
+
+/*------------------------------------------------------------------------------
+ - ESTILOS PARA LAS TABLA TEMAS DISCOGRAFICA
+ -----------------------------------------------------------------------------*/
+table.table-temas-discografica{
+    width:100%;
+    border:1px solid #E7B969;
+    margin-bottom: 10px;
+}
+    table.table-temas-discografica .cell1{width: 50%;}
+    table.table-temas-discografica .cell2{width: 50%;}
+    table.table-temas-discografica tbody td input[type=text]{margin-bottom: 0;}
+
+
+/*------------------------------------------------------------------------------
  - ESTILOS PARA LAS TABLAS "LUGAR"" (dentro del popup)
  -----------------------------------------------------------------------------*/
 table.table-lugar{
@@ -637,7 +703,7 @@ table.table-calendar{
  -----------------------------------------------------------------------------*/
 .cont-twitter{
     float:left;
-    width: 210px;
+    width: 200px;
     height:300px;
     margin-left: 10px;
 }
@@ -651,6 +717,7 @@ table.table-calendar{
     }
     .cont-twitter .text{
         float: left;
+        width: 200px;
         clear: left;
         font-size: 90%;
     }

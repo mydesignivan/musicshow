@@ -11,6 +11,7 @@
             <li><a href="<?=site_url('/index/')?>" class="mnu_inicio">Inicio</a></li>
             <li><a href="<?=site_url('/paneluser/micuenta/')?>" class="mnu_inicio">Mi Cuenta</a></li>
             <li><a href="<?=site_url('/paneluser/recitales/');?>" class="mnu_recitales">Recitales</a></li>
+            <li><a href="<?=site_url('/paneluser/bandas/');?>" class="mnu_recitales">Bandas</a></li>
         </ul>
     </div>
     <!-- ================  END MENU  ================ -->

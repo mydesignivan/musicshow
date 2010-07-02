@@ -52,6 +52,10 @@ define('TBL_RECITALES_TO_LUGARVTA', 'recitales_to_lugarvta');
 define('TBL_LUGARES', 'lugares');
 define('TBL_CONTENT', 'content_index');
 define('TBL_DESTACADOS', 'destacados');
+define('TBL_BANDAS', 'bandas');
+define('TBL_IMAGESBANDAS', 'image_bandas');
+define('TBL_DISCOGRAFIA', 'discografia');
+define('TBL_DISCOGRAFIA_TEMAS', 'discografia_temas');
 
 /*
 |--------------------------------------------------------------------------
