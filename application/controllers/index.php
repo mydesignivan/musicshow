@@ -23,6 +23,10 @@ class Index extends Controller {
     /* PUBLIC FUNCTIONS
      **************************************************************************/
     public function index(){
+        /*$this->load->library('encpss');
+        echo $this->encpss->decode('RWc3dw/7z65xhGqDloY2DqZ//Gr58p6G');
+        die();*/
+
         $this->_data = $this->dataview->set_data(array(
             'info' => $this->destacados_model->get_content(),
             'tlp_script' => array('twitter', 'imagegallery')

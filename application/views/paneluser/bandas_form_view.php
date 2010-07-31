@@ -16,13 +16,13 @@
             <!-- ========== PROVINCIA =========== -->
             <p>
                 <span class="required">*</span><label class="label-form" for="cboStates">Provincia</label><br />
-                <?=form_dropdown('cboStates', $comboStates,  @$info['state_id'], 'class="select-form validate" id="cboStates"');?>
+                <?=form_dropdown('cboStates', $comboStates,  @$info['state_id'], 'class="select-form validate" id="cboStates" onchange="Bandas.show_states(this)"');?>
             </p>
             <!-- ========== CIUDAD =========== -->
             <p>
                 <span class="required">*</span><label class="label-form" for="cboCity">Ciudad</label><br />
                 <select name="cboCity" id="cboCity" class="select-form validate">
-                    <option value="0">Seleccione una Ciudad</option>
+                    <option value="0">Seleccione una Provincia</option>
                 </select>
             </p>
             <!-- ========== INFLUENCIAS =========== -->
@@ -46,11 +46,12 @@
                         <tr>
                             <td class="cell-1"><input type="text" class="input-table" /></td>
                             <td class="cell-2"><input type="text" class="input-table" /></td>
-                            <td class="cell-3"><button type="button" class="button-medium">Eliminar</button></td>
+                            <td class="cell-3"><button type="button" class="button-medium" onclick="JTable.remove(this)">Eliminar</button></td>
                         </tr>
                     </tbody>
                 </table>
-                <button type="button" class="button-large">Agregar otro</button>
+                <button type="button" class="button-large" onclick="JTable.add('#tblIntegrantes')">Agregar otro</button>
+                <div id="msgbox-integrantes" class="clear prepend-top"></div>
             </div>
 
             <!-- ========== IMAGENES =========== -->
@@ -63,24 +64,26 @@
                             <span>Im&aacute;gen</span><br />
                             <span>Comentario</span>
                         </div>
-                        <div class="span-6 last">
-                            <input type="file" name="txtImage" size="20" /><br />
+                        <div class="span-13 last">
+                            <input type="file" name="txtImage" size="15" />
+                            <button type="button" class="button-medium" onclick="Bandas.attach_file_remove(this)">Eliminar</button><br />
+
                             <textarea name="txtImageComment" cols="22" rows="5" class="textarea-small"></textarea>
                         </div>
                     </li>
                 </ul>
-                <a href="" class="link1">Adjuntar otra im&aacute;gen</a>
+                <a href="javascript:void(Bandas.attach_file())" class="link1">Adjuntar otra im&aacute;gen</a>
             </div>
 
             <!-- ========== DISCOGRAFICA =========== -->
             <div class="float-left clear prepend-top">
-                <label class="label-form" for="txtGenero">Discogr&aacute;fica</label>
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;Si</span><input type="radio" name="optDiscografia" />&nbsp;&nbsp;
-                <span>No</span><input type="radio" name="optDiscografia" checked />
+                <label class="label-form" for="optDiscografia">Discogr&aacute;fica</label>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;Si</span><input type="radio" name="optDiscografia" onclick="$('#contDiscografica').fadeIn('slow')" />&nbsp;&nbsp;
+                <span>No</span><input type="radio" name="optDiscografia" checked  onclick="$('#contDiscografica').fadeOut('slow')" />
             </div>
 
-            <div id="contDiscografica" class="clear float-left prepend-top">
-                <label class="label-form" for="txtGenero">Discogr&aacute;fica Actual</label>&nbsp;<input type="text" id="txtDiscActual" name="txtDiscActual" class="input-form validate" value="" />
+            <div id="contDiscografica" class="clear float-left prepend-top hide">
+                <label class="label-form" for="txtDiscActual">Discogr&aacute;fica Actual</label>&nbsp;<input type="text" id="txtDiscActual" name="txtDiscActual" class="input-form validate" value="" />
 
                 <table id="tblDiscografica" class="table-discografica" cellpadding="0" cellspacing="0">
                     <thead>
@@ -97,30 +100,32 @@
                             <td class="cell-1"><input type="text" class="input-table" /></td>
                             <td class="cell-2"><input type="text" class="input-table" /></td>
                             <td class="cell-3">
-                                <table id="tblDiscografica" class="table-temas-discografica" cellpadding="0" cellspacing="0">
+                                <table class="table-temas-discografica" cellpadding="0" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <td class="cell-1">Nombre</td>
-                                            <td class="cell-2">Minutos</td>
+                                            <td class="cell1">Nombre</td>
+                                            <td class="cell2">Minutos</td>
+                                            <td class="cell3">Acci&oacute;n</td>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td class="cell-1"><input type="text" class="input-table" /></td>
-                                            <td class="cell-2"><input type="text" class="input-table" /></td>
+                                            <td class="cell1"><input type="text" class="input-table" /></td>
+                                            <td class="cell2"><input type="text" class="input-table" /></td>
+                                            <td class="cell3"><button type="button" class="button-medium" onclick="JTable.remove(this)">Eliminar</button></td>
                                         </tr>
                                     </tbody>
                                 </table>
-                                <button type="button" class="button-large">Agregar otro</button>
+                                <button type="button" class="button-large" onclick="JTable.add($(this).parent().find('table'))">Agregar otro</button>
                             </td>
                             <td class="cell-4">
                                 
                             </td>
-                            <td class="cell-5"><button type="button" class="button-medium">Eliminar</button></td>
+                            <td class="cell-5"><button type="button" class="button-medium" onclick="JTable.remove(this)">Eliminar</button></td>
                         </tr>
                     </tbody>
                 </table>                
-                <button type="button" class="button-large">Agregar otro</button>
+                <button type="button" class="button-large" onclick="JTable.add('#tblDiscografica')">Agregar otro</button>
             </div>
 
             <!-- ========== HISTORIA DE LA BANDA =========== -->
@@ -131,28 +136,28 @@
 
             <!-- ========== TOCANDO DESDE =========== -->
             <div class="clear float-left">
-                <label class="label-form" for="txtGenero">Tocando Desde:</label><br />
+                <label class="label-form" for="txtTocandoDesde">Tocando Desde:</label><br />
                 <input type="text" id="txtTocandoDesde" name="txtTocandoDesde" class="input-form validate" value="<?=$info['tocando_desde'];?>" />
             </div>
 
             <!-- ========== MANAGER =========== -->
             <div class="clear float-left">
-                <label class="label-form" for="txtGenero">Manager</label>
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;Si</span><input type="radio" name="optManager" />&nbsp;&nbsp;
-                <span>No</span><input type="radio" name="optManager" checked />
+                <label class="label-form" for="optManager">Manager</label>
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;Si</span><input type="radio" name="optManager" onclick="$('#contManager').fadeIn('slow')" />&nbsp;&nbsp;
+                <span>No</span><input type="radio" name="optManager" checked onclick="$('#contManager').fadeOut('slow')" />
             </div>
 
-            <div id="contManager" class="clear float-left prepend-top">
+            <div id="contManager" class="clear float-left prepend-top hide">
                 <div class="span-10">
-                    <label class="label-form float-left" for="txtGenero">Nombre</label>
+                    <label class="label-form float-left" for="txtManagerName">Nombre</label>
                     <input type="text" id="txtManagerName" name="txtManagerName" class="input-form validate float-right" value="<?=$info['manager_name'];?>" />
                 </div>
                 <div class="clear span-10">
-                    <label class="label-form float-left" for="txtGenero">Telefono</label>
+                    <label class="label-form float-left" for="txtManagerPhone">Telefono</label>
                     <input type="text" id="txtManagerPhone" name="txtManagerPhone" class="input-form validate float-right" value="<?=$info['manager_phone'];?>" />
                 </div>
                 <div class="clear span-10">
-                    <label class="label-form float-left" for="txtGenero">E-Mail</label>
+                    <label class="label-form float-left" for="txtManagerEmail">E-Mail</label>
                     <input type="text" id="txtManagerEmail" name="txtManagerEmail" class="input-form validate float-right" value="<?=$info['manager_email'];?>" />
                 </div>
             </div>
@@ -177,20 +182,63 @@
                 </div>
             </div>
 
+            <!-- ========== OTROS CONTACTOS =========== -->
+            <div class="clear float-left">
+                <label class="label-form">Otros Contactos:</label>
+            </div>
+
+            <div class="clear float-left">
+                <table id="tblOtherContact" class="table-othercontact" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <td class="cell-1">Nombre</td>
+                            <td class="cell-2">Telefono</td>
+                            <td class="cell-3">E-Mail</td>
+                            <td class="cell-4">Acci&oacute;n</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="cell-1"><input type="text" class="input-table" /></td>
+                            <td class="cell-2"><input type="text" class="input-table" /></td>
+                            <td class="cell-3"><input type="text" class="input-table" /></td>
+                            <td class="cell-4"><button type="button" class="button-medium" onclick="JTable.remove(this)">Eliminar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="button-large" onclick="JTable.add('#tblOtherContact')">Agregar otro</button>
+            </div>
+
+
+
             <!-- ========== LA BANDA EN LA WEB =========== -->
             <div class="clear float-left">
-                <label class="label-form" for="txtContactPrensa">La banda en la Web:</label>&nbsp;&nbsp;
-                <select id="cboBandaWeb" name="cboBandaWeb">
-                    <option value="Sitio Web">Sitio Web</option>
-                    <option value="Youtube">Youtube</option>
-                    <option value="Twitter">Twitter</option>
-                    <option value="Fotolog">Fotolog</option>
-                    <option value="MySpace">MySpace</option>
-                    <option value="El Sonar">El Sonar</option>
-                    <option value="Puro Volumen">Puro Volumen</option>
-                    <option value="other">Otro</option>
-                </select>
-                <input type="text" name="txtBandaWebUrl" id="txtBandaWebUrl" class="input-form" />
+                <label class="label-form">La banda en la Web:</label>
+            </div>
+
+            <div class="clear float-left">
+                <table id="tblBandaWeb" class="table-bandaweb" cellpadding="0" cellspacing="0">
+                    <tbody>
+                        <tr>
+                            <td class="cell-1">
+                                <select name="cboBandaWeb" onchange="Bandas.change_bandaweb(this)">
+                                    <option value="Sitio Web">Sitio Web</option>
+                                    <option value="Youtube">Youtube</option>
+                                    <option value="Twitter">Twitter</option>
+                                    <option value="Fotolog">Fotolog</option>
+                                    <option value="MySpace">MySpace</option>
+                                    <option value="El Sonar">El Sonar</option>
+                                    <option value="Puro Volumen">Puro Volumen</option>
+                                    <option value="other">Otro</option>
+                                </select>
+                                <input type="text" class="input-table hide" />
+                            </td>
+                            <td class="cell-2"><input type="text" class="input-table" /></td>
+                            <td class="cell-3"><button type="button" class="button-medium" onclick="JTable.remove(this)">Eliminar</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button type="button" class="button-large" onclick="JTable.add('#tblBandaWeb')">Agregar otro</button>
             </div>
 
             <!-- ========== LINKS DE INTERES =========== -->
@@ -198,23 +246,23 @@
                 <label class="label-form" for="txtContactPrensa">Links de Interes:</label>
             </div>
             <div class="clear float-left">
-                <label class="label-form" for="txtUrl">URL:</label>
-                <input type="text" id="txtUrl" name="txtUrl" class="input-form validate" value="<?=$info['manager_phone'];?>" /><br />
+                <label class="label-form" for="txtLinksInteresTitle">T&iacute;tulo:</label>
+                <input type="text" id="txtLinksInteresTitle" name="txtLinksInteresTitle" class="input-form validate" value="<?=$info['manager_phone'];?>" /><br />
 
-                <label class="label-form" for="txtUrl">T&iacute;tulo:</label>
-                <input type="text" id="txtUrl" name="txtUrl" class="input-form validate" value="<?=$info['manager_phone'];?>" />
+                <label class="label-form" for="txtLinksInteresUrl">URL:</label>
+                <input type="text" id="txtLinksInteresUrl" name="txtLinksInteresUrl" class="input-form validate" value="<?=$info['manager_phone'];?>" />
             </div>
 
             <!-- ========== MAS INFO =========== -->
             <div class="clear float-left prepend-top">
-                <label class="label-form" for="txtHistory">Mas Info:</label><br />
-                <textarea name="txtHistory" cols="22" rows="5" class="textarea-form"></textarea>
+                <label class="label-form" for="txtMoreInfo">Mas Info:</label><br />
+                <textarea name="txtMoreInfo" id="txtMoreInfo" cols="22" rows="5" class="textarea-form"></textarea>
             </div>
 
             <input type="hidden" name="banda_id" value="<?=$info['banda_id'];?>" />
 
             <div class="clear text-center"><br />
-                <button type="button" class="button-large">Guardar</button>
+                <button type="button" class="button-large" onclick="Bandas.save()">Guardar</button>
             </div>
         </form>
 
@@ -222,7 +270,7 @@
 
         <script type="text/javascript">
         <!--
-            Bandas.initializer(<?=!$info ? 'false' : 'true';?>);
+            Bandas.initializer({mode : '<?=!$info ? 'create' : 'edit';?>'});
         -->
         </script>
         

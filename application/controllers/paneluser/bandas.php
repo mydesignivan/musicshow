@@ -69,7 +69,7 @@ class Bandas extends Controller{
         }
         
         $this->_data = $this->dataview->set_data(array(
-            'tlp_script'   => array('validator', 'popup', 'fancybox', 'bandas_form'),
+            'tlp_script'   => array('validator', 'popup', 'fancybox', 'jtable', 'bandas_form'),
             'tlp_section'  => 'paneluser/bandas_form_view.php',
             'info'         => $info,
             'title'        => $title,
@@ -145,6 +145,16 @@ class Bandas extends Controller{
         echo $this->recitales_model->check($_POST['banda'], $_POST['recitalid']);
         die();
     }
+
+    public function ajax_show_states(){
+        $comboCity = $this->lists_model->get_city($_POST['id']);
+        echo '<option value="0">Seleccione una Ciudad</option>\n';
+        foreach( $comboCity as $row ){
+            echo '<option value="'.$row['city_id'].'">'.$row['name'].'</option>\n';
+        }
+        die();
+    }
+
 
     /* FUNCTIONS PRIVATE
      **************************************************************************/
