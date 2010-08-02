@@ -17,16 +17,32 @@ var Bandas = new (function(){
         popup.initializer();
 
         JTable.init('#tblDiscografica');
+
+        formatNumber.init('#txtTocandoDesde, .jq-field-int');
+
     };
 
     this.save = function(){
         if( working ) return false;
+        
+        if( $('#form1')[0].optDiscografia[0].value==1 ){
+            var arr_tracks = new Array();
+            $('#tblDiscografica tbody tbody tr').each(function(){
+                var input = $(this).find('input:text');
+                arr_tracks.push({
+                    name    : input.eq(0).val(),
+                    minutes : input.eq(1).val()
+                });                
+            });
+            $('#extra_post').val(JSON.encode(arr_tracks));
+        }
 
         ajaxloader.show('Validando Formulario');
         $.validator.validate('#form1 .validate', function(error){
             if( !error && valid_images() && valid_integrantes() ){
                 ajaxloader.show('Enviando Formulario');
-                
+
+                $('#form1').submit();
 
             }else{
                 ajaxloader.hidden();
@@ -114,7 +130,6 @@ var Bandas = new (function(){
     var valid_images = function(){
         var inputs = $('#contImages input:file');
         var empty=0;
-        alert(inputs.length)
 
         inputs.each(function(){
             if( !$(this).val() ) empty++;

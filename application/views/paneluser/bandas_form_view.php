@@ -44,8 +44,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="cell-1"><input type="text" class="input-table" /></td>
-                            <td class="cell-2"><input type="text" class="input-table" /></td>
+                            <td class="cell-1"><input type="text" class="input-table" name="txtIntegName[]" /></td>
+                            <td class="cell-2"><input type="text" class="input-table" name="txtIntegInstr[]" /></td>
                             <td class="cell-3"><button type="button" class="button-medium" onclick="JTable.remove(this)">Eliminar</button></td>
                         </tr>
                     </tbody>
@@ -65,7 +65,7 @@
                             <span>Comentario</span>
                         </div>
                         <div class="span-13 last">
-                            <input type="file" name="txtImage" size="15" />
+                            <input type="file" name="txtImage[]" size="15" />
                             <button type="button" class="button-medium" onclick="Bandas.attach_file_remove(this)">Eliminar</button><br />
 
                             <textarea name="txtImageComment" cols="22" rows="5" class="textarea-small"></textarea>
@@ -78,8 +78,8 @@
             <!-- ========== DISCOGRAFICA =========== -->
             <div class="float-left clear prepend-top">
                 <label class="label-form" for="optDiscografia">Discogr&aacute;fica</label>
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;Si</span><input type="radio" name="optDiscografia" onclick="$('#contDiscografica').fadeIn('slow')" />&nbsp;&nbsp;
-                <span>No</span><input type="radio" name="optDiscografia" checked  onclick="$('#contDiscografica').fadeOut('slow')" />
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;Si</span><input type="radio" name="optDiscografia" onclick="$('#contDiscografica').fadeIn('slow')" value="1" />&nbsp;&nbsp;
+                <span>No</span><input type="radio" name="optDiscografia" checked  onclick="$('#contDiscografica').fadeOut('slow')" value="0" />
             </div>
 
             <div id="contDiscografica" class="clear float-left prepend-top hide">
@@ -97,8 +97,8 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="cell-1"><input type="text" class="input-table" /></td>
-                            <td class="cell-2"><input type="text" class="input-table" /></td>
+                            <td class="cell-1"><input type="text" class="input-table" name="txtDiscCDname[]" /></td>
+                            <td class="cell-2"><input type="text" class="input-table" name="txtDiscName[]" /></td>
                             <td class="cell-3">
                                 <table class="table-temas-discografica" cellpadding="0" cellspacing="0">
                                     <thead>
@@ -111,7 +111,7 @@
                                     <tbody>
                                         <tr>
                                             <td class="cell1"><input type="text" class="input-table" /></td>
-                                            <td class="cell2"><input type="text" class="input-table" /></td>
+                                            <td class="cell2"><input type="text" class="input-table jq-field-int" /></td>
                                             <td class="cell3"><button type="button" class="button-medium" onclick="JTable.remove(this)">Eliminar</button></td>
                                         </tr>
                                     </tbody>
@@ -119,7 +119,7 @@
                                 <button type="button" class="button-large" onclick="JTable.add($(this).parent().find('table'))">Agregar otro</button>
                             </td>
                             <td class="cell-4">
-                                
+                                <input type="file" name="txtDiscoImage" size="5" name="txtDiscImage[]" />
                             </td>
                             <td class="cell-5"><button type="button" class="button-medium" onclick="JTable.remove(this)">Eliminar</button></td>
                         </tr>
@@ -143,8 +143,8 @@
             <!-- ========== MANAGER =========== -->
             <div class="clear float-left">
                 <label class="label-form" for="optManager">Manager</label>
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;Si</span><input type="radio" name="optManager" onclick="$('#contManager').fadeIn('slow')" />&nbsp;&nbsp;
-                <span>No</span><input type="radio" name="optManager" checked onclick="$('#contManager').fadeOut('slow')" />
+                <span>&nbsp;&nbsp;&nbsp;&nbsp;Si</span><input type="radio" name="optManager" onclick="$('#contManager').fadeIn('slow')" value="1" />&nbsp;&nbsp;
+                <span>No</span><input type="radio" name="optManager" checked onclick="$('#contManager').fadeOut('slow')" value="0" />
             </div>
 
             <div id="contManager" class="clear float-left prepend-top hide">
@@ -199,9 +199,9 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="cell-1"><input type="text" class="input-table" /></td>
-                            <td class="cell-2"><input type="text" class="input-table" /></td>
-                            <td class="cell-3"><input type="text" class="input-table" /></td>
+                            <td class="cell-1"><input type="text" class="input-table" name="txtContactOtherName[]" /></td>
+                            <td class="cell-2"><input type="text" class="input-table" name="txtContactOtherPhone[]" /></td>
+                            <td class="cell-3"><input type="text" class="input-table" name="txtContactOtherEmail[]" /></td>
                             <td class="cell-4"><button type="button" class="button-medium" onclick="JTable.remove(this)">Eliminar</button></td>
                         </tr>
                     </tbody>
@@ -221,7 +221,7 @@
                     <tbody>
                         <tr>
                             <td class="cell-1">
-                                <select name="cboBandaWeb" onchange="Bandas.change_bandaweb(this)">
+                                <select name="cboBandaWeb[]" onchange="Bandas.change_bandaweb(this)">
                                     <option value="Sitio Web">Sitio Web</option>
                                     <option value="Youtube">Youtube</option>
                                     <option value="Twitter">Twitter</option>
@@ -231,9 +231,9 @@
                                     <option value="Puro Volumen">Puro Volumen</option>
                                     <option value="other">Otro</option>
                                 </select>
-                                <input type="text" class="input-table hide" />
+                                <input type="text" class="input-table hide" name="txtOtherBanda[]" />
                             </td>
-                            <td class="cell-2"><input type="text" class="input-table" /></td>
+                            <td class="cell-2"><input type="text" class="input-table" name="txtBandaWebVal[]" /></td>
                             <td class="cell-3"><button type="button" class="button-medium" onclick="JTable.remove(this)">Eliminar</button></td>
                         </tr>
                     </tbody>
@@ -264,6 +264,9 @@
             <div class="clear text-center"><br />
                 <button type="button" class="button-large" onclick="Bandas.save()">Guardar</button>
             </div>
+
+            <input type="hidden" name="banda_id" id="banda_id" value="" />
+            <input type="hidden" name="extra_post" id="extra_post" value="" />
         </form>
 
 

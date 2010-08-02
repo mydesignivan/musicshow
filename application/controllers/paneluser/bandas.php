@@ -69,7 +69,7 @@ class Bandas extends Controller{
         }
         
         $this->_data = $this->dataview->set_data(array(
-            'tlp_script'   => array('validator', 'popup', 'fancybox', 'jtable', 'bandas_form'),
+            'tlp_script'   => array('validator', 'popup', 'fancybox', 'jtable', 'json', 'bandas_form'),
             'tlp_section'  => 'paneluser/bandas_form_view.php',
             'info'         => $info,
             'title'        => $title,
@@ -80,6 +80,9 @@ class Bandas extends Controller{
 
     public function create(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
+
+            print_array($_POST, true);
+
             $resultUpload = $this->uploadimages->upload();
             
             if( $resultUpload['status']=="ok" ){
