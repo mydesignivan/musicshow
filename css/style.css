@@ -748,3 +748,21 @@ table.table-bandaweb{
         clear: left;
         font-size: 90%;
     }
+
+/*------------------------------------------------------------------------------
+ - ESTILO PARA MENSAJES DEL VALIDADOR
+ -----------------------------------------------------------------------------*/
+.valid-success{
+    clear: both;
+    background: transparent url(../images/icon_success.png) no-repeat !important;
+    width: 16px;
+    height: 16px;
+}
+.valid-error{
+    clear: both;
+    background: #FBE3E4;
+    color: #8a1f11;
+    border-color: #FBC2C4;
+    padding: 5px;
+    margin-bottom: 1em;
+}

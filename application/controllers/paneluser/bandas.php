@@ -10,15 +10,6 @@ class Bandas extends Controller{
         $this->load->model('bandas_model');
         $this->load->model('lists_model');
         $this->load->helper('form');
-        $this->load->library('uploadimages', array(
-            'filename'           => 'fileUpload',
-            'upload_dir'         => UPLOAD_DIR,
-            /*'upload_maxsize'     => UPLOAD_MAXSIZE,
-            'upload_filetype'    => UPLOAD_FILETYPE,*/
-            'active_valid'       => false,
-            'image_thumb_width'  => IMAGE_THUMB_WIDTH,
-            'image_thumb_height' => IMAGE_THUMB_HEIGHT
-        ));
 
         $this->load->library('dataview', array(
             'tlp_section'  => 'paneluser/bandas_list_view.php',
@@ -69,11 +60,11 @@ class Bandas extends Controller{
         }
         
         $this->_data = $this->dataview->set_data(array(
-            'tlp_script'   => array('validator', 'popup', 'fancybox', 'jtable', 'json', 'bandas_form'),
+            'tlp_script'   => array('plugins_validator', 'popup', 'fancybox', 'jtable', 'json', 'bandas_form'),
             'tlp_section'  => 'paneluser/bandas_form_view.php',
             'info'         => $info,
             'title'        => $title,
-            'comboStates'  => $this->lists_model->get_states(array("0"=>"Seleccione una Provincia"), 13)
+            'comboStates'  => $this->lists_model->get_states(array(""=>"Seleccione una Provincia"), 13)
         ));
         $this->load->view("template_paneluser_view", $this->_data);
     }
@@ -81,34 +72,12 @@ class Bandas extends Controller{
     public function create(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
 
-            print_array($_POST, true);
+            //print_array($_POST, true);
 
             $resultUpload = $this->uploadimages->upload();
             
             if( $resultUpload['status']=="ok" ){
-                // Guardo los datos
-                $data = $this->_request_fields();
-                $timer = $data['timer'];
 
-                $data['user_id'] = $this->session->userdata('user_id');
-                $data['date_added'] = date('Y-m-d h:i:s');
-                $data = array_merge($resultUpload['result'], $data);
-
-                $recital_id = $this->recitales_model->create($data);
-
-                if( is_numeric($recital_id) ){
-                    $this->load->helper('twitter_helper');
-
-                    $data = $this->recitales_model->get_recital($recital_id);
-
-                    $msg = get_datetime($_POST['txtDate'], $timer) . " - ";
-                    $msg.= $data['lugar_city'] . " - ";
-                    $msg.= $_POST['txtBanda'] . " - ";
-                    $msg.= $data['genero_name'] . " - ";
-                    $msg.= site_url('/vermas/index/'.$recital_id);
-
-                    postToTwitter(CFG_TWITTER_USER, CFG_TWITTER_PSS, $msg);
-                }
                 redirect('/paneluser/recitales/');
             }
         }
@@ -119,12 +88,6 @@ class Bandas extends Controller{
             $resultUpload = $this->uploadimages->upload();
 
             if( $resultUpload['status']=="ok" ){
-                $data = $this->_request_fields();
-                $data['last_modified'] = date('Y-m-d h:i:s');
-                $data['json'] = $_POST['json'];
-                $data = array_merge($resultUpload['result'], $data);
-
-                $this->recitales_model->edit($data, $_POST['recital_id']);
                 redirect('/paneluser/recitales/');
             }
         }
@@ -151,7 +114,7 @@ class Bandas extends Controller{
 
     public function ajax_show_states(){
         $comboCity = $this->lists_model->get_city($_POST['id']);
-        echo '<option value="0">Seleccione una Ciudad</option>\n';
+        echo '<option value="">Seleccione una Ciudad</option>\n';
         foreach( $comboCity as $row ){
             echo '<option value="'.$row['city_id'].'">'.$row['name'].'</option>\n';
         }

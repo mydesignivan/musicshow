@@ -5,14 +5,27 @@ var Bandas = new (function(){
     this.initializer = function(_params){
         params.mode = _params;
 
-        $.validator.setting('#form1 .validate', {
-            effect_show     : 'slidefade',
-            validateOne     : true
-        });
+        var o = $.extend(true, {
+            //debug : true,
+            rules : {
+                txtBanda        : 'required',
+                txtGenero       : 'required',
+                cboStates       : 'required',
+                cboCity         : 'required',
+                txtInfluencias  : 'required'
+            },
 
-        $('#txtBanda, #txtGenero, #cboStates, #cboCity, #txtInfluencias').validator({
-            v_required  : true
-        });
+            submitHandler : function(){
+                //ajaxloader.show('Validando Formulario');
+            },
+
+            invalidHandler : function(){
+                //ajaxloader.hidden();
+            },
+            onsubmit : false
+
+        }, jQueryValidatorOptDef);
+        $('#form1').bind('submit', _on_submit).validate(o);
 
         popup.initializer();
 
@@ -23,7 +36,7 @@ var Bandas = new (function(){
     };
 
     this.save = function(){
-        if( working ) return false;
+        /*if( working ) return false;
         
         if( $('#form1')[0].optDiscografia[0].value==1 ){
             var arr_tracks = new Array();
@@ -39,17 +52,17 @@ var Bandas = new (function(){
 
         ajaxloader.show('Validando Formulario');
         $.validator.validate('#form1 .validate', function(error){
-            if( !error && valid_images() && valid_integrantes() ){
+            if( !error && valid_integrantes() && valid_images() ){
                 ajaxloader.show('Enviando Formulario');
 
-                $('#form1').submit();
+                //$('#form1').submit();
 
             }else{
                 ajaxloader.hidden();
             }
         });
 
-        return false;
+        return false;*/
     };
 
     this.show_states = function(el){
@@ -91,6 +104,31 @@ var Bandas = new (function(){
 
     /* PRIVATE METHODS
      **************************************************************************/
+    var _on_submit = function(){
+        if( working ) return false;
+
+        if( $('#form1').valid() && _valid_integrantes() && _valid_images() ){
+            ajaxloader.show('Enviando Formulario');
+            
+            if( $('#form1')[0].optDiscografia[0].value==1 ){
+                var arr_tracks = new Array();
+                $('#tblDiscografica tbody tbody tr').each(function(){
+                    var input = $(this).find('input:text');
+                    arr_tracks.push({
+                        name    : input.eq(0).val(),
+                        minutes : input.eq(1).val()
+                    });
+                });
+                $('#extra_post').val(JSON.encode(arr_tracks));
+            }
+            
+            return true;
+
+        }
+
+        return false;
+    };
+
     var ajaxloader ={
         show : function(msg){
             var html = '<div class="text-center">';
@@ -111,7 +149,7 @@ var Bandas = new (function(){
         }
     };
 
-    var valid_integrantes = function(){
+    var _valid_integrantes = function() {
         var empty=0;
         var inputs = $('#tblIntegrantes tbody tr input:text');
         inputs.each(function(){
@@ -119,15 +157,15 @@ var Bandas = new (function(){
         });
 
         if( empty == inputs.length ){
-            show_error('#msgbox-integrantes', 'Se requiere que ingrese al menos un integrante.');
+            $('#msgbox-integrantes').html("Se requiere que ingrese al menos un integrante.").show().focus();
             return false;
-        }else $.validator.hide('#msgbox-integrantes');
 
+        }else $('#msgbox-integrantes').hide();
 
         return true;
     };
 
-    var valid_images = function(){
+    var _valid_images = function(){
         var inputs = $('#contImages input:file');
         var empty=0;
 
@@ -136,10 +174,9 @@ var Bandas = new (function(){
         });
 
         if( empty == inputs.length ){
-            show_error(inputs.eq(0), 'Este campo es requerido.');
+            $('#msgbox-image').html("Este campo es obligatorio.").show().focus();
             return false;
-        }else $.validator.hide(inputs.eq(0));
-
+        }else $('#msgbox-image').hide();
 
         return true;
     };
