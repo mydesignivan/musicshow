@@ -517,6 +517,18 @@ table.table-integrantes{
     table.table-integrantes .cell-3{width:90px; text-align: center;}
 
 /*------------------------------------------------------------------------------
+ - ESTILOS PARA LAS TABLA GALERIA IMAGEN BANDA
+ -----------------------------------------------------------------------------*/
+table.table-gallerybanda{
+    width:100%;
+    border:1px solid #E7B969;
+    margin-bottom: 10px;
+}
+    table.table-gallerybanda .cell-1{width:120px; padding-left: 5px;}
+    table.table-gallerybanda .cell-2{width:200px; padding-left: 5px; vertical-align: top;}
+    table.table-gallerybanda .cell-3{width:90px; text-align: center;}
+
+/*------------------------------------------------------------------------------
  - ESTILOS PARA LAS TABLA DISCOGRAFICA
  -----------------------------------------------------------------------------*/
 table.table-discografica{

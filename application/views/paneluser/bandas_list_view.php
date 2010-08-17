@@ -27,8 +27,8 @@
                     $class = $n%2 ? '' : 'class="row-par"';
                 ?>
                     <tr <?=$class;?>>
-                        <td class="cell-1"><input type="checkbox" value="<?=$row['banda_id'];?>" /></td>
-                        <td class="cell-2"><a href="<?=site_url('/paneluser/bandas/form/'.$row['banda_id']);?>" class="link-title"><?=$row['name'];?></a></td>
+                        <td class="cell-1"><input type="checkbox" value="<?=$row['bandas_id'];?>" /></td>
+                        <td class="cell-2"><a href="<?=site_url('/paneluser/bandas/form/'.$row['bandas_id']);?>" class="link-title"><?=$row['name'];?></a></td>
                         <td class="cell-3"><?=$row['genero'];?></td>
                         <td class="cell-4"><?=$row['state'];?></td>
                         <td class="cell-5"><?=$row['city'];?></td>

@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 3.2.0.1
+-- version 3.2.4
 -- http://www.phpmyadmin.net
 --
 -- Servidor: localhost
--- Tiempo de generación: 31-07-2010 a las 04:03:43
--- Versión del servidor: 5.1.37
--- Versión de PHP: 5.3.0
+-- Tiempo de generación: 17-08-2010 a las 04:24:48
+-- Versión del servidor: 5.1.41
+-- Versión de PHP: 5.3.1
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
@@ -25,6 +25,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- Estructura de tabla para la tabla `bandas`
 --
 
+DROP TABLE IF EXISTS `bandas`;
 CREATE TABLE IF NOT EXISTS `bandas` (
   `bandas_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(200) NOT NULL,
@@ -43,40 +44,167 @@ CREATE TABLE IF NOT EXISTS `bandas` (
   `contact_name` varchar(100) NOT NULL,
   `contact_phone` char(50) NOT NULL,
   `contact_mail` varchar(100) NOT NULL,
-  `bandaweb_name` varchar(100) NOT NULL,
-  `bandaweb_url` varchar(200) NOT NULL,
   `link_url` varchar(300) NOT NULL,
   `link_title` varchar(100) NOT NULL,
   `masinfo` text NOT NULL,
   `date_added` datetime NOT NULL,
   `last_modified` datetime NOT NULL,
   PRIMARY KEY (`bandas_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
 
 --
 -- Volcar la base de datos para la tabla `bandas`
 --
 
+INSERT INTO `bandas` (`bandas_id`, `name`, `genero`, `state_id`, `city_id`, `influencias`, `discografica_visible`, `discografica_actual`, `history`, `tocando_desde`, `manager_visible`, `manager_name`, `manager_phone`, `manager_mail`, `contact_name`, `contact_phone`, `contact_mail`, `link_url`, `link_title`, `masinfo`, `date_added`, `last_modified`) VALUES
+(1, 'banda1', 'asd', 179, 338, 'sfgsdfg', 1, 'sdfsdf', 'sdfsdf', '23423', 1, 'dfgdfg', '434', 'asd@adas.com', 'sfsf', '534534', 'gwewef@asda.com', 'www.google.com', 'sdfsdfsdf', 'sdfgsdfgsdfg\nsdfgsdfg', '2010-08-15 12:30:13', '2010-08-16 22:34:59');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `bandas_gallerie`
+-- Estructura de tabla para la tabla `bandas_discografica`
 --
 
-CREATE TABLE IF NOT EXISTS `bandas_gallerie` (
+DROP TABLE IF EXISTS `bandas_discografica`;
+CREATE TABLE IF NOT EXISTS `bandas_discografica` (
+  `discografica_id` int(11) NOT NULL AUTO_INCREMENT,
+  `bandas_id` int(11) NOT NULL,
+  `discografia` varchar(200) NOT NULL,
+  `cd_name` varchar(200) NOT NULL,
+  `thumb` varchar(255) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `width` varchar(4) NOT NULL,
+  `height` varchar(4) NOT NULL,
+  PRIMARY KEY (`discografica_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Volcar la base de datos para la tabla `bandas_discografica`
+--
+
+INSERT INTO `bandas_discografica` (`discografica_id`, `bandas_id`, `discografia`, `cd_name`, `thumb`, `image`, `width`, `height`) VALUES
+(1, 1, 'erter', 'ewrwe', '12820040834c69d473b2605__2145500167_a4df60b93c_thumb.jpg', '12820040834c69d473b2605__2145500167_a4df60b93c.jpg', '99', '90');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `bandas_discografica_temas`
+--
+
+DROP TABLE IF EXISTS `bandas_discografica_temas`;
+CREATE TABLE IF NOT EXISTS `bandas_discografica_temas` (
+  `tema_id` int(11) NOT NULL AUTO_INCREMENT,
+  `discografica_id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `minutes` varchar(11) NOT NULL,
+  PRIMARY KEY (`tema_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=19 ;
+
+--
+-- Volcar la base de datos para la tabla `bandas_discografica_temas`
+--
+
+INSERT INTO `bandas_discografica_temas` (`tema_id`, `discografica_id`, `name`, `minutes`) VALUES
+(14, 3, 'aa', '34'),
+(15, 3, 'sds', '32'),
+(18, 1, 'fsdf', '454');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `bandas_gallery`
+--
+
+DROP TABLE IF EXISTS `bandas_gallery`;
+CREATE TABLE IF NOT EXISTS `bandas_gallery` (
   `bandagallerie_id` int(11) NOT NULL AUTO_INCREMENT,
-  `banda_id` int(11) NOT NULL,
+  `bandas_id` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
   `thumb` varchar(255) NOT NULL,
+  `width` varchar(4) NOT NULL,
+  `height` varchar(4) NOT NULL,
+  `comment` text NOT NULL,
   `order` int(11) NOT NULL,
   PRIMARY KEY (`bandagallerie_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Volcar la base de datos para la tabla `bandas_gallerie`
+-- Volcar la base de datos para la tabla `bandas_gallery`
 --
 
+INSERT INTO `bandas_gallery` (`bandagallerie_id`, `bandas_id`, `image`, `thumb`, `width`, `height`, `comment`, `order`) VALUES
+(1, 1, '12819703754c6950c7d35f9__2145500167_a4df60b93c.jpg', '12819703754c6950c7d35f9__2145500167_a4df60b93c_thumb.jpg', '99', '90', 'sdfasdf sdf asd\nf\nasdfasdf', 0),
+(3, 1, '12819718074c69565fcf795__casa-madera14.jpg', '12819718074c69565fcf795__casa-madera14_thumb.jpg', '107', '81', 'fdgdgdfg', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `bandas_integrantes`
+--
+
+DROP TABLE IF EXISTS `bandas_integrantes`;
+CREATE TABLE IF NOT EXISTS `bandas_integrantes` (
+  `ingregantes_id` int(11) NOT NULL AUTO_INCREMENT,
+  `bandas_id` int(11) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `instrument` varchar(200) NOT NULL,
+  PRIMARY KEY (`ingregantes_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=20 ;
+
+--
+-- Volcar la base de datos para la tabla `bandas_integrantes`
+--
+
+INSERT INTO `bandas_integrantes` (`ingregantes_id`, `bandas_id`, `name`, `instrument`) VALUES
+(19, 1, 'asd', 'dfgdfg');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `bandas_othercontact`
+--
+
+DROP TABLE IF EXISTS `bandas_othercontact`;
+CREATE TABLE IF NOT EXISTS `bandas_othercontact` (
+  `othercontact_id` int(11) NOT NULL AUTO_INCREMENT,
+  `bandas_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  PRIMARY KEY (`othercontact_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Volcar la base de datos para la tabla `bandas_othercontact`
+--
+
+INSERT INTO `bandas_othercontact` (`othercontact_id`, `bandas_id`, `name`, `phone`, `email`) VALUES
+(7, 1, 'dfgdfg', '45345', 'asda@asd.com'),
+(8, 1, 'rwe', '1232', 'wasd@aas.com');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `bandas_weblink`
+--
+
+DROP TABLE IF EXISTS `bandas_weblink`;
+CREATE TABLE IF NOT EXISTS `bandas_weblink` (
+  `weblinks_id` int(11) NOT NULL AUTO_INCREMENT,
+  `bandas_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `title_other` varchar(255) NOT NULL,
+  `url` varchar(255) NOT NULL,
+  PRIMARY KEY (`weblinks_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+
+--
+-- Volcar la base de datos para la tabla `bandas_weblink`
+--
+
+INSERT INTO `bandas_weblink` (`weblinks_id`, `bandas_id`, `title`, `title_other`, `url`) VALUES
+(7, 1, 'Fotolog', '', 'xzxzx'),
+(8, 1, 'Youtube', '', 'sdfsdfsf');
 
 -- --------------------------------------------------------
 
@@ -84,6 +212,7 @@ CREATE TABLE IF NOT EXISTS `bandas_gallerie` (
 -- Estructura de tabla para la tabla `ci_sessions`
 --
 
+DROP TABLE IF EXISTS `ci_sessions`;
 CREATE TABLE IF NOT EXISTS `ci_sessions` (
   `session_id` varchar(40) NOT NULL DEFAULT '0',
   `ip_address` varchar(16) NOT NULL DEFAULT '0',
@@ -106,6 +235,7 @@ INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activ
 -- Estructura de tabla para la tabla `content_index`
 --
 
+DROP TABLE IF EXISTS `content_index`;
 CREATE TABLE IF NOT EXISTS `content_index` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `content` longtext NOT NULL,
@@ -125,6 +255,7 @@ INSERT INTO `content_index` (`id`, `content`) VALUES
 -- Estructura de tabla para la tabla `destacados`
 --
 
+DROP TABLE IF EXISTS `destacados`;
 CREATE TABLE IF NOT EXISTS `destacados` (
   `destacado_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -147,85 +278,10 @@ CREATE TABLE IF NOT EXISTS `destacados` (
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `discografica`
---
-
-CREATE TABLE IF NOT EXISTS `discografica` (
-  `discografica_id` int(11) NOT NULL AUTO_INCREMENT,
-  `discografia` varchar(200) NOT NULL,
-  `cd_name` varchar(200) NOT NULL,
-  `image_cd` varchar(255) NOT NULL,
-  PRIMARY KEY (`discografica_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Volcar la base de datos para la tabla `discografica`
---
-
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `discografica_temas`
---
-
-CREATE TABLE IF NOT EXISTS `discografica_temas` (
-  `tema_id` int(11) NOT NULL AUTO_INCREMENT,
-  `discografica_id` int(11) NOT NULL,
-  `name` int(200) NOT NULL,
-  `minutes` int(11) NOT NULL,
-  PRIMARY KEY (`tema_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Volcar la base de datos para la tabla `discografica_temas`
---
-
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `images_bandas`
---
-
-CREATE TABLE IF NOT EXISTS `images_bandas` (
-  `image_id` int(11) NOT NULL AUTO_INCREMENT,
-  `filename` varchar(255) NOT NULL,
-  `filename_thumb` varchar(255) NOT NULL,
-  `comment` text NOT NULL,
-  PRIMARY KEY (`image_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Volcar la base de datos para la tabla `images_bandas`
---
-
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `integrantes`
---
-
-CREATE TABLE IF NOT EXISTS `integrantes` (
-  `ingregantes_id` int(11) NOT NULL AUTO_INCREMENT,
-  `banda_id` int(11) NOT NULL,
-  `name` varchar(200) NOT NULL,
-  `instrument` varchar(200) NOT NULL,
-  PRIMARY KEY (`ingregantes_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
-
---
--- Volcar la base de datos para la tabla `integrantes`
---
-
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `list_city`
 --
 
+DROP TABLE IF EXISTS `list_city`;
 CREATE TABLE IF NOT EXISTS `list_city` (
   `city_id` int(11) NOT NULL AUTO_INCREMENT,
   `state_id` int(11) NOT NULL,
@@ -819,6 +875,7 @@ INSERT INTO `list_city` (`city_id`, `state_id`, `name`) VALUES
 -- Estructura de tabla para la tabla `list_country`
 --
 
+DROP TABLE IF EXISTS `list_country`;
 CREATE TABLE IF NOT EXISTS `list_country` (
   `country_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_spanish_ci DEFAULT NULL,
@@ -1076,6 +1133,7 @@ INSERT INTO `list_country` (`country_id`, `name`) VALUES
 -- Estructura de tabla para la tabla `list_generos`
 --
 
+DROP TABLE IF EXISTS `list_generos`;
 CREATE TABLE IF NOT EXISTS `list_generos` (
   `genero_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -1103,6 +1161,7 @@ INSERT INTO `list_generos` (`genero_id`, `name`) VALUES
 -- Estructura de tabla para la tabla `list_states`
 --
 
+DROP TABLE IF EXISTS `list_states`;
 CREATE TABLE IF NOT EXISTS `list_states` (
   `state_id` int(11) NOT NULL AUTO_INCREMENT,
   `country_id` int(11) DEFAULT NULL,
@@ -5415,6 +5474,7 @@ INSERT INTO `list_states` (`state_id`, `country_id`, `name`) VALUES
 -- Estructura de tabla para la tabla `lugares`
 --
 
+DROP TABLE IF EXISTS `lugares`;
 CREATE TABLE IF NOT EXISTS `lugares` (
   `lugar_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -5452,6 +5512,7 @@ INSERT INTO `lugares` (`lugar_id`, `user_id`, `city_id`, `name`, `address`) VALU
 -- Estructura de tabla para la tabla `recitales`
 --
 
+DROP TABLE IF EXISTS `recitales`;
 CREATE TABLE IF NOT EXISTS `recitales` (
   `recital_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
@@ -5499,13 +5560,14 @@ INSERT INTO `recitales` (`recital_id`, `user_id`, `banda`, `date`, `timer`, `gen
 -- Estructura de tabla para la tabla `recitales_to_lugarvta`
 --
 
+DROP TABLE IF EXISTS `recitales_to_lugarvta`;
 CREATE TABLE IF NOT EXISTS `recitales_to_lugarvta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL,
   `recital_id` int(11) NOT NULL,
   `lugar_id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=62 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=58 ;
 
 --
 -- Volcar la base de datos para la tabla `recitales_to_lugarvta`
@@ -5523,11 +5585,7 @@ INSERT INTO `recitales_to_lugarvta` (`id`, `user_id`, `recital_id`, `lugar_id`) 
 (54, 20, 46, 36),
 (55, 20, 47, 34),
 (56, 20, 48, 33),
-(57, 20, 49, 33),
-(58, 20, 50, 32),
-(59, 20, 52, 41),
-(60, 20, 53, 33),
-(61, 20, 55, 33);
+(57, 20, 50, 32);
 
 -- --------------------------------------------------------
 
@@ -5535,6 +5593,7 @@ INSERT INTO `recitales_to_lugarvta` (`id`, `user_id`, `recital_id`, `lugar_id`) 
 -- Estructura de tabla para la tabla `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` char(10) NOT NULL,

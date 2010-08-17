@@ -72,24 +72,138 @@ class Bandas extends Controller{
     public function create(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
 
-            //print_array($_POST, true);
+                /*echo $_POST['extra_post']."<br>";
+                $extra_post = json_decode($_POST['extra_post']);
+                print_array($extra_post, true);*/
 
-            $resultUpload = $this->uploadimages->upload();
+//            print_array($_POST, true);
             
-            if( $resultUpload['status']=="ok" ){
+            $this->load->library('superupload');
 
-                redirect('/paneluser/recitales/');
+            //Sube las imagenes de la BANDA
+            $config = array(
+                'path'          => UPLOAD_BANDA_DIR,
+                'thumb_width'   => IMAGE_BANDA_THUMB_WIDTH,
+                'thumb_height'  => IMAGE_BANDA_THUMB_HEIGHT,
+                'maxsize'       => UPLOAD_BANDA_MAXSIZE,
+                'filetype'      => UPLOAD_BANDA_FILETYPE
+            );
+            $this->superupload->initialize($config);
+            $resultUpload1 = $this->superupload->upload('txtImage');
+
+            //Sube las imagenes de la DISCOGRAFICA
+            $config = array(
+                'path'          => UPLOAD_DISC_DIR,
+                'thumb_width'   => IMAGE_DISC_THUMB_WIDTH,
+                'thumb_height'  => IMAGE_DISC_THUMB_HEIGHT,
+                'maxsize'       => UPLOAD_DISC_MAXSIZE,
+                'filetype'      => UPLOAD_DISC_FILETYPE
+            );
+            $this->superupload->initialize($config);
+            $this->superupload->clear();
+            $resultUpload2 = $this->superupload->upload('txtDiscImage');
+
+            if( $resultUpload1['status']=="success" && $resultUpload2['status']=="success" ){
+
+                if( !$this->bandas_model->create($resultUpload1['output'], $resultUpload2['output']) ){
+                    $this->session->set_flashdata('status', "error");
+                    $this->session->set_flashdata('message', 'Ha ocurrido un error en la base de dato, por favor, intentelo mas tarde o comuniquese con el administrador de la web.');
+                    redirect('/paneluser/bandas/form/');
+
+                }else {
+                    redirect('/paneluser/bandas/');
+                }
+
+            }else{
+                $message = array();
+                if( $resultUpload1['status']=="error" ){
+                    $message[] = "<b>Error en la imagen de la banda</b>.<br />" . $this->superupload->get_error($resultUpload1['error']);
+                }
+
+                if( $resultUpload2['status']=="error" ){
+                    $message[] = "<br /><br /><b>Error en la imagen de la discografica.</b><br />" . $this->superupload->get_error($resultUpload2['error']);
+                }
+                $this->session->set_flashdata('status', "error");
+                $this->session->set_flashdata('message', implode("<br /><br />", $message));
+                redirect('/paneluser/bandas/form/');
             }
+
         }
     }
 
     public function edit(){
         if( $_SERVER['REQUEST_METHOD']=="POST" ){
-            $resultUpload = $this->uploadimages->upload();
 
-            if( $resultUpload['status']=="ok" ){
-                redirect('/paneluser/recitales/');
+            //print_array($_POST, true);
+
+            /*echo $_POST['extra_post']."<br>";
+            $extra_post = json_decode($_POST['extra_post']);
+            print_array($extra_post, true);*/
+
+
+            $this->load->library('superupload');
+
+            //Sube las imagenes de la BANDA
+            $config = array(
+                'path'          => UPLOAD_BANDA_DIR,
+                'thumb_width'   => IMAGE_BANDA_THUMB_WIDTH,
+                'thumb_height'  => IMAGE_BANDA_THUMB_HEIGHT,
+                'maxsize'       => UPLOAD_BANDA_MAXSIZE,
+                'filetype'      => UPLOAD_BANDA_FILETYPE
+            );
+            $this->superupload->initialize($config);
+            $uploadImageBanda = $this->superupload->upload('txtImage');
+            if( !$uploadImageBanda ) $uploadImageBanda = array('status'=>'success', 'output'=>array());
+
+            $this->superupload->clear();
+            $uploadImageBandaEdit = $this->superupload->upload('txtImageEdit');
+
+            //Sube las imagenes de la DISCOGRAFICA
+            $config = array(
+                'path'          => UPLOAD_DISC_DIR,
+                'thumb_width'   => IMAGE_DISC_THUMB_WIDTH,
+                'thumb_height'  => IMAGE_DISC_THUMB_HEIGHT,
+                'maxsize'       => UPLOAD_DISC_MAXSIZE,
+                'filetype'      => UPLOAD_DISC_FILETYPE
+            );
+            $this->superupload->initialize($config);
+            $this->superupload->clear();
+            $uploadImageDisc = $this->superupload->upload('txtDiscImage');
+            if( !$uploadImageDisc ) $uploadImageDisc = array('status'=>'success', 'output'=>array());
+            $this->superupload->clear();
+            $uploadImageDiscEdit = $this->superupload->upload('txtDiscImageEdit');
+
+            if( $uploadImageBanda['status']=="success" && $uploadImageBandaEdit['status']=="success" && $uploadImageDisc['status']=="success" && $uploadImageDiscEdit['status']=="success" ){
+
+                if( !$this->bandas_model->edit($uploadImageBanda['output'], $uploadImageBandaEdit['output'], $uploadImageDisc['output'], $uploadImageDiscEdit['output']) ){
+                    $this->session->set_flashdata('status', "error");
+                    $this->session->set_flashdata('message', 'Ha ocurrido un error en la base de dato, por favor, intentelo mas tarde o comuniquese con el administrador de la web.');
+
+                    redirect('/paneluser/bandas/form/'.$_POST['bandas_id']);
+
+                }else {
+                    redirect('/paneluser/bandas/');
+                }
+
+            }else{
+                $message = array();
+                if( $uploadImageBanda['status']=="error" ){
+                    $message[] = "<b>Error en la imagen de la banda</b>.<br />" . $this->superupload->get_error($uploadImageBanda['error']);
+                }
+                if( $uploadImageBandaEdit['status']=="error" ){
+                    $message[] = "<b>Error en la imagen de la banda</b>.<br />" . $this->superupload->get_error($uploadImageBandaEdit['error']);
+                }
+                if( $uploadImageDisc['status']=="error" ){
+                    $message[] = "<br /><br /><b>Error en la imagen de la discografica.</b><br />" . $this->superupload->get_error($uploadImageDisc['error']);
+                }
+                if( $uploadImageDiscEdit['status']=="error" ){
+                    $message[] = "<br /><br /><b>Error en la imagen de la discografica.</b><br />" . $this->superupload->get_error($uploadImageDiscEdit['error']);
+                }
+                $this->session->set_flashdata('status', "error");
+                $this->session->set_flashdata('message', implode("<br /><br />", $message));
+                redirect('/paneluser/bandas/form/'.$_POST['bandas_id']);
             }
+
         }
     }
     public function delete(){

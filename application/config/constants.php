@@ -53,9 +53,12 @@ define('TBL_LUGARES', 'lugares');
 define('TBL_CONTENT', 'content_index');
 define('TBL_DESTACADOS', 'destacados');
 define('TBL_BANDAS', 'bandas');
-define('TBL_IMAGESBANDAS', 'image_bandas');
-define('TBL_DISCOGRAFIA', 'discografia');
-define('TBL_DISCOGRAFIA_TEMAS', 'discografia_temas');
+define('TBL_BANDASGALLERY', 'bandas_gallery');
+define('TBL_BANDASINT', 'bandas_integrantes');
+define('TBL_BANDASDISC', 'bandas_discografica');
+define('TBL_BANDASDISCTRACK', 'bandas_discografica_temas');
+define('TBL_BANDASOTHERCONTACTS', 'bandas_othercontact');
+define('TBL_BANDASWEBLINK', 'bandas_weblink');
 
 /*
 |--------------------------------------------------------------------------
@@ -70,6 +73,33 @@ define('IMAGE_THUMB_WIDTH', 107);
 define('IMAGE_THUMB_HEIGHT', 90);
 define('IMAGE_ORIGINAL_WIDTH', 800);
 define('IMAGE_ORIGINAL_HEIGHT', 600);
+
+/*
+|--------------------------------------------------------------------------
+| UPLOAD FILE "BANDAS"
+|--------------------------------------------------------------------------
+*/
+define('UPLOAD_BANDA_DIR', './uploads/bandas/');
+define('UPLOAD_BANDA_FILETYPE', 'gif|jpg|png');
+define('UPLOAD_BANDA_MAXSIZE', 1024); //Expresado en Kylobytes
+define('IMAGE_BANDA_THUMB_WIDTH', 107);
+define('IMAGE_BANDA_THUMB_HEIGHT', 90);
+define('IMAGE_BANDA_ORIGINAL_WIDTH', 800);
+define('IMAGE_BANDA_ORIGINAL_HEIGHT', 600);
+
+/*
+|--------------------------------------------------------------------------
+| UPLOAD FILE "DISCOGRAFICA"
+|--------------------------------------------------------------------------
+*/
+define('UPLOAD_DISC_DIR', './uploads/disc/');
+define('UPLOAD_DISC_FILETYPE', 'gif|jpg|png');
+define('UPLOAD_DISC_MAXSIZE', 1024); //Expresado en Kylobytes
+define('IMAGE_DISC_THUMB_WIDTH', 107);
+define('IMAGE_DISC_THUMB_HEIGHT', 90);
+define('IMAGE_DISC_ORIGINAL_WIDTH', 800);
+define('IMAGE_DISC_ORIGINAL_HEIGHT', 600);
+
 
 /*
 |--------------------------------------------------------------------------
