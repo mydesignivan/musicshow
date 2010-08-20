@@ -23,11 +23,14 @@
 <script type="text/javascript" src="js/helpers.min.js"></script>
 <script type="text/javascript" src="js/class.login.min.js"></script>
 <script type="text/javascript" src="js/comun.js"></script>
+<script type="text/javascript" src="js/includeflash.js"></script>
 <!--========== END LIBRARIES =======-->
 
 <script type="text/javascript">
 <!--
     if( $.browser.opera ) $('head').append($('<link href="css/styleOpera.css" rel="stylesheet" type="text/css" />'));
+    //if( $.browser.safari ) $('head').append($('<link href="css/styleSafari.css" rel="stylesheet" type="text/css" />'));
+    //if( $.browser.opera ) $('head').append($('<link href="css/styleOpera.css" rel="stylesheet" type="text/css" />'));
 -->
 </script>
 

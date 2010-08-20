@@ -89,7 +89,7 @@ class Bandas extends Controller{
                 'filetype'      => UPLOAD_BANDA_FILETYPE
             );
             $this->superupload->initialize($config);
-            $resultUpload1 = $this->superupload->upload('txtImage');
+            $uploadImageBanda = $this->superupload->upload('txtImage');
 
             //Sube las imagenes de la DISCOGRAFICA
             $config = array(
@@ -101,13 +101,15 @@ class Bandas extends Controller{
             );
             $this->superupload->initialize($config);
             $this->superupload->clear();
-            $resultUpload2 = $this->superupload->upload('txtDiscImage');
+            $uploadImageDisc = $this->superupload->upload('txtDiscImage');
 
-            if( $resultUpload1['status']=="success" && $resultUpload2['status']=="success" ){
+            if( $uploadImageBanda['status']=="success" && $uploadImageDisc['status']=="success" ){
 
-                if( !$this->bandas_model->create($resultUpload1['output'], $resultUpload2['output']) ){
+                if( !$this->bandas_model->create($uploadImageBanda['output'], $uploadImageDisc['output']) ){
                     $this->session->set_flashdata('status', "error");
-                    $this->session->set_flashdata('message', 'Ha ocurrido un error en la base de dato, por favor, intentelo mas tarde o comuniquese con el administrador de la web.');
+                    $this->session->set_flashdata('message', ERR_DB);
+                    $this->_delete_images(UPLOAD_BANDA_DIR, $uploadImageBanda['output']);
+                    $this->_delete_images(UPLOAD_DISC_DIR, $uploadImageDisc['output']);
                     redirect('/paneluser/bandas/form/');
 
                 }else {
@@ -116,12 +118,14 @@ class Bandas extends Controller{
 
             }else{
                 $message = array();
-                if( $resultUpload1['status']=="error" ){
-                    $message[] = "<b>Error en la imagen de la banda</b>.<br />" . $this->superupload->get_error($resultUpload1['error']);
+                if( $uploadImageBanda['status']=="error" ){
+                    $message[] = "<b>Error en la imagen de la banda</b>.<br />" . $this->superupload->get_error($uploadImageBanda['error']);
+                    $this->_delete_images(UPLOAD_BANDA_DIR, $uploadImageBanda['output']);
                 }
 
-                if( $resultUpload2['status']=="error" ){
-                    $message[] = "<br /><br /><b>Error en la imagen de la discografica.</b><br />" . $this->superupload->get_error($resultUpload2['error']);
+                if( $uploadImageDisc['status']=="error" ){
+                    $message[] = "<br /><br /><b>Error en la imagen de la discografica.</b><br />" . $this->superupload->get_error($uploadImageDisc['error']);
+                    $this->_delete_images(UPLOAD_DISC_DIR, $uploadImageDisc['output']);
                 }
                 $this->session->set_flashdata('status', "error");
                 $this->session->set_flashdata('message', implode("<br /><br />", $message));
@@ -172,12 +176,15 @@ class Bandas extends Controller{
             if( !$uploadImageDisc ) $uploadImageDisc = array('status'=>'success', 'output'=>array());
             $this->superupload->clear();
             $uploadImageDiscEdit = $this->superupload->upload('txtDiscImageEdit');
+            if( !$uploadImageDiscEdit ) $uploadImageDiscEdit = array('status'=>'success', 'output'=>array());
 
             if( $uploadImageBanda['status']=="success" && $uploadImageBandaEdit['status']=="success" && $uploadImageDisc['status']=="success" && $uploadImageDiscEdit['status']=="success" ){
 
                 if( !$this->bandas_model->edit($uploadImageBanda['output'], $uploadImageBandaEdit['output'], $uploadImageDisc['output'], $uploadImageDiscEdit['output']) ){
                     $this->session->set_flashdata('status', "error");
-                    $this->session->set_flashdata('message', 'Ha ocurrido un error en la base de dato, por favor, intentelo mas tarde o comuniquese con el administrador de la web.');
+                    $this->session->set_flashdata('message', ERR_DB);
+                    $this->_delete_images(UPLOAD_BANDA_DIR, $uploadImageBanda['output']);
+                    $this->_delete_images(UPLOAD_DISC_DIR, $uploadImageDisc['output']);
 
                     redirect('/paneluser/bandas/form/'.$_POST['bandas_id']);
 
@@ -186,18 +193,28 @@ class Bandas extends Controller{
                 }
 
             }else{
+                /*echo "uploadImageBanda ".$uploadImageBanda['status']."<br>";
+                echo "uploadImageBandaEdit ".$uploadImageBandaEdit['status']."<br>";
+                echo "uploadImageDisc ".$uploadImageDisc['status']."<br>";
+                echo "uploadImageDiscEdit ".$uploadImageDiscEdit['status']."<br>";
+                die();*/
+
                 $message = array();
                 if( $uploadImageBanda['status']=="error" ){
                     $message[] = "<b>Error en la imagen de la banda</b>.<br />" . $this->superupload->get_error($uploadImageBanda['error']);
+                    $this->_delete_images(UPLOAD_BANDA_DIR, $uploadImageBanda['output']);
                 }
                 if( $uploadImageBandaEdit['status']=="error" ){
                     $message[] = "<b>Error en la imagen de la banda</b>.<br />" . $this->superupload->get_error($uploadImageBandaEdit['error']);
+                    $this->_delete_images(UPLOAD_BANDA_DIR, $uploadImageBandaEdit['output']);
                 }
                 if( $uploadImageDisc['status']=="error" ){
                     $message[] = "<br /><br /><b>Error en la imagen de la discografica.</b><br />" . $this->superupload->get_error($uploadImageDisc['error']);
+                    $this->_delete_images(UPLOAD_DISC_DIR, $uploadImageDisc['output']);
                 }
                 if( $uploadImageDiscEdit['status']=="error" ){
                     $message[] = "<br /><br /><b>Error en la imagen de la discografica.</b><br />" . $this->superupload->get_error($uploadImageDiscEdit['error']);
+                    $this->_delete_images(UPLOAD_DISC_DIR, $uploadImageDiscEdit['output']);
                 }
                 $this->session->set_flashdata('status', "error");
                 $this->session->set_flashdata('message', implode("<br /><br />", $message));
@@ -211,18 +228,23 @@ class Bandas extends Controller{
             $id = $this->uri->segment_array();
             array_splice($id, 0,3);
 
-            if( $this->recitales_model->delete(array('recital_id'=>$id)) ){
-                redirect('/paneluser/recitales/');
+            //print_array($id, true);
+
+            if( !$this->bandas_model->delete($id) ){
+                $this->session->set_flashdata('status', "error");
+                $this->session->set_flashdata('message', ERR_DB);
             }else{
-                show_error(ERR_RECITAL_DELETE);
+                $this->session->set_flashdata('status', "success");
+                $this->session->set_flashdata('message', "La eliminaci&oacute;n ha sido realizada con &eacute;xito.");
             }
+            redirect('/paneluser/bandas/');
         }
     }
 
     /* FUNCTIONS AJAX
      **************************************************************************/
     public function ajax_check(){
-        echo $this->recitales_model->check($_POST['banda'], $_POST['recitalid']);
+        //echo $this->recitales_model->check($_POST['banda'], $_POST['recitalid']);
         die();
     }
 
@@ -238,24 +260,13 @@ class Bandas extends Controller{
 
     /* FUNCTIONS PRIVATE
      **************************************************************************/
-    private function _request_fields(){
-        $ret = array(
-            'banda'         => $_POST['txtBanda'],
-            'genero_id'     => $_POST['cboGenero'],
-            'date'          => str_replace("/", ",", $_POST['txtDate']),
-            'lugar_id'      => $_POST['lugar_id'],
-            'lugarvta_id'   => @$_POST['lugarvta_id'],
-            'price'         => $_POST['txtPrice'],
-            'price2'        => $_POST['txtPrice2'],
-            'moreinfo'      => $_POST['txtMoreInfo']
-        );
-
-        if( $_POST['cboTimerHour']!="null" && $_POST['cboTimerMinute']!="null" ){
-            $ret['timer'] = $_POST['cboTimerHour'].":".$_POST['cboTimerMinute'];
+    private function _delete_images($path, $output){
+        foreach( $output as $row ){
+            @unlink($path . $row['filename_thumb']);
+            @unlink($path . $row['filename_image']);
         }
-
-        return $ret;
     }
+
 
 }
 

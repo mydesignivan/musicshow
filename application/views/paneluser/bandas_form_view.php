@@ -38,7 +38,7 @@
             </p>
             <!-- ========== INFLUENCIAS =========== -->
             <p>
-                <span class="required">*</span><label class="label-form" for="txtInfluencias">Influencias</label><br />
+                <label class="label-form" for="txtInfluencias">Influencias</label><br />
                 <textarea name="txtInfluencias" id="txtInfluencias" cols="22" rows="5" class="textarea-form"><?=$info['influencias']?></textarea>
             </p>
 
@@ -122,13 +122,17 @@
                 <span>No</span><input type="radio" name="optDiscografia"  onclick="Bandas.showhide_discografica('hide');" value="0" <?php if( !isset($info['discografica_visible']) || $info['discografica_visible']==0 ) echo 'checked="checked"';?> />
             </div>
 
-            <div id="contDiscografica" class="clear float-left prepend-top <?php if( $info['discografica_visible']!=1 ) echo 'hide';?>">
-                <label class="label-form" for="txtDiscActual">Discogr&aacute;fica Actual</label>&nbsp;<input type="text" id="txtDiscActual" name="txtDiscActual" class="input-form" value="<?=$info['discografica_actual']?>" />
+            <div id="div1" class="float-left clear prepend-top <?php if( $info['discografica_visible']!=1 ) echo 'hide';?>">
+                <label class="label-form" for="txtDiscActual">Discogr&aacute;fica Actual</label>&nbsp;
+                <input type="text" id="txtDiscActual" name="txtDiscActual" class="input-form" value="<?=$info['discografica_actual']?>" />
+            </div>
 
+            <div id="contDiscografica" class="clear float-left prepend-top">
+                <label class="label-form">Discogr&aacute;fica</label><br />
                 <table id="tblDiscografica" class="table-discografica" cellpadding="0" cellspacing="0">
                     <thead>
                         <tr>
-                            <td class="cell-1">Nombre del CD</td>
+                            <td class="cell-1">Nombre CD</td>
                             <td class="cell-2">Discogr&aacute;fica</td>
                             <td class="cell-3">Temas</td>
                             <td class="cell-4">Tapa del CD</td>
@@ -138,9 +142,8 @@
                     <tbody>
                <?php
                 $listDisc = array();
-                if( !isset($info['listImages']) ){                    
-                    $listDisc[] = array('discografica_id'=>0, 'discografia'=>'', 'cd_name'=>'', 'thumb'=>'', 'width'=>'', 'height'=>'', 'tracks'=>array(array('tema_id'=>0, 'name'=>'', 'minutes'=>'')));
-                }else{
+                $listDisc[] = array('discografica_id'=>0, 'discografia'=>'', 'cd_name'=>'', 'thumb'=>'', 'width'=>'', 'height'=>'', 'tracks'=>array(array('tema_id'=>0, 'name'=>'', 'minutes'=>'')));
+                if( isset($info['listDisc']) && count($info['listDisc'])>0 ){
                     $listDisc = $info['listDisc'];
                 }?>
                 <?php foreach( $listDisc as $rowDisc ) {?>
@@ -312,15 +315,35 @@
             </div>
 
             <!-- ========== LINKS DE INTERES =========== -->
-            <div class="clear float-left">
-                <label class="label-form">Links de Interes:</label>
-            </div>
-            <div class="clear float-left">
-                <label class="label-form" for="txtLinksInteresTitle">T&iacute;tulo:</label>
-                <input type="text" id="txtLinksInteresTitle" name="txtLinksInteresTitle" class="input-form" value="<?=$info['link_title'];?>" /><br />
-
-                <label class="label-form" for="txtLinksInteresUrl">URL:</label>
-                <input type="text" id="txtLinksInteresUrl" name="txtLinksInteresUrl" class="input-form" value="<?=$info['link_url'];?>" />
+            <div class="clear prepend-top float-left">
+                <label class="label-form">Links de Interes:</label><br />
+                <table id="tblLinksInteres" class="table-integrantes" cellpadding="0" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <td class="cell-1">T&iacute;tulo</td>
+                            <td class="cell-2">URL</td>
+                            <td class="cell-3">Acci&oacute;n</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $listLinksInteres = array();
+                    $listLinksInteres[] = array('title'=>'', 'url'=>'');
+                    if( isset($info['listLinksInteres']) ){
+                        if( $info['listLinksInteres']->num_rows>0 )
+                            $listLinksInteres = $info['listLinksInteres']->result_array();
+                    }
+                    ?>
+                    <?php foreach( $listLinksInteres as $row ){?>
+                        <tr>
+                            <td class="cell-1"><input type="text" class="input-table" name="txtLinksInteresTitle[]" value="<?=$row['title']?>" /></td>
+                            <td class="cell-2"><input type="text" class="input-table" name="txtLinksInteresUrl[]" value="<?=$row['url']?>" /></td>
+                            <td class="cell-3"><button type="button" name="btnlinksinteresdel" class="button-medium" onclick="JTable.remove(this)">Eliminar</button></td>
+                        </tr>
+                    <?php }?>
+                    </tbody>
+                </table>
+                <button type="button" name="btnlinksinteresadd" class="button-large" onclick="JTable.add('#tblLinksInteres')">Agregar otro</button>
             </div>
 
             <!-- ========== MAS INFO =========== -->

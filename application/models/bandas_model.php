@@ -16,6 +16,7 @@ class bandas_model extends Model {
         $this->db->trans_start(); // INICIO TRANSACCION
 
         try{
+            $extra_post = json_decode($_POST['extra_post']);
 
             // ALTA DATOS "BANDAS"
             if( !$this->db->insert(TBL_BANDAS, $data) ) throw true;
@@ -28,37 +29,32 @@ class bandas_model extends Model {
             if( !$this->_save_imagesbanda($uploadImageBanda, $bandas_id) ) throw true;
 
             // ALTA DATOS "DISCOGRAFICA"
-            if( $_POST['optDiscografia']==1 ){
-                $n=0;
-                $arr_track = json_decode($_POST['extra_post']);
+            $n=0;
+            foreach( $uploadImageDisc as $row ){
+                $data = array(
+                    'bandas_id'   => $bandas_id,
+                    'discografia' => $_POST['txtDiscName'][$n],
+                    'cd_name'     => $_POST['txtDiscCDname'][$n],
+                    'thumb'       => $row['filename_thumb'],
+                    'image'       => $row['filename_image'],
+                    'width'       => $row['thumb_width'],
+                    'height'      => $row['thumb_height']
+                );
+                if( !$this->db->insert(TBL_BANDASDISC, $data) ) throw true;
+                $disc_id = $this->db->insert_id();
 
-                foreach( $uploadImageDisc as $row ){
-                    if( !empty($_POST['txtDiscName'][$n]) && !empty($_POST['txtDiscCDname'][$n]) ) {
-                        $data = array(
-                            'bandas_id'   => $bandas_id,
-                            'discografia' => $_POST['txtDiscName'][$n],
-                            'cd_name'     => $_POST['txtDiscCDname'][$n],
-                            'thumb'       => $row['filename_thumb'],
-                            'image'       => $row['filename_image'],
-                            'width'       => $row['thumb_width'],
-                            'height'      => $row['thumb_height']
-                        );
-                        if( !$this->db->insert(TBL_BANDASDISC, $data) ) throw true;
-                        $disc_id = $this->db->insert_id();
-
-                        // ALTA DATOS "TEMAS DISCOGRAFICA"
-                        foreach( $arr_track[$n] as $rowTrack ){
-                            $data = array(
-                                'discografica_id' => $disc_id,
-                                'name'            => $rowTrack->name,
-                                'minutes'         => $rowTrack->minutes
-                            );
-                            if( !$this->db->insert(TBL_BANDASDISCTRACK, $data) ) throw true;
-                        }
-                        
-                    }
-                    $n++;
+                // ALTA DATOS "TEMAS DISCOGRAFICA"
+                foreach( $extra_post->tracks[$n] as $rowTrack ){
+                    $data = array(
+                        'bandas_id'       => $bandas_id,
+                        'discografica_id' => $disc_id,
+                        'name'            => $rowTrack->name,
+                        'minutes'         => $rowTrack->minutes
+                    );
+                    if( !$this->db->insert(TBL_BANDASDISCTRACK, $data) ) throw true;
                 }
+
+                $n++;
             }
             
             // ALTA DATOS "OTROS CONTACTO"
@@ -66,6 +62,9 @@ class bandas_model extends Model {
 
             // ALTA DATOS "LA BANDA EN LA WEB"
             if( !$this->_save_weblink($bandas_id) ) throw true;
+
+            // ALTA DATOS "LINKS DE INTERES"
+            if( !$this->_save_linksinteres($bandas_id) ) throw true;
 
 
             $this->db->trans_complete(); // COMPLETO LA TRANSACCION
@@ -131,79 +130,74 @@ class bandas_model extends Model {
             }
 
 
-            if( $_POST['optDiscografia']==1 ){
-                // ALTA DATOS "DISCOGRAFICA"
-                $n=0;
-                foreach( $uploadImageDisc as $row ){
-                    if( !empty($_POST['txtDiscCDname'][$n]) ) {
-                        $data = array(
-                            'bandas_id'   => $bandas_id,
-                            'discografia' => $_POST['txtDiscName'][$n],
-                            'cd_name'     => $_POST['txtDiscCDname'][$n],
-                            'thumb'       => $row['filename_thumb'],
-                            'image'       => $row['filename_image'],
-                            'width'       => $row['thumb_width'],
-                            'height'      => $row['thumb_height']
-                        );
-                        if( !$this->db->insert(TBL_BANDASDISC, $data) ) throw true;
-                        $disc_id = $this->db->insert_id();
+            // ALTA DATOS "DISCOGRAFICA"
+            $n=0;
+            foreach( $uploadImageDisc as $row ){
+                $data = array(
+                    'bandas_id'   => $bandas_id,
+                    'discografia' => $_POST['txtDiscName'][$n],
+                    'cd_name'     => $_POST['txtDiscCDname'][$n],
+                    'thumb'       => $row['filename_thumb'],
+                    'image'       => $row['filename_image'],
+                    'width'       => $row['thumb_width'],
+                    'height'      => $row['thumb_height']
+                );
+                if( !$this->db->insert(TBL_BANDASDISC, $data) ) throw true;
+                $disc_id = $this->db->insert_id();
 
-                        // ALTA DATOS "TEMAS DISCOGRAFICA"
-                        foreach( $extra_post->tracks[$n] as $rowTrack ){
-                            $data = array(
-                                'discografica_id' => $disc_id,
-                                'name'            => $rowTrack->name,
-                                'minutes'         => $rowTrack->minutes
-                            );
-                            if( !$this->db->insert(TBL_BANDASDISCTRACK, $data) ) throw true;
-                        }
-                    }
-                    $n++;
-                }
-
-                // EDIT DATOS "DISCOGRAFICA"
-                $n=0;
-                foreach( $uploadImageDiscEdit as $row ){
-                    if( !empty($_POST['txtDiscCDnameEdit'][$n]) ) {
-                        $data = array(
-                            'thumb'       => $row['filename_thumb'],
-                            'image'       => $row['filename_image'],
-                            'width'       => $row['thumb_width'],
-                            'height'      => $row['thumb_height']
-                        );
-                        $this->db->where('discografica_id', $extra_post->discografica_id[$n]);
-                        if( !$this->db->update(TBL_BANDASDISC, $data) ) throw true;
-                    }
-                    $n++;
-                }
-
-                for( $n=0; $n<=count($_POST['discografica_id'])-1; $n++ ){
+                // ALTA DATOS "TEMAS DISCOGRAFICA"
+                foreach( $extra_post->tracks[$n] as $rowTrack ){
                     $data = array(
-                        'discografia' => $_POST['txtDiscCDnameEdit'][$n],
-                        'cd_name' => $_POST['txtDiscNameEdit'][$n]
+                        'bandas_id'       => $bandas_id,
+                        'discografica_id' => $disc_id,
+                        'name'            => $rowTrack->name,
+                        'minutes'         => $rowTrack->minutes
                     );
-                    $this->db->where('discografica_id', $_POST['discografica_id'][$n]);
-                    if( !$this->db->update(TBL_BANDASDISC, $data) ) return false;
+                    if( !$this->db->insert(TBL_BANDASDISCTRACK, $data) ) throw true;
+                }
+                $n++;
+            }
 
-                    // ALTA DATOS "TEMAS DISCOGRAFICA"
-                    $this->db->delete(TBL_BANDASDISCTRACK, array('discografica_id' => $_POST['discografica_id'][$n]));
-                    foreach( $extra_post->tracks_edit[$n] as $rowTrack ){
-                        $data = array(
-                            'discografica_id' => $_POST['discografica_id'][$n],
-                            'name'            => $rowTrack->name,
-                            'minutes'         => $rowTrack->minutes
-                        );
-                        if( !$this->db->insert(TBL_BANDASDISCTRACK, $data) ) throw true;
-                    }
+            // EDIT DATOS "DISCOGRAFICA"
+            $n=0;
+            foreach( $uploadImageDiscEdit as $row ){
+                $data = array(
+                    'thumb'       => $row['filename_thumb'],
+                    'image'       => $row['filename_image'],
+                    'width'       => $row['thumb_width'],
+                    'height'      => $row['thumb_height']
+                );
+                $this->db->where('discografica_id', $extra_post->discografica_id[$n]);
+                if( !$this->db->update(TBL_BANDASDISC, $data) ) throw true;
+                $n++;
+            }
 
+            for( $n=0; $n<=count($_POST['discografica_id'])-1; $n++ ){
+                $data = array(
+                    'discografia' => $_POST['txtDiscCDnameEdit'][$n],
+                    'cd_name' => $_POST['txtDiscNameEdit'][$n]
+                );
+                $this->db->where('discografica_id', $_POST['discografica_id'][$n]);
+                if( !$this->db->update(TBL_BANDASDISC, $data) ) return false;
+
+                // ALTA DATOS "TEMAS DISCOGRAFICA"
+                $this->db->delete(TBL_BANDASDISCTRACK, array('discografica_id' => $_POST['discografica_id'][$n]));
+                foreach( $extra_post->tracks_edit[$n] as $rowTrack ){
+                    $data = array(
+                        'bandas_id'       => $bandas_id,
+                        'discografica_id' => $_POST['discografica_id'][$n],
+                        'name'            => $rowTrack->name,
+                        'minutes'         => $rowTrack->minutes
+                    );
+                    if( !$this->db->insert(TBL_BANDASDISCTRACK, $data) ) throw true;
                 }
 
-                // DELETE DATOS "DISCOGRAFICA"
-                if( count($extra_post->imagedisc_del)>0 ){
-                    $this->db->where_in("discografica_id", $extra_post->imagedisc_del);
-                    $this->db->delete(TBL_BANDASDISC);
-                }
+            }
 
+            // DELETE DATOS "DISCOGRAFICA"
+            if( count($extra_post->imagedisc_del)>0 ){
+                $this->db->where_in("discografica_id", $extra_post->imagedisc_del);
+                $this->db->delete(TBL_BANDASDISC);
             }
 
             // ALTA DATOS "OTROS CONTACTO"
@@ -214,6 +208,10 @@ class bandas_model extends Model {
             $this->db->delete(TBL_BANDASWEBLINK, array('bandas_id' => $bandas_id));
             if( !$this->_save_weblink($bandas_id) ) throw true;
 
+            // ALTA DATOS "LINKS DE INTERES"
+            $this->db->delete(TBL_BANDASLINKSINTERES, array('bandas_id' => $bandas_id));
+            if( !$this->_save_linksinteres($bandas_id) ) throw true;
+
             $this->db->trans_complete(); // COMPLETO LA TRANSACCION
 
 
@@ -222,12 +220,65 @@ class bandas_model extends Model {
             return false;
         }
 
-            die("ok");
         return true;
     }
     
-    public function delete($where){
+    public function delete($id){
+        // EXTRAE LISTADO DE IMAGENES PARA BANDA
+        $this->db->select('image, thumb');
+        $listImgBandas = $this->db->get_where(TBL_BANDASGALLERY)->result_array();
 
+        // EXTRAE LISTADO DE IMAGENES PARA DISCOGRAFICA
+        $this->db->select('image, thumb');
+        $listImgDisc = $this->db->get_where(TBL_BANDASDISC)->result_array();
+
+
+        $this->db->trans_start(); // INICIO TRANSACCION
+
+        // ELIMINA DATOS TABLA "BANDAS"
+        $this->db->where_in('bandas_id', $id);
+        if( !$this->db->delete(TBL_BANDAS) ) return false;
+
+        // ELIMINA DATOS TABLA "DISCOGRAFICA"
+        $this->db->where_in('bandas_id', $id);
+        if( !$this->db->delete(TBL_BANDASDISC) ) return false;
+
+        // ELIMINA DATOS TABLA "DISCOGRAFICA TEMAS"
+        $this->db->where_in('bandas_id', $id);
+        if( !$this->db->delete(TBL_BANDASDISCTRACK) ) return false;
+
+        // ELIMINA DATOS TABLA "DISCOGRAFICA TEMAS"
+        $this->db->where_in('bandas_id', $id);
+        if( !$this->db->delete(TBL_BANDASGALLERY) ) return false;
+
+        // ELIMINA DATOS TABLA "INTEGRANTES"
+        $this->db->where_in('bandas_id', $id);
+        if( !$this->db->delete(TBL_BANDASINT) ) return false;
+
+        // ELIMINA DATOS TABLA "LINKS INTERES"
+        $this->db->where_in('bandas_id', $id);
+        if( !$this->db->delete(TBL_BANDASLINKSINTERES) ) return false;
+
+        // ELIMINA DATOS TABLA "OTROS CONTACTOS"
+        $this->db->where_in('bandas_id', $id);
+        if( !$this->db->delete(TBL_BANDASOTHERCONTACTS) ) return false;
+
+        // ELIMINA DATOS TABLA "WEB LINKS"
+        $this->db->where_in('bandas_id', $id);
+        if( !$this->db->delete(TBL_BANDASWEBLINK) ) return false;
+
+        foreach( $listImgBandas as $row ){
+            @unlink(UPLOAD_BANDA_DIR . $row['thumb']);
+            @unlink(UPLOAD_BANDA_DIR . $row['image']);
+        }
+        foreach( $listImgDisc as $row ){
+            @unlink(UPLOAD_DISC_DIR . $row['thumb']);
+            @unlink(UPLOAD_DISC_DIR . $row['image']);
+        }
+
+        $this->db->trans_complete(); // COMPLETO LA TRANSACCION
+
+        return true;
     }
 
     public function get_list($limit, $offset, $where=array()) {
@@ -265,14 +316,12 @@ class bandas_model extends Model {
         $info['listImages'] = $this->db->get_where(TBL_BANDASGALLERY, array('bandas_id'=>$id));
 
         // LISTADO DISCOGRAFICA
-        if( $info['discografica_visible']==1 ){
-            $listDisc = $this->db->get_where(TBL_BANDASDISC, array('bandas_id'=>$id))->result_array();
-            $info['listDisc'] = array();
-            foreach( $listDisc as $row ){
-                // LISTADO DISCOGRAFICA TEMAS
-                $row['tracks'] = $this->db->get_where(TBL_BANDASDISCTRACK, array('discografica_id'=>$row['discografica_id']))->result_array();
-                $info['listDisc'][] = $row;
-            }
+        $listDisc = $this->db->get_where(TBL_BANDASDISC, array('bandas_id'=>$id))->result_array();
+        $info['listDisc'] = array();
+        foreach( $listDisc as $row ){
+            // LISTADO DISCOGRAFICA TEMAS
+            $row['tracks'] = $this->db->get_where(TBL_BANDASDISCTRACK, array('discografica_id'=>$row['discografica_id']))->result_array();
+            $info['listDisc'][] = $row;
         }
 
         // LISTADO OTROS CONTACTO
@@ -280,6 +329,9 @@ class bandas_model extends Model {
 
         // LISTADO WEBLINKS
         $info['listWebLink'] = $this->db->get_where(TBL_BANDASWEBLINK, array('bandas_id'=>$id));
+
+        // LISTADO WEBLINKS
+        $info['listLinksInteres'] = $this->db->get_where(TBL_BANDASLINKSINTERES, array('bandas_id'=>$id));
 
         return $info;
     }
@@ -305,8 +357,6 @@ class bandas_model extends Model {
             '`contact_name`' => $_POST['txtContactName'],
             '`contact_phone`' => $_POST['txtContactPhone'],
             '`contact_mail`' => $_POST['txtContactEmail'],
-            '`link_url`' => $_POST['txtLinksInteresUrl'],
-            '`link_title`' => $_POST['txtLinksInteresTitle'],
             '`masinfo`' => $_POST['txtMoreInfo']
         );
     }
@@ -325,26 +375,30 @@ class bandas_model extends Model {
 
     private function _save_othercontact($bandas_id){
         for( $n=0; $n<=count($_POST['txtContactOtherName'])-1; $n++ ){
-            $data = array(
-                'bandas_id'  => $bandas_id,
-                'name'       => $_POST['txtContactOtherName'][$n],
-                'phone'      => $_POST['txtContactOtherPhone'][$n],
-                'email'      => $_POST['txtContactOtherEmail'][$n]
-            );
-            if( !$this->db->insert(TBL_BANDASOTHERCONTACTS, $data) ) return false;
+            if( !empty($_POST['txtContactOtherName'][$n]) ){
+                $data = array(
+                    'bandas_id'  => $bandas_id,
+                    'name'       => $_POST['txtContactOtherName'][$n],
+                    'phone'      => $_POST['txtContactOtherPhone'][$n],
+                    'email'      => $_POST['txtContactOtherEmail'][$n]
+                );
+                if( !$this->db->insert(TBL_BANDASOTHERCONTACTS, $data) ) return false;
+            }
         }
         return true;
     }
 
     private function _save_weblink($bandas_id){
         for( $n=0; $n<=count($_POST['cboBandaWeb'])-1; $n++ ){
-            $data = array(
-                'bandas_id'   => $bandas_id,
-                'title'       => $_POST['cboBandaWeb'][$n],
-                'title_other' => $_POST['txtOtherBanda'][$n],
-                'url'         => $_POST['txtBandaWebVal'][$n]
-            );
-            if( !$this->db->insert(TBL_BANDASWEBLINK, $data) ) return false;
+            if( !empty($_POST['cboBandaWeb'][$n]) && !empty($_POST['txtBandaWebVal'][$n]) ){
+                $data = array(
+                    'bandas_id'   => $bandas_id,
+                    'title'       => $_POST['cboBandaWeb'][$n],
+                    'title_other' => $_POST['txtOtherBanda'][$n],
+                    'url'         => $_POST['txtBandaWebVal'][$n]
+                );
+                if( !$this->db->insert(TBL_BANDASWEBLINK, $data) ) return false;
+            }
         }
         return true;
     }
@@ -366,6 +420,19 @@ class bandas_model extends Model {
         return true;
     }
 
+    private function _save_linksinteres($bandas_id){
+        for( $n=0; $n<=count($_POST['txtLinksInteresTitle'])-1; $n++ ){
+            if( !empty($_POST['txtLinksInteresTitle'][$n]) && !empty($_POST['txtLinksInteresUrl'][$n]) ){
+                $data = array(
+                    'bandas_id'  => $bandas_id,
+                    'title'      => $_POST['txtLinksInteresTitle'][$n],
+                    'url'        => $_POST['txtLinksInteresUrl'][$n]
+                );
+                if( !$this->db->insert(TBL_BANDASLINKSINTERES, $data) ) return false;
+            }
+        }
+        return true;
+    }
 
 }
 ?>

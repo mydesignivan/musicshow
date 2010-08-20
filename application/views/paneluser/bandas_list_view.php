@@ -1,4 +1,10 @@
         <h1>Bandas</h1>
+        
+        <?php if( $this->session->flashdata('status')!='' ){?>
+        <div class="<?=$this->session->flashdata('status')?>">
+            <?=$this->session->flashdata('message')?>
+        </div>
+        <?php }?>
 
         <div class="float-right">
             <button type="button" class="button-large" onclick="location.href='<?=site_url('/paneluser/bandas/form/');?>';">Nuevo</button>

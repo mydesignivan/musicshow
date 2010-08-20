@@ -59,6 +59,7 @@ define('TBL_BANDASDISC', 'bandas_discografica');
 define('TBL_BANDASDISCTRACK', 'bandas_discografica_temas');
 define('TBL_BANDASOTHERCONTACTS', 'bandas_othercontact');
 define('TBL_BANDASWEBLINK', 'bandas_weblink');
+define('TBL_BANDASLINKSINTERES', 'bandas_linksinteres');
 
 /*
 |--------------------------------------------------------------------------
@@ -118,6 +119,8 @@ define('ERR_USER_EDIT',   'El usuario no pudo ser modificado. Si el error coninu
 define('ERR_USER_DELETE', 'El usuario no pudo ser eliminado. Si el error coninua por favor, comuniquelo al administrador del sitio.');
 
 define('ERR_RECITAL_DELETE', 'El recital no pudo ser eliminado. Si el error coninua por favor, comuniquelo al administrador del sitio.');
+
+define('ERR_DB', 'Ha ocurrido un error en la base de dato, por favor, intentelo mas tarde o comuniquese con el administrador de la web.');
 
 /*
 |--------------------------------------------------------------------------

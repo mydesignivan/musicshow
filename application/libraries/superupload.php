@@ -167,7 +167,7 @@ class SuperUpload{
         $output = "<ul>";
         foreach( $errors as $error ){
             $txt = "Nombre de Archivo: " . $error['file']['name'] ."<br />";
-            $txt.= "Mensaje: <br />" . $error['message'];
+            $txt.= "Mensaje: " . $error['message'];
             $output.= "<li>". $txt ."</li>";
         }
         $output.="</ul>";

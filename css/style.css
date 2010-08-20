@@ -532,12 +532,12 @@ table.table-gallerybanda{
  - ESTILOS PARA LAS TABLA DISCOGRAFICA
  -----------------------------------------------------------------------------*/
 table.table-discografica{
-    width:800px;
+    width:780px;
     border:1px solid #E7B969;
     margin-bottom: 10px;
 }
-    table.table-discografica .cell-1{width:150px; vertical-align: top;}
-    table.table-discografica .cell-2{width:150px; vertical-align: top;}
+    table.table-discografica .cell-1{width:100px; vertical-align: top;}
+    table.table-discografica .cell-2{width:100px; vertical-align: top;}
     table.table-discografica .cell-3{width:200px; text-align: left; vertical-align: top;}
     table.table-discografica thead .cell-3{text-align: center !important;}
     table.table-discografica .cell-4{width:150px; text-align: center; vertical-align: top;}

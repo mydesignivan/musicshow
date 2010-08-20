@@ -11,8 +11,7 @@ var Bandas = new (function(){
                 txtBanda        : 'required',
                 txtGenero       : 'required',
                 cboStates       : 'required',
-                cboCity         : 'required',
-                txtInfluencias  : 'required'
+                cboCity         : 'required'
             },
 
             submitHandler : function(){
@@ -93,18 +92,18 @@ var Bandas = new (function(){
 
     this.showhide_discografica = function(a){
         if( a=="show" ){
-            $('#contDiscografica').fadeIn('slow');
-
+            $('#div1').fadeIn('slow');
+            $('#txtDiscActual').focus();
         }else{
-            $('#contDiscografica').fadeOut('slow');
+            $('#div1').fadeOut('slow');
             $('#txtDiscActual').val('');
-            $('#tblDiscografica tbody').html('').append($('#tblDiscografica').data('jtable-data')).find('input:text, input:file').val('');;
         }
     };
 
     this.showhide_manager = function(a){
         if( a=="show" ){
             $('#contManager').fadeIn('slow');
+            $('#txtManagerName').focus();
 
         }else{
             $('#contManager').fadeOut('slow');
@@ -143,47 +142,45 @@ var Bandas = new (function(){
 
             var json={};
 
-            if( $('#form1')[0].optDiscografia[0].value==1 ){
-                var arr_tracks = [];
+            var arr_tracks = [];
+
+            if( _params.mode=="edit" ){
                 var arr_tracks_edit = [];
-
-                if( _params.mode=="edit" ){
-                    json.imagedisc_del = discDel;
-                    json.href_imgdisc_image = [];
-                    json.href_imgdisc_thumb = [];
-                    json.discografica_id = [];
-                }
-
-                $('#tblDiscografica >tbody >tr').each(function(){
-                    var arr = [];
-                    var input;
-                    var t=$(this);
-
-                    t.find('tbody tr').each(function(){
-                        input = $(this).find('input:text');
-                        arr.push({
-                            name    : input.eq(0).val(),
-                            minutes : input.eq(1).val()
-                        });
-                    });
-
-                    if( t.attr('id')=='' ){
-                        arr_tracks.push(arr);
-                    }else{
-                        arr_tracks_edit.push(arr);
-                        input = t.find('input:file');
-                        if( t.find('input:file').val() ){
-                            var a = t.find('.jq-thumb');
-                            json.href_imgdisc_image.push( a.attr('href') );
-                            json.href_imgdisc_thumb.push( a.find('img').attr('src') );
-                            json.discografica_id.push( t.attr('id').substr(4) );
-                        }
-
-                    }
-                });
-                json.tracks = arr_tracks;
-                json.tracks_edit = arr_tracks_edit;
+                json.imagedisc_del = discDel;
+                json.href_imgdisc_image = [];
+                json.href_imgdisc_thumb = [];
+                json.discografica_id = [];
             }
+
+            $('#tblDiscografica >tbody >tr').each(function(){
+                var arr = [];
+                var input;
+                var t=$(this);
+
+                t.find('tbody tr').each(function(){
+                    input = $(this).find('input:text');
+                    arr.push({
+                        name    : input.eq(0).val(),
+                        minutes : input.eq(1).val()
+                    });
+                });
+
+                if( t.attr('id')=='' ){
+                    arr_tracks.push(arr);
+                }else{
+                    arr_tracks_edit.push(arr);
+                    input = t.find('input:file');
+                    if( t.find('input:file').val() ){
+                        var a = t.find('.jq-thumb');
+                        json.href_imgdisc_image.push( a.attr('href') );
+                        json.href_imgdisc_thumb.push( a.find('img').attr('src') );
+                        json.discografica_id.push( t.attr('id').substr(4) );
+                    }
+
+                }
+            });
+            json.tracks = arr_tracks;
+            json.tracks_edit = arr_tracks_edit;
 
             
             if( _params.mode=="edit" ){

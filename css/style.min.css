@@ -97,7 +97,7 @@ table tbody .row-hover:hover{background-color:#E3C8B9}
 table.table-list .cell-3{width:290px}
 table.table-gallerybanda .cell-1{width:120px;padding-left:5px}
 table.table-gallerybanda .cell-2{width:200px;padding-left:5px;vertical-align:top}
-table.table-discografica{width:800px;border:1px solid #E7B969;margin-bottom:10px}
+table.table-discografica{width:100%;border:1px solid #E7B969;margin-bottom:10px}
 table.table-discografica .cell-3{width:200px;text-align:left;vertical-align:top}
 table.table-discografica .cell-4{width:150px;text-align:center;vertical-align:top}
 table.table-discografica .cell-5{text-align:center;vertical-align:top}
@@ -143,4 +143,4 @@ table.table-list .cell-2,table.table-bandas .cell-2{width:200px}
 table.table-bandas .cell-4,table.table-bandas .cell-5{width:100px}
 table.table-integrantes,table.table-gallerybanda,table.table-temas-discografica,table.table-othercontact,table.table-bandaweb{width:100%;border:1px solid #E7B969;margin-bottom:10px}
 table.table-integrantes .cell-1,table.table-integrantes .cell-2,table.table-othercontact .cell-1,table.table-othercontact .cell-2,table.table-othercontact .cell-3,table.table-bandaweb .cell-1,table.table-bandaweb .cell-2{width:150px;padding-left:5px}
-table.table-discografica .cell-1,table.table-discografica .cell-2{width:150px;vertical-align:top}
+table.table-discografica .cell-1,table.table-discografica .cell-2{width:100px;vertical-align:top}
