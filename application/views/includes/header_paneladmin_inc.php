@@ -7,11 +7,12 @@
     </div>
     <!-- ================  MENU  ================ -->
     <div class="clear span-13 append-11 last menu-container">
-        <ul class="menu">
+        <ul class="menu" style="width:900px">
             <li><a href="<?=site_url('/paneladmin/index/')?>" class="mnu_inicio">Inicio</a></li>
             <li><a href="<?=site_url('/paneladmin/destacados/')?>" class="mnu_inicio">Destacados</a></li>
             <li><a href="<?=site_url('/paneladmin/recitales/');?>" class="mnu_recitales">Recitales</a></li>
             <li><a href="<?=site_url('/paneladmin/usuarios/');?>" class="mnu_recitales">Usuarios</a></li>
+            <li><a href="<?=site_url('/paneladmin/bandas/');?>" class="mnu_recitales">Bandas</a></li>
         </ul>
     </div>
     <!-- ================  END MENU  ================ -->

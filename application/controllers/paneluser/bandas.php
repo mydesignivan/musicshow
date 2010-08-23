@@ -161,6 +161,7 @@ class Bandas extends Controller{
 
             $this->superupload->clear();
             $uploadImageBandaEdit = $this->superupload->upload('txtImageEdit');
+            if( !$uploadImageBandaEdit ) $uploadImageBandaEdit = array('status'=>'success', 'output'=>array());
 
             //Sube las imagenes de la DISCOGRAFICA
             $config = array(

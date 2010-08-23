@@ -85,5 +85,13 @@ class lists_model extends Model {
         return $array;
     }
 
+    public function get_value($table, $where){
+        $query = $this->db->get_where($table, $where);
+        if( $query->num_rows > 0 ) {
+            $row = $query->row_array();
+            return $row['name'];
+        }else return false;
+    }
+
 }
 ?>

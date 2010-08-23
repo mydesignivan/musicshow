@@ -15,11 +15,11 @@ var Bandas = new (function(){
             },
 
             submitHandler : function(){
-                //ajaxloader.show('Validando Formulario');
+                ajaxloader.show('Validando Formulario');
             },
 
             invalidHandler : function(){
-                //ajaxloader.hidden();
+                ajaxloader.hidden();
             },
             onsubmit : false
 
@@ -40,6 +40,7 @@ var Bandas = new (function(){
 
         formatNumber.init('#txtTocandoDesde, .jq-field-int');
 
+        $('a.jq-thumb').fancybox();
     };
 
     this.show_states = function(el){
@@ -53,9 +54,19 @@ var Bandas = new (function(){
     };
 
     this.removeImage = function(t){
-        var id = $(t).parent().parent().attr('id').substr(5);
+        var tr = $(t).parent().parent();
+        var id = tr.attr('id').substr(5);
+        if( !isNaN(id) ) {
+            var tagA = tr.find('a.jq-thumb');
+            var tagImg = tagA.find('img');
+        }
+
         JTable.remove(t, function(){
-            if( !isNaN(id) ) imgDel.push(id);
+            if( !isNaN(id) ) {
+                imgDel.push(id);
+                imgHref.image.push(tagA.attr('href'));
+                imgHref.thumb.push(tagImg.attr('src'));
+            }
         });
     };
 
@@ -69,9 +80,20 @@ var Bandas = new (function(){
     };
 
     this.removeDisc = function(t){
-        var id = $(t).parent().parent().attr('id').substr(4);
+        var tr = $(t).parent().parent();
+        var id = tr.attr('id').substr(4);
+
+        if( !isNaN(id) ) {
+            var tagA = tr.find('a.jq-thumb');
+            var tagImg = tagA.find('img');
+        }
+
         JTable.remove(t, function(){
-            if( !isNaN(id) ) discDel.push(id);
+            if( !isNaN(id) ) {
+                discDel.push(id);
+                discHref.image.push(tagA.attr('href'));
+                discHref.thumb.push(tagImg.attr('src'));
+            }
         });
     };
 
@@ -111,26 +133,20 @@ var Bandas = new (function(){
         }
     };
 
-    this.prueba = function(){
-        $('#tblImagesBandas input:file').each(function(){
-            var t=$(this);
-            if( t.val() ){
-
-                alert(t.parent().find('a').attr('href'));
-                alert(t.parent().find('img').attr('src'));
-
-            }
-        });
-
-    };
-
-
     /* PRIVATE PROPERTIES
      **************************************************************************/
     var working=false;
     var _params={};
     var imgDel = [];
+    var imgHref = {
+        image : [],
+        thumb : []
+    };
     var discDel = [];
+    var discHref = {
+        image : [],
+        thumb : []
+    };
 
     /* PRIVATE METHODS
      **************************************************************************/
@@ -147,6 +163,7 @@ var Bandas = new (function(){
             if( _params.mode=="edit" ){
                 var arr_tracks_edit = [];
                 json.imagedisc_del = discDel;
+                json.imagedisc_href = discHref;
                 json.href_imgdisc_image = [];
                 json.href_imgdisc_thumb = [];
                 json.discografica_id = [];
@@ -185,6 +202,7 @@ var Bandas = new (function(){
             
             if( _params.mode=="edit" ){
                 json.image_del = imgDel;
+                json.image_href = imgHref;
                 json.href_imgbanda_image = [];
                 json.href_imgbanda_thumb = [];
                 json.bandagallerie_id = [];
@@ -205,6 +223,8 @@ var Bandas = new (function(){
             $('#extra_post').val(JSON.encode(json));
             
             return true;
+        }else{
+            alert("Disculpe, hay errores de validación en el formulario.")
         }
 
         return false;
@@ -250,16 +270,11 @@ var Bandas = new (function(){
         var empty=0;
         var condition=false;
 
-        if( _params.mode=="create" ){
-            var inputs = $('#tblImagesBandas tbody input:file');
-            inputs.each(function(){
-                if( !$(this).val() ) empty++;
-            });
-            condition = empty == inputs.length;
-        }else{
-            condition = $('#tblImagesBandas tbody img').length==0;
-        }
-
+        var inputs = $('#tblImagesBandas tbody input:file');
+        inputs.each(function(){
+            if( !$(this).val() ) empty++;
+        });
+        condition = _params.mode=="create" ? empty == inputs.length : $('#tblImagesBandas tbody img').length==0 && empty == inputs.length;
         if( condition ){
             $('#msgbox-image').html("Este campo es obligatorio.").show().focus();
             return false;
