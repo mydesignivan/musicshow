@@ -11,9 +11,9 @@
             <li><a href="<?=site_url('/index/')?>" class="mnu_inicio">Inicio</a></li>
             <li><a href="<?=site_url('/paneluser/micuenta/')?>" class="mnu_inicio">Mi Cuenta</a></li>
             <li><a href="<?=site_url('/paneluser/recitales/');?>" class="mnu_recitales">Recitales</a></li>
-    <?php if( $this->session->userdata('username')=="imattoni" || $this->session->userdata('username')=="juanadmin" ) {?>
+    <?php //if( $this->session->userdata('username')=="imattoni" || $this->session->userdata('username')=="juanadmin" ) {?>
             <li><a href="<?=site_url('/paneluser/bandas/');?>" class="mnu_recitales">Bandas</a></li>
-    <?php }?>
+    <?php //}?>
         </ul>
     </div>
     <!-- ================  END MENU  ================ -->
