@@ -181,8 +181,8 @@ class bandas_model extends Model {
             if( isset($_POST['discografica_id']) ){
                 for( $n=0; $n<=count($_POST['discografica_id'])-1; $n++ ){
                     $data = array(
-                        'discografia' => $_POST['txtDiscCDnameEdit'][$n],
-                        'cd_name' => $_POST['txtDiscNameEdit'][$n]
+                        'discografia' => $_POST['txtDiscNameEdit'][$n],
+                        'cd_name' => $_POST['txtDiscCDnameEdit'][$n]
                     );
                     $this->db->where('discografica_id', $_POST['discografica_id'][$n]);
                     if( !$this->db->update(TBL_BANDASDISC, $data) ) return false;

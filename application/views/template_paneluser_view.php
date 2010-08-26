@@ -22,13 +22,30 @@
 
     <!-- ================  MAIN CONTAINER  ================ -->
     <div class="clear span-24 main-container">
-        <div class="span-16 column-left">
-            <?php require($tlp_section);?>
+        <div class="span-16 append-bottom push-1">
+        <?php if( $this->config->item('banner_visible') ){?>
+            <script type="text/javascript">
+            <!--
+                google_ad_client = "pub-0293633642876335";
+                /* 468x60, creado 27/03/10 */
+                google_ad_slot = "8938683242";
+                google_ad_width = 468;
+                google_ad_height = 60;
+            //-->
+            </script>
+            <script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
+        <?php }?>
         </div>
 
-        <div class="span-6 last column-right">
-            <div class="sidebar">
-                <?php require('includes/banner_vertical_inc.php');?>
+        <div class="clear">
+            <div class="span-16 column-left">
+                <?php require($tlp_section);?>
+            </div>
+
+            <div class="span-6 last column-right">
+                <div class="sidebar">
+                    <?php require('includes/banner_vertical_inc.php');?>
+                </div>
             </div>
         </div>
     </div>

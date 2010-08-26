@@ -13,11 +13,6 @@ var Bandas = new (function(){
                 cboStates       : 'required',
                 cboCity         : 'required'
             },
-
-            submitHandler : function(){
-                ajaxloader.show('Validando Formulario');
-            },
-
             invalidHandler : function(){
                 ajaxloader.hidden();
             },
@@ -152,6 +147,7 @@ var Bandas = new (function(){
      **************************************************************************/
     var _on_submit = function(){
         if( working ) return false;
+        ajaxloader.show('Validando Formulario');
 
         if( $('#form1').valid() && _valid_integrantes() && _valid_images() ){
             ajaxloader.show('Enviando Formulario');
@@ -199,7 +195,7 @@ var Bandas = new (function(){
             json.tracks = arr_tracks;
             json.tracks_edit = arr_tracks_edit;
 
-            
+
             if( _params.mode=="edit" ){
                 json.image_del = imgDel;
                 json.image_href = imgHref;
@@ -221,10 +217,11 @@ var Bandas = new (function(){
             }
 
             $('#extra_post').val(JSON.encode(json));
-            
+
             return true;
         }else{
-            alert("Disculpe, hay errores de validación en el formulario.")
+            ajaxloader.hidden();
+            alert("Comprube los campos obligatorios.")
         }
 
         return false;
